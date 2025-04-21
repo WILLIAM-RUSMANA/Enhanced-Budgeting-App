@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class FullScreenGUI {
+public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Full Screen GUI");
@@ -10,7 +10,7 @@ public class FullScreenGUI {
             frame.setUndecorated(true); // Removes title bar for full-screen mode
 
             // Create a close button
-            JButton closeButton = new JButton("Exit");
+            JButton closeButton = new JButton("X");
             closeButton.setFont(new Font("Arial", Font.BOLD, 16));
             closeButton.setBackground(Color.RED);
             closeButton.setForeground(Color.WHITE);
