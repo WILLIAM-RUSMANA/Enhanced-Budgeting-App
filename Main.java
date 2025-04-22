@@ -8,6 +8,7 @@ public class Main {
     static LocalDate today = LocalDate.now();
     static int[] currentYearMonth = getYearMonth();
     static ArrayList<Budget> budgets = new ArrayList<>();
+    static ArrayList<Expense> expenses = new ArrayList<>();
 
 
     public static void main(String[] args) {
