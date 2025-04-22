@@ -1,36 +1,44 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.time.LocalDate;
+
 
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
+    static LocalDate today = LocalDate.now();
+    static int[] currentYearMonth = getYearMonth();
+    static ArrayList<Budget> budgets = new ArrayList<>();
+
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Full Screen GUI");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setUndecorated(true); // Removes title bar for full-screen mode
+        Budget currentBudget = getCurrentBudget(currentYearMonth[0], currentYearMonth[1]);
+        boolean run = true;
+        double currentBudgetAmount = currentBudget.getBudget();
+        System.out.println("Budget: " + currentBudget.getBudget());
+        while (run) {
+            String command = scanner.nextLine();
+            System.out.println("-->" + command);
+        }
+    }
 
-            // Create a close button
-            JButton closeButton = new JButton("X");
-            closeButton.setFont(new Font("Arial", Font.BOLD, 16));
-            closeButton.setBackground(Color.RED);
-            closeButton.setForeground(Color.WHITE);
-            closeButton.setFocusPainted(false);
-            closeButton.addActionListener((ActionEvent e) -> System.exit(0));
+    public static Budget newBudget(double budget) {
+        return new Budget(budget, currentYearMonth[0], currentYearMonth[1]);
+    }
 
-            // Create a panel and set layout
-            JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            panel.setOpaque(false);
-            panel.add(closeButton);
+    public static Expense newExpense(double expense) {
+        return new Expense(expense, currentYearMonth[0], currentYearMonth[1]);
+    }
 
-            // Add the panel to the frame
-            frame.add(panel, BorderLayout.NORTH);
+    public static Budget getCurrentBudget(int year, int month) {
+        for (Budget budget: budgets) {
+            if (budget.getYearMonth().equals(year + " " + month)) {
+                return budget;
+            }
+        }
+        return new Budget(year, month);
+    }
 
-            // Set full screen mode
-            GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice device = env.getDefaultScreenDevice();
-            device.setFullScreenWindow(frame);
-
-            frame.setVisible(true);
-        });
+    public static int[] getYearMonth() {
+        return new int[] {today.getYear(), today.getMonthValue()};
     }
 }
