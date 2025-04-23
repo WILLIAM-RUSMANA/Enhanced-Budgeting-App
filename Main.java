@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 
 
+
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static LocalDate today = LocalDate.now();
@@ -12,13 +13,20 @@ public class Main {
 
 
     public static void main(String[] args) {
+        budgets.add(new Budget(1000, currentYearMonth[0], currentYearMonth[1]));
+        Data.addBudgetData(budgets);
+
         Budget currentBudget = getCurrentBudget(currentYearMonth[0], currentYearMonth[1]);
+        Expense currentExpense = getCurrentExpense(currentYearMonth[0], currentYearMonth[1]);
+
+        printBudget(currentBudget);
+        printExpense(currentExpense);
         boolean run = true;
-        double currentBudgetAmount = currentBudget.getBudget();
-        System.out.println("Budget: " + currentBudget.getBudget());
         while (run) {
             String command = scanner.nextLine();
-            System.out.println("-->" + command);
+        }
+        for (Budget budget: budgets) {
+            System.out.println(budget.getBudget() + " " + budget.getYearMonth());
         }
     }
 
@@ -30,6 +38,7 @@ public class Main {
         return new Expense(expense, currentYearMonth[0], currentYearMonth[1]);
     }
 
+    // Getters
     public static Budget getCurrentBudget(int year, int month) {
         for (Budget budget: budgets) {
             if (budget.getYearMonth().equals(year + " " + month)) {
@@ -39,7 +48,26 @@ public class Main {
         return new Budget(year, month);
     }
 
+    public static Expense getCurrentExpense(int year, int month) {
+        for (Expense expense: expenses) {
+            if (expense.getYearMonth().equals(year + " " + month)) {
+                return expense;
+            }
+        }
+        return new Expense(year, month);
+    }
+
     public static int[] getYearMonth() {
         return new int[] {today.getYear(), today.getMonthValue()};
     }
+
+    // Prints
+    public static void printBudget(Budget budget) {
+        System.out.println("Current Budget: " + budget.getBudget());
+    }
+
+    public static void printExpense(Expense expense) {
+        System.out.println("Current Budget: " + expense.getExpense());
+    }
+
 }

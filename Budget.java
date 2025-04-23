@@ -22,6 +22,6 @@ public class Budget {
     }
 
     public String getYearMonth() {
-        return this.month + " " + this.year;
+        return this.year + " " + this.month;
     }
 }
