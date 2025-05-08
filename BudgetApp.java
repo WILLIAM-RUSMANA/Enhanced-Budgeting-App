@@ -2,29 +2,32 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.naming.InitialContext;
 
 public class BudgetApp {
-    private Scanner scanner = new Scanner(System.in);
-    private LocalDate today = LocalDate.now();
-    private int[] currentYearMonth = getYearMonth();
-    private ArrayList<Budget> budgets = new ArrayList<>();
-    private ArrayList<Expense> expenses = new ArrayList<>();
+    private final Scanner scanner = new Scanner(System.in);
+    private static final LocalDate today = LocalDate.now();
+    private final int[] currentYearMonth = getYearMonth();
+    private final ArrayList<Budget> budgets = new ArrayList<>();
+    private final ArrayList<Expense> expenses = new ArrayList<>();
     private boolean run = true;
+    private String username;
+
+    BudgetApp(String username) {
+        this.username = username;
+    }
 
     public void start() {
-        initializeData();
+        initializeBudgetData();
+        initializeExpenseData();
         mainLoop();
     }
 
-    public void initializeData(){
+    public void initializeBudgetData(){
         Data.addBudgetData(budgets);
     }
+    public void initializeExpenseData() { Data.addExpenseData(expenses); }
 
     private void mainLoop() {
-        budgets.add(new Budget(1000, currentYearMonth[0], currentYearMonth[1]));
-        Data.addBudgetData(budgets);
-
         Budget currentBudget = getCurrentBudget(currentYearMonth[0], currentYearMonth[1]);
         Expense currentExpense = getCurrentExpense(currentYearMonth[0], currentYearMonth[1]);
 
@@ -36,10 +39,10 @@ public class BudgetApp {
             String command = scanner.nextLine();
 
             switch (command) {
-                case "addExpense":
+                case "add expense":
                     addExpenseCommand();
                     break;
-                case "addBudget":
+                case "add budget":
                     addBudgetCommand();
                     break;
                 case "show":
@@ -53,6 +56,9 @@ public class BudgetApp {
                     System.out.println("Unknown command!");
             }
         }
+    }
+    public static int[] getYearMonth() {
+        return new int[] {today.getYear(), today.getMonthValue()};
     }
 
     public void initializeCurrentBudget(double budget) {
