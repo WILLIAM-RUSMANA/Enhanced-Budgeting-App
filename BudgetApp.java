@@ -86,6 +86,15 @@ public class BudgetApp {
         return null;
     }
 
+    public void addExpenseCommand() {
+    }
+
+    public void addBudgetCommand() {
+    }
+
+    public void showBudgetsAndExpenses() {
+    }
+
     private void printBudget(Budget budget) {
         System.out.println("Current Budget: " + budget.getBudget());
     }
