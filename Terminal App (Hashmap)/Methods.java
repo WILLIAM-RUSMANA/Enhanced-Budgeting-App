@@ -1,6 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.*;
@@ -9,6 +6,23 @@ public class Methods {
 
     static Integer currentId = 1; // initial ID for new entries
     static Scanner scanner = new Scanner(System.in);
+
+    // This method is used to add dummy data for testing purposes
+    // It generates random values for the specified type (Expense or Budget)
+    public static void addDummyData(String type, int count, Map<Integer, Value> map) {
+    Random random = new Random(); // Random object for generating random values
+    for (int i = 0; i < count; i++) {
+        double amount = 1 + (10000 - 1) * random.nextDouble(); // Amount between 1 and 10000
+        String description = "Dummy " + type + " " + currentId;
+        String date = String.format("%02d/%02d/%04d", 
+                          random.nextInt(28) + 1, // Day
+                          random.nextInt(12) + 1, // Month
+                          2025);                  // Year
+        Value v = new Value(amount, description, date);
+        map.put(currentId++, v);
+    }
+    System.out.println(count + " dummy " + type.toLowerCase() + " entries added successfully.");
+    }
 
     // This method is used for both adding expenses and budgets, based on the type parameter
     public static void handleAddValue(String type, Map<Integer, Value> map, Scanner scanner) {

@@ -8,6 +8,9 @@ public class Main {
     public static Map<Integer, Value> budgetMap = new HashMap<>();
 
     public static void main(String[] args) {
+        Methods.addDummyData("expense", 100,expenseMap); // Adding dummy data for expenses
+        Methods.addDummyData("budget", 100,budgetMap); // Adding dummy data for budgets
+
         Scanner scanner = new Scanner(System.in); // Scanner object for user input
         while (true) {
             System.out.println("Welcome to the financial tracker!");
