@@ -1,22 +1,24 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.List;
 
 public class UI extends JFrame {
     private JTextField budgetField, descriptionField, amountField, dateField;
-    private JLabel remainingBudgetLabel, monthLabel;
+    private JLabel budgetLabel, remainingBudgetLabel, monthLabel;
     private DefaultTableModel expenseTableModel;
+    private ArrayList<Budget> budgets;
+    private ArrayList<Expense> expenses;
 
-    private Map<YearMonth, Double> monthlyBudgets = new HashMap<>();
-    private Map<YearMonth, List<Expense>> monthlyExpenses = new HashMap<>();
+    private YearMonth currentMonth = YearMonth.now();  // Starts with the value of the current year and month
 
-    private YearMonth currentMonth = YearMonth.now();
-
-    public UI() {
-        setTitle("Budgeting App");
+    public UI(ArrayList<Budget> budgets, ArrayList<Expense> expenses) {
+        this.budgets = budgets;
+        this.expenses = expenses;
+        setTitle("Enhanced Budgeting App");
         setSize(1080, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -24,24 +26,40 @@ public class UI extends JFrame {
         setLayout(new BorderLayout());
 
         // Top Panel with Month Navigation and Remaining Budget
+//        JPanel topPanel = new JPanel(new BorderLayout());
+        JPanel monthNavPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0)    );
+//        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10)); // hgap = 20px
         JPanel topPanel = new JPanel(new BorderLayout());
-        JPanel monthNavPanel = new JPanel();
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton prevMonthButton = new JButton("<<");
         JButton nextMonthButton = new JButton(">>");
         monthLabel = new JLabel();
-        updateMonthLabel();
+        monthLabel.setPreferredSize(new Dimension(100, 30));
+        monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        updateMonth();
 
         monthNavPanel.add(prevMonthButton);
         monthNavPanel.add(monthLabel);
         monthNavPanel.add(nextMonthButton);
 
+        budgetLabel = new JLabel();
+        budgetLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        budgetLabel.setPreferredSize(new Dimension(250, 30));
+        budgetLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
         remainingBudgetLabel = new JLabel();
         remainingBudgetLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        remainingBudgetLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        remainingBudgetLabel.setPreferredSize(new Dimension(250, 30));
+        remainingBudgetLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+        JPanel budgetPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 0)); // 20px horizontal gap
+        budgetPanel.add(budgetLabel);
+        budgetPanel.add(remainingBudgetLabel);
 
         topPanel.add(monthNavPanel, BorderLayout.WEST);
-        topPanel.add(remainingBudgetLabel, BorderLayout.EAST);
+        topPanel.add(budgetPanel, BorderLayout.EAST);
+
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(topPanel, BorderLayout.NORTH);
 
@@ -113,8 +131,8 @@ public class UI extends JFrame {
 
     private void setBudget() {
         try {
-            double budget = Double.parseDouble(budgetField.getText());
-            monthlyBudgets.put(currentMonth, budget);
+            double amount = Double.parseDouble(budgetField.getText());
+            budgets.add(new Budget(amount, currentMonth.getYear(), currentMonth.getMonthValue()));
             refreshUI();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter a valid number.");
@@ -125,12 +143,13 @@ public class UI extends JFrame {
         try {
             String desc = descriptionField.getText();
             double amount = Double.parseDouble(amountField.getText());
-
             int date = Integer.parseInt(dateField.getText());
+            int numericYear = currentMonth.getYear();
+            int numericMonth = currentMonth.getMonthValue();
 
-            Expense expense = new Expense(desc, amount, date);
-            monthlyExpenses.computeIfAbsent(currentMonth, k -> new ArrayList<>()).add(expense);
-
+            Expense expense = new Expense(amount, numericYear, numericMonth, date, desc);
+//            expense.computeIfAbsent(currentMonth, k -> new ArrayList<>()).add(expense);
+            expenses.add(expense);
             refreshUI();
 
             descriptionField.setText("");
@@ -146,35 +165,36 @@ public class UI extends JFrame {
 
         // Update expense table
         expenseTableModel.setRowCount(0);
-        List<Expense> expenses = monthlyExpenses.getOrDefault(currentMonth, new ArrayList<>());
+        List<Expense> monthlyExpenses = new ArrayList<>();
         double totalExpenses = 0;
-        for (Expense exp : expenses) {
-            expenseTableModel.addRow(new Object[]{exp.date, exp.description, exp.amount});
-            totalExpenses += exp.amount;
+        for (Expense expense : expenses) {
+            if (expense.getYear() == currentMonth.getYear() && expense.getMonth() == currentMonth.getMonthValue()) {
+                monthlyExpenses.add(expense);
+            }
         }
 
-        double budget = monthlyBudgets.getOrDefault(currentMonth, 0.0);
-        double remaining = budget - totalExpenses;
+        for (Expense exp : monthlyExpenses) {
+            expenseTableModel.addRow(new Object[]{exp.getDate(), exp.getDescription(), exp.getAmount()});
+            totalExpenses += exp.getAmount();
+        }
+
+        double monthlyBudget = 0;
+        for (Budget budget: budgets) {
+            if (budget.getYear() == currentMonth.getYear() && budget.getMonth() == currentMonth.getMonthValue()) {
+                monthlyBudget = budget.getAmount();
+            }
+        }
+        budgetLabel.setText("Budget: Rp " + monthlyBudget);
+        double remaining = monthlyBudget - totalExpenses;
         remainingBudgetLabel.setText("Remaining: Rp " + String.format("%,.0f", remaining));
+    }
+
+    private void updateMonth() {
+
+        updateMonthLabel();
     }
 
     private void updateMonthLabel() {
         monthLabel.setText(currentMonth.getMonth() + " " + currentMonth.getYear());
-    }
-
-    static class Expense {
-        String description;
-        double amount;
-        int date;
-
-        Expense(String description, double amount, int date) {
-            this.description = description;
-            this.amount = amount;
-            this.date = date;
-        }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(UI::new);
     }
 }

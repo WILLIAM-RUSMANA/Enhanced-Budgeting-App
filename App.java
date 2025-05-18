@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class BudgetApp {
+public class App {
     private final Scanner scanner = new Scanner(System.in);
     private static final LocalDate today = LocalDate.now();
     private final int[] currentYearMonth = getYearMonth();
@@ -12,7 +12,7 @@ public class BudgetApp {
     private boolean run = true;
     private String username;
 
-    BudgetApp(String username) {
+    App(String username) {
         this.username = username;
     }
 
@@ -96,11 +96,11 @@ public class BudgetApp {
     }
 
     private void printBudget(Budget budget) {
-        System.out.println("Current Budget: " + budget.getBudget());
+        System.out.println("Current Budget: " + budget.getAmount());
     }
 
     private void printExpense(Expense expense) {
-        System.out.println("Current Expense: " + expense.getExpense());
+        System.out.println("Current Expense: " + expense.getAmount());
     }
  
 }
