@@ -1,22 +1,25 @@
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class UI extends JFrame {
+    // Text fields:
     private JTextField budgetField, descriptionField, amountField, dateField;
-    private JLabel budgetLabel, remainingBudgetLabel, monthLabel;
+    // Labels:
+    private JLabel budgetLabel, remainingBudgetLabel, monthLabel, totalExpenseLabel;
+    // Expense table
     private DefaultTableModel expenseTableModel;
+    // Lists of budgets and expenses
     private ArrayList<Budget> budgets;
     private ArrayList<Expense> expenses;
 
-    private YearMonth currentMonth = YearMonth.now();  // Starts with the value of the current year and month
+    private YearMonth currentMonth = YearMonth.now();  // Starts with the value of the current year and month (2025-5)
 
     public UI(ArrayList<Budget> budgets, ArrayList<Expense> expenses) {
-        this.budgets = budgets;
+        this.budgets = budgets;   // Gives access to the budgets arraylist to the UI class
         this.expenses = expenses;
         setTitle("Enhanced Budgeting App");
         setSize(1080, 720);
@@ -25,17 +28,14 @@ public class UI extends JFrame {
 
         setLayout(new BorderLayout());
 
-        // Top Panel with Month Navigation and Remaining Budget
-//        JPanel topPanel = new JPanel(new BorderLayout());
+        // Top Panel with Month Navigation
         JPanel monthNavPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0)    );
-//        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10)); // hgap = 20px
         JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton prevMonthButton = new JButton("<<");
         JButton nextMonthButton = new JButton(">>");
         monthLabel = new JLabel();
-        monthLabel.setPreferredSize(new Dimension(100, 30));
+        monthLabel.setPreferredSize(new Dimension(120, 30));
         monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
         updateMonth();
 
@@ -48,21 +48,41 @@ public class UI extends JFrame {
         budgetLabel.setPreferredSize(new Dimension(250, 30));
         budgetLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
+        totalExpenseLabel = new JLabel();
+        totalExpenseLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        totalExpenseLabel.setPreferredSize(new Dimension(250, 30));
+        totalExpenseLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
         remainingBudgetLabel = new JLabel();
         remainingBudgetLabel.setFont(new Font("Arial", Font.BOLD, 16));
         remainingBudgetLabel.setPreferredSize(new Dimension(250, 30));
         remainingBudgetLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JPanel budgetPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 0)); // 20px horizontal gap
+        JPanel topContentPanel = new JPanel();
+        topContentPanel.setLayout(new BoxLayout(topContentPanel, BoxLayout.X_AXIS));
+
+        JPanel budgetPanel = new JPanel();
+        budgetPanel.setLayout(new BoxLayout(budgetPanel, BoxLayout.Y_AXIS));
+        budgetPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         budgetPanel.add(budgetLabel);
+        budgetPanel.add(totalExpenseLabel);
         budgetPanel.add(remainingBudgetLabel);
 
-        topPanel.add(monthNavPanel, BorderLayout.WEST);
-        topPanel.add(budgetPanel, BorderLayout.EAST);
+        monthNavPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+        budgetPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
-        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        topContentPanel.add(monthNavPanel);
+        topContentPanel.add(Box.createHorizontalStrut(20));
+        topContentPanel.add(budgetPanel);
+
+        topPanel.setLayout(new BorderLayout());
+        topPanel.add(topContentPanel, BorderLayout.CENTER);
+
+        // Reduce the bottom margin from 10 to 5 (or any desired value)
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
         add(topPanel, BorderLayout.NORTH);
-
+        // Remove almost all margins from the top panel
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 2, 0, 2));
         // Tabbed Pane
         JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -156,7 +176,7 @@ public class UI extends JFrame {
             amountField.setText("");
             dateField.setText("");
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid expense amount.");
+            JOptionPane.showMessageDialog(this, "Please enter a valid expense.");
         }
     }
 
@@ -184,13 +204,13 @@ public class UI extends JFrame {
                 monthlyBudget = budget.getAmount();
             }
         }
-        budgetLabel.setText("Budget: Rp " + monthlyBudget);
+        budgetLabel.setText("Budget         : Rp " + String.format("%,.0f", monthlyBudget));
+        totalExpenseLabel.setText("Expense      : Rp " + String.format("%,.0f", totalExpenses));
         double remaining = monthlyBudget - totalExpenses;
-        remainingBudgetLabel.setText("Remaining: Rp " + String.format("%,.0f", remaining));
+        remainingBudgetLabel.setText("Remaining  : Rp " + String.format("%,.0f", remaining));
     }
 
     private void updateMonth() {
-
         updateMonthLabel();
     }
 
