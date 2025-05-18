@@ -9,7 +9,7 @@ public class UI extends JFrame {
     // Text fields:
     private JTextField budgetField, descriptionField, amountField, dateField;
     // Labels:
-    private JLabel budgetLabel, remainingBudgetLabel, monthLabel, totalExpenseLabel;
+    private JLabel budgetLabel, remainingBudgetLabel, monthLabel, totalExpenseLabel, projectedExpenseLabel;
     // Expense table
     private DefaultTableModel expenseTableModel;
     // Lists of budgets and expenses
@@ -24,21 +24,23 @@ public class UI extends JFrame {
         setTitle("Enhanced Budgeting App");
         setSize(1080, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);  // Place the window in the center of the screen
 
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout());  // Applies Border layout to the container (NORTH, SOUTH, EAST, WEST, CENTER)
 
-        // Top Panel with Month Navigation
-        JPanel monthNavPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0)    );
+        // Top Panel with Month Navigation assignment
         JPanel topPanel = new JPanel(new BorderLayout());
 
+        JPanel monthNavPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         JButton prevMonthButton = new JButton("<<");
         JButton nextMonthButton = new JButton(">>");
+
         monthLabel = new JLabel();
         monthLabel.setPreferredSize(new Dimension(120, 30));
-        monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        updateMonth();
+        monthLabel.setHorizontalAlignment(SwingConstants.CENTER);         // Set the horizontal alignment of monthLabel to center
+        updateMonth();  // updates month and year label in UI
 
+        // adds month navigation buttons and monthLabel to monthNavPanel
         monthNavPanel.add(prevMonthButton);
         monthNavPanel.add(monthLabel);
         monthNavPanel.add(nextMonthButton);
@@ -71,22 +73,32 @@ public class UI extends JFrame {
         monthNavPanel.setAlignmentY(Component.TOP_ALIGNMENT);
         budgetPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
+        JPanel projectionPanel = new JPanel();
+        projectionPanel.setLayout(new BoxLayout(projectionPanel, BoxLayout.X_AXIS));
+
+        projectedExpenseLabel = new JLabel();
+        projectedExpenseLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        remainingBudgetLabel.setPreferredSize(new Dimension(250, 30));
+        projectedExpenseLabel.setText("Projected Expense: ");
+
+        projectionPanel.add(projectedExpenseLabel);
+
         topContentPanel.add(monthNavPanel);
         topContentPanel.add(Box.createHorizontalStrut(20));
         topContentPanel.add(budgetPanel);
 
         topPanel.setLayout(new BorderLayout());
-        topPanel.add(topContentPanel, BorderLayout.CENTER);
+        topPanel.add(topContentPanel, BorderLayout.WEST);
+        topPanel.add(projectionPanel, BorderLayout.EAST);
 
-        // Reduce the bottom margin from 10 to 5 (or any desired value)
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
         add(topPanel, BorderLayout.NORTH);
-        // Remove almost all margins from the top panel
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 2, 0, 2));
-        // Tabbed Pane
-        JTabbedPane tabbedPane = new JTabbedPane();
 
-        // Budgeting Tab
+
+        JTabbedPane tabbedPane = new JTabbedPane(); // Tabbed Pane (Budgeting and expenses) tabs
+
+        // Budgeting tab
         JPanel budgetingPanel = new JPanel(new BorderLayout());
         JPanel inputPanel = new JPanel();
 
@@ -102,7 +114,7 @@ public class UI extends JFrame {
         setBudgetButton.addActionListener(e -> setBudget());
         budgetField.addActionListener(e -> setBudget());
 
-        // Expenses Tab
+        // Expenses tab
         JPanel expensesPanel = new JPanel(new BorderLayout());
 
         String[] columnNames = {"Date", "Description", "Amount (Rp)"};
@@ -125,6 +137,7 @@ public class UI extends JFrame {
         addExpensePanel.add(addExpenseButton);
 
         addExpenseButton.addActionListener(e -> addExpense());
+        setupExpenseFieldNavigation();
         amountField.addActionListener(e -> addExpense());
 
         expensesPanel.add(addExpensePanel, BorderLayout.NORTH);
@@ -161,23 +174,32 @@ public class UI extends JFrame {
 
     private void addExpense() {
         try {
-            String desc = descriptionField.getText();
-            double amount = Double.parseDouble(amountField.getText());
-            int date = Integer.parseInt(dateField.getText());
-            int numericYear = currentMonth.getYear();
-            int numericMonth = currentMonth.getMonthValue();
-
-            Expense expense = new Expense(amount, numericYear, numericMonth, date, desc);
-//            expense.computeIfAbsent(currentMonth, k -> new ArrayList<>()).add(expense);
+            Expense expense = getExpense();
             expenses.add(expense);
             refreshUI();
 
             descriptionField.setText("");
             amountField.setText("");
             dateField.setText("");
-        } catch (NumberFormatException ex) {
+        } catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid expense.");
+        } catch(IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid date.");
         }
+    }
+
+    private Expense getExpense() {
+        String desc = descriptionField.getText().trim();
+        double amount = Double.parseDouble(amountField.getText().trim().replace("\n", "").replace("\r", ""));
+        int date = Integer.parseInt(dateField.getText().trim().replace("\n", "").replace("\r", ""));
+        int numericYear = currentMonth.getYear();
+        int numericMonth = currentMonth.getMonthValue();
+
+        if (date > 31 || date < 1) {  // Change according to accurate amount of dates in the specific month
+            throw new IllegalArgumentException();  // Triggers the invalid date popup
+        }
+
+        return new Expense(amount, numericYear, numericMonth, date, desc);
     }
 
     private void refreshUI() {
@@ -216,5 +238,20 @@ public class UI extends JFrame {
 
     private void updateMonthLabel() {
         monthLabel.setText(currentMonth.getMonth() + " " + currentMonth.getYear());
+    }
+
+    private void setupExpenseFieldNavigation() {
+        // When Enter is pressed in the date field, move focus to description field
+        dateField.addActionListener(e -> {
+            descriptionField.requestFocusInWindow();
+        });
+
+        // When Enter is pressed in the description field, move focus to amount field
+        descriptionField.addActionListener(e -> {
+            amountField.requestFocusInWindow();
+        });
+
+        // When Enter is pressed in the amount field (last field), submit the expense
+        amountField.addActionListener(e -> addExpense());
     }
 }

@@ -4,6 +4,8 @@ public class Expense {
     private double year;
     private double date;
     private String description;
+    private String category;
+    private String type;
 
     public Expense(int year, int month) {
         this.amount = 0;
