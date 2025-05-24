@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class UI extends JFrame {
     // Text fields:
-    private JTextField budgetField, descriptionField, amountField, dateField;
+    private JTextField budgetField, amountField, categoryField, dateField, descriptionField, frequencyField;
     // Labels:
     private JLabel budgetLabel, remainingBudgetLabel, monthLabel, totalExpenseLabel;
     // Expense table
@@ -111,28 +111,37 @@ public class UI extends JFrame {
         // Expenses tab
         JPanel expensesPanel = new JPanel(new BorderLayout());
 
-        String[] columnNames = {"Date", "Description", "Amount (Rp)"};
+        String[] columnNames = {"Date", "Amount (Rp)", "Category", "Description", "Freq"};
         expenseTableModel = new DefaultTableModel(columnNames, 0);
         JTable expenseTable = new JTable(expenseTableModel);
         JScrollPane scrollPane = new JScrollPane(expenseTable);
 
         JPanel addExpensePanel = new JPanel();
-        descriptionField = new JTextField(15);
         amountField = new JTextField(10);
         dateField = new JTextField(5);
+        categoryField = new JTextField(5);
+        descriptionField = new JTextField(15);
+        frequencyField = new JTextField(5);
+        // TODO: implement the description and freq the table model
+
         JButton addExpenseButton = new JButton("Add Expense");
 
         addExpensePanel.add(new JLabel("Date:"));
         addExpensePanel.add(dateField);
-        addExpensePanel.add(new JLabel("Description:"));
-        addExpensePanel.add(descriptionField);
         addExpensePanel.add(new JLabel("Amount (Rp):"));
         addExpensePanel.add(amountField);
+        addExpensePanel.add(new JLabel("Category:"));
+        addExpensePanel.add(categoryField);
+        addExpensePanel.add(new JLabel("Description"));
+        addExpensePanel.add(descriptionField);
+        addExpensePanel.add(new JLabel("Freq."));
+        addExpensePanel.add(frequencyField);
+
         addExpensePanel.add(addExpenseButton);
 
-        addExpenseButton.addActionListener(e -> addExpense());
-        setupExpenseFieldNavigation();
-        amountField.addActionListener(e -> addExpense());
+        // Event listeners for Adding Expenses
+        addExpenseButton.addActionListener(e -> addExpense());  // using button click
+        setupExpenseFieldNavigation();  // using ENTER navigation
 
         expensesPanel.add(addExpensePanel, BorderLayout.NORTH);
         expensesPanel.add(scrollPane, BorderLayout.CENTER);
@@ -167,6 +176,7 @@ public class UI extends JFrame {
             double amount = Double.parseDouble(budgetField.getText());
             budgets.add(new Budget(amount, displayedMonth.getYear(), displayedMonth.getMonthValue()));
             refreshUI();
+            amountField.setText("");
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter a valid number.");
         }
@@ -178,9 +188,11 @@ public class UI extends JFrame {
             expenses.add(expense);
             refreshUI();
 
-            descriptionField.setText("");
-            amountField.setText("");
             dateField.setText("");
+            amountField.setText("");
+            categoryField.setText("");
+            descriptionField.setText("");
+            frequencyField.setText("");
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid expense.");
         } catch (IllegalArgumentException ex) {
@@ -189,17 +201,20 @@ public class UI extends JFrame {
     }
 
     private Expense getExpense() {
-        String desc = descriptionField.getText().trim();
         double amount = Double.parseDouble(amountField.getText().trim().replace("\n", "").replace("\r", ""));
         int date = Integer.parseInt(dateField.getText().trim().replace("\n", "").replace("\r", ""));
+        String category = categoryField.getText().trim();
         int numericYear = displayedMonth.getYear();
         int numericMonth = displayedMonth.getMonthValue();
+        String description = descriptionField.getText().trim();
+        String freq = frequencyField.getText().trim();
+
 
         if (date > 31 || date < 1) {  // Change according to accurate amount of dates in the specific month
             throw new IllegalArgumentException();  // Triggers the invalid date popup
         }
 
-        return new Expense(amount, numericYear, numericMonth, date, desc, "", "");
+        return new Expense(amount, numericYear, numericMonth, date, category, description, freq);
     }
 
     private void refreshUI() {
@@ -217,7 +232,7 @@ public class UI extends JFrame {
         }
 
         for (Expense exp : monthlyExpenses) {
-            expenseTableModel.addRow(new Object[]{exp.getDate(), exp.getDescription(), exp.getAmount()});
+            expenseTableModel.addRow(new Object[]{exp.getDate(), exp.getAmount(), exp.getCategory(), exp.getDescription(), exp.getFrequency()});
             totalExpenses += exp.getAmount();
         }
 
@@ -227,10 +242,10 @@ public class UI extends JFrame {
                 monthlyBudget = budget.getAmount();
             }
         }
-        budgetLabel.setText("Budget         : Rp " + String.format("%,.0f", monthlyBudget));
-        totalExpenseLabel.setText("Expense      : Rp " + String.format("%,.0f", totalExpenses));
+        budgetLabel.setText("Budget          : Rp " + String.format("%,.0f", monthlyBudget));
+        totalExpenseLabel.setText("Expense        : Rp " + String.format("%,.0f", totalExpenses));
         double remaining = monthlyBudget - totalExpenses;
-        remainingBudgetLabel.setText("Remaining  : Rp " + String.format("%,.0f", remaining));
+        remainingBudgetLabel.setText("Remaining     : Rp " + String.format("%,.0f", remaining));
     }
 
     // New method to handle projection tab visibility
@@ -272,18 +287,27 @@ public class UI extends JFrame {
         monthLabel.setText(displayedMonth.getMonth() + " " + displayedMonth.getYear());
     }
 
+    // Enter shortcut enabler function
     private void setupExpenseFieldNavigation() {
         // When Enter is pressed in the date field, move focus to description field
         dateField.addActionListener(e -> {
-            descriptionField.requestFocusInWindow();
-        });
-
-        // When Enter is pressed in the description field, move focus to amount field
-        descriptionField.addActionListener(e -> {
             amountField.requestFocusInWindow();
         });
 
-        // When Enter is pressed in the amount field (last field), submit the expense
-        amountField.addActionListener(e -> addExpense());
+        // When Enter is pressed in the amount field, move to freq field
+        amountField.addActionListener(e -> {
+            categoryField.requestFocusInWindow();
+        });
+
+        categoryField.addActionListener(e -> {
+            descriptionField.requestFocusInWindow();
+        });
+
+        descriptionField.addActionListener(e -> {
+            frequencyField.requestFocusInWindow();
+        });
+
+        frequencyField.addActionListener(e -> addExpense());
+
     }
 }
