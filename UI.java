@@ -199,7 +199,7 @@ public class UI extends JFrame {
             throw new IllegalArgumentException();  // Triggers the invalid date popup
         }
 
-        return new Expense(amount, numericYear, numericMonth, date, desc);
+        return new Expense(amount, numericYear, numericMonth, date, desc, "", "");
     }
 
     private void refreshUI() {

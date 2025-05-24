@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class ExpenseFilteringMethods {
         ArrayList<Expense> filteredExpenses = new ArrayList<>(); // Create a new list to store filtered expenses
 
         // Sort the expenses by description in ascending order
-        Collections.sort(expenses, Comparator.comparing(Expense::getDescription));// Sort the expenses by description
+        expenses.sort(Comparator.comparing(Expense::getDescription));// Sort the expenses by description
 
         // Add expenses to the filtered list if they match the category
         for (Expense expense : expenseCopy) {
@@ -35,9 +34,9 @@ public class ExpenseFilteringMethods {
         ArrayList<Expense> filteredExpenses = new ArrayList<>(); // Create a new list to store filtered expenses
 
         // Sort the expenses by year, month, and date in descending order
-        Collections.sort(expenses, Comparator.comparing(Expense::getYear).reversed()
-                    .thenComparing(Expense::getMonth).reversed()
-                    .thenComparing(Expense::getDate).reversed());
+        expenses.sort(Comparator.comparing(Expense::getYear).reversed()
+                .thenComparing(Expense::getMonth).reversed()
+                .thenComparing(Expense::getDate).reversed());
 
         // Add expenses to the filtered list if they match the specified year, month, and date
         for (Expense expense : expensesCopy) {
