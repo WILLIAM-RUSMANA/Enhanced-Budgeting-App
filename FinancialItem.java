@@ -22,7 +22,7 @@ public class FinancialItem {
         this.amount = amount;
         this.month = month;
         this.year = year;
-        this.category = "";
+        this.category = category;
     }
 
     // Getters

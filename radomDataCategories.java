@@ -6,16 +6,16 @@ public class radomDataCategories {
     Double baseAmount;
     Double monthlyTrend;
     Double standardDeviation;
-    Double FrequencyperWeek;
+    Double frequencyPerWeek;
 
     // Constructor to initialize the category with its properties
-    public radomDataCategories(String name, Double baseAmount, Double monthlyTrend, Double standardDeviation, Double FrequencyperWeek) {
+    public radomDataCategories(String name, Double baseAmount, Double monthlyTrend, Double standardDeviation, Double frequencyPerWeek) {
         this.name = name;
         this.baseAmount = baseAmount;
         this.monthlyTrend = monthlyTrend;
         this.standardDeviation = standardDeviation;
-        this.FrequencyperWeek = FrequencyperWeek;
-        }
+        this.frequencyPerWeek = frequencyPerWeek;
+    }
 
     // Getters for the properties of the category
         public String getName() {
@@ -34,7 +34,7 @@ public class radomDataCategories {
             return standardDeviation;
         }
 
-        public Double getFrequencyperWeek() {
-            return FrequencyperWeek;
+        public Double getFrequencyPerWeek() {
+            return frequencyPerWeek;
         }
     }

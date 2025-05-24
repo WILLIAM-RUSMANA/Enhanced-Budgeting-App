@@ -1,5 +1,5 @@
 public class Expense extends FinancialItem {
-    private double date;
+    private int date;
     private String description;
     private String type;
 
@@ -25,7 +25,7 @@ public class Expense extends FinancialItem {
     }
 
     // Getters
-    public double getDate() {
+    public int getDate() {
         return date;
     }
 
@@ -42,7 +42,7 @@ public class Expense extends FinancialItem {
         this.setAmount(expenseAmount);
     }
 
-    public void setDate(double date) {
+    public void setDate(int date) {
         this.date = date;
     }
 }
