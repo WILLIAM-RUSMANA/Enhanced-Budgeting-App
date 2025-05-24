@@ -1,27 +1,27 @@
 public class Expense extends FinancialItem {
     private int date;
     private String description;
-    private String type;
+    private String frequency;
 
     public Expense(int year, int month) {
         super(year, month);
         this.date = 0;
         this.description = "";
-        this.type = "";
+        this.frequency = "";
     }
 
     public Expense(double amount, int year, int month) {
         super(amount, year, month);
         this.date = 0;
         this.description = "";
-        this.type = "";
+        this.frequency = "";
     }
 
-    public Expense(double amount, int year, int month, int date, String category, String description, String type) {
+    public Expense(double amount, int year, int month, int date, String category, String description, String frequency) {
         super(amount, year, month, category);
         this.date = date;
         this.description = description;
-        this.type = type;
+        this.frequency = frequency;
     }
 
     // Getters
@@ -33,8 +33,8 @@ public class Expense extends FinancialItem {
         return description;
     }
 
-    public String getType() {
-        return type;
+    public String getFrequency() {
+        return frequency;
     }
 
     // Setters

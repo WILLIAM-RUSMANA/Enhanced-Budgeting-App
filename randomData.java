@@ -9,13 +9,13 @@ public class randomData {
     // The generateRandomData method generates random expenses based on the specified number of days
     // The generated expenses are stored in a list and returned
 
-    public Map<String, radomDataCategories> dataMap = new HashMap<>();
+    public Map<String, radomDataCategories> dataMap = new HashMap<>();  // TODO Array list for Array list version no?
     Random random = new Random(); // Random number generator
     // TODO start 10 years back
     LocalDate startDate = LocalDate.of(2025, 1, 1); // Start date for generating random data
     // TODO Implement these two in the random generated thing
     String description = "";
-    String type = "recurring";
+    String frequency = "recurring";
 
     public List<Expense> generateRandomData(Integer numDays){
         // Initialize the map with different categories of expenses
@@ -61,7 +61,7 @@ public class randomData {
                     amount = Math.max(0, amount); // Ensure non-negative amount
 
                     // Create a new Expense object with the generated amount and date
-                    Expense expense = new Expense(amount, year, month, day, categoryName, description, type);
+                    Expense expense = new Expense(amount, year, month, day, categoryName, description, frequency);
                     randomExpenses.add(expense);
                 }
             }
