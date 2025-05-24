@@ -60,7 +60,7 @@ public class randomData {
                     amount = Math.max(0, amount); // Ensure non-negative amount
 
                     // Create a new Expense object with the generated amount and date
-                    Expense expense = new Expense(amount, year, month, day, categoryName, description, type);
+                    Expense expense = new Expense(amount, year, month, day, categoryName, description, frequency);
                     randomExpenses.add(expense);
                 }
             }
