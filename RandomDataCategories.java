@@ -73,6 +73,7 @@ public class RandomDataCategories {
                 if (previousDate != null) {
                      long interval = ChronoUnit.DAYS.between(previousDate, currentDate);
                     tootalInterval += interval;
+                    count++;
                 }
                 previousDate = currentDate;
             }
