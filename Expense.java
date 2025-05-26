@@ -17,6 +17,13 @@ public class Expense extends FinancialItem {
         this.frequency = "";
     }
 
+    public Expense(double amount, int year, int month, int date, String category, String description) {
+        super(amount, year, month, category);
+        this.date = date;
+        this.description = description;
+        this.frequency = "";
+    }
+
     public Expense(double amount, int year, int month, int date, String category, String description, String frequency) {
         super(amount, year, month, category);
         this.date = date;
