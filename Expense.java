@@ -52,4 +52,8 @@ public class Expense extends FinancialItem {
     public void setDate(int date) {
         this.date = date;
     }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
 }

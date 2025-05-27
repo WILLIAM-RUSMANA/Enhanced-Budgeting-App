@@ -2,6 +2,7 @@ import java.util.*;
 import java.time.*;
 
 public class randomData {
+
     // This class generates random data for expenses
     // It uses a map to store different categories of expenses
     // Each category has a base amount, monthly trend, standard deviation, and frequency per week
@@ -10,23 +11,15 @@ public class randomData {
 
     public List<RandomDataCategories> dataList = new ArrayList();
     Random random = new Random(); // Random number generator
-    // TODO start 10 years back
     LocalDate startDate = LocalDate.of(2015, 1, 1); // Start date for generating random data
-    // TODO Implement these two in the random generated thing
-    String description = "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-    String frequency = "recurring";
 
     public List<Expense> generateRandomData(Integer numDays){
-        // Initialize the map with different categories of expenses
-        // TODO FIX THE categories part and I think you can think of a better way since, you typed down every category "Groceries" twice
-        dataList.add(new RandomDataCategories("Groceries", 200.0, 0.05, 20.0, 3.0));
-        dataList.add(new RandomDataCategories("Utilities", 150.0, 0.02, 10.0, 1.0));
-        dataList.add(new RandomDataCategories("Transportation", 100.0, 0.03, 15.0, 2.0));
-        dataList.add(new RandomDataCategories("Entertainment", 80.0, 0.04, 5.0, 1.0));
-        dataList.add(new RandomDataCategories("Rent", 1200.0, 0.01, 50.0, 1.0));
-        dataList.add(new RandomDataCategories("Dining Out", 150.0, 0.03, 10.0, 2.0));
 
-        // copy the map to a list
+        RandomDataCategories data = new RandomDataCategories(); // Create an instance of RandomDataCategories to access its methods
+        data.initializeData(); // Initialize the data categories with predefined values
+        dataList =  data.list; // Get the list of categories from the RandomDataCategories instance
+        
+        // make a new list to store the generated random expenses
         List<Expense> randomExpenses = new ArrayList<>();
 
         // Generate random expenses for the specified number of days
@@ -41,6 +34,7 @@ public class randomData {
             for (RandomDataCategories category : dataList){
                 String categoryName = category.getName(); // Get the category name
                 double probability = category.getFrequencyPerWeek() / 7.0; // Calculate the probability of generating an expense for this category
+                
 
                 // increase the probability of entertainment and dining out for weekends
                 if((categoryName.equals("Entertainment") || categoryName.equals("Dining Out")) && (dayOfWeek > 5)){
@@ -48,23 +42,41 @@ public class randomData {
                 }
 
                 // Generate a random number and compare it with the probability
+                double finalAmount = 0;
                 if(random.nextDouble() < probability){
 
                     // Get the base amount, monthly trend, and standard deviation for the category
                     double baseAmount = category.getBaseAmount();
                     double monthlyTrend = category.getMonthlyTrend();
                     double standardDeviation = category.getStandardDeviation();
-
+                    double frequency = category.getFrequencyPerWeek(); // Get the frequency of the category
+                    
                     // Generate a random amount based on the base amount, monthly trend, and standard deviation
-                    double amount = baseAmount + (monthlyTrend * month) + (random.nextGaussian() * standardDeviation);
-                    amount = Math.max(0, amount); // Ensure non-negative amount
-
-                    // Create a new Expense object with the generated amount and date
-                    Expense expense = new Expense(amount, year, month, day, categoryName, description, frequency);
-                    randomExpenses.add(expense);
+                    double monthPassed = i/30;
+                    double Inflation = baseAmount * Math.pow((1 + monthlyTrend), monthPassed);// Calculate the inflation-adjusted base amount
+                    double noise = random.nextGaussian() * standardDeviation; // Generate noise using a Gaussian distribution
+                    double amount = Inflation + noise; // Calculate the final amount by adding noise to the base amount
+                    finalAmount = Math.max(0, amount); // Ensure non-negative amount
                 }
+
+                String description = ""; // Initialize description as an empty string
+                Expense expense = new Expense(finalAmount, year, month, day, categoryName, description);
+                // Create a new Expense object with the generated amount and date
+                randomExpenses.add(expense);
             }
         }
+
+        // Analyze the frequency pattern for each category and set it in the corresponding expenses
+        for (RandomDataCategories cat : dataList) {
+            String categoryName = cat.getName(); 
+            String pattern = cat.analyzeFrequencyPattern(randomExpenses, categoryName);
+
+            // Set the frequency pattern for each expense in the category
+             for (Expense exp : randomExpenses) {
+                if (exp.getCategory().equals(categoryName)) {exp.setFrequency(pattern);}
+            }
+        }
+
         // Return the list of generated random expenses
         return randomExpenses;
     }
