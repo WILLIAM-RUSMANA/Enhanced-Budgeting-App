@@ -14,7 +14,7 @@ public class randomData {
     LocalDate startDate = LocalDate.of(2015, 1, 1); // Start date for generating random data
     // TODO Implement these two in the random generated thing
     String description = "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-    String type = "recurring";
+    String frequency = "recurring";
 
     public List<Expense> generateRandomData(Integer numDays){
         // Initialize the map with different categories of expenses

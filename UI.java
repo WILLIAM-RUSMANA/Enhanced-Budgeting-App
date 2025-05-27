@@ -245,7 +245,7 @@ public class UI extends JFrame {
         budgetLabel.setText("Budget          : Rp " + String.format("%,.0f", monthlyBudget));
         totalExpenseLabel.setText("Expense        : Rp " + String.format("%,.0f", totalExpenses));
         double remaining = monthlyBudget - totalExpenses;
-        remainingBudgetLabel.setText("Remaining     : Rp " + String.format("%,.0f", remaining));
+        remainingBudgetLabel.setText("Remaining    : Rp " + String.format("%,.0f", remaining));
     }
 
     // New method to handle projection tab visibility
