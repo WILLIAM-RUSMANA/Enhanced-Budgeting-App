@@ -1,3 +1,4 @@
+package OOP;
 public class Expense extends FinancialItem {
     private int date;
     private String description;

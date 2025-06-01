@@ -1,3 +1,4 @@
+package OOP;
 public class FinancialItem {
     private double amount;
     private int month;  // 1-12
