@@ -123,7 +123,6 @@ public class UI extends JFrame {
         categoryField = new JTextField(5);
         descriptionField = new JTextField(15);
         frequencyField = new JTextField(5);
-        // TODO: implement the description and freq the table model
 
         JButton addExpenseButton = new JButton("Add Expense");
 
