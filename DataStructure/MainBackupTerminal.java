@@ -14,6 +14,8 @@ public class MainBackupTerminal {
     static Scanner scanner = new Scanner(System.in);
     static LocalDate today = LocalDate.now();    
 
+
+
     public static void main(String[] args) {
         System.out.println("Welcome to the Budget Management System!");
         while (true) {
@@ -45,8 +47,10 @@ public class MainBackupTerminal {
                     System.out.println("2. Middle of the Data Structures");
                     System.out.println("3. End of the Data Structures");
                     System.out.print("Enter your choice (1-3): ");
+
                     int positionChoice = scanner.nextInt();
-                    
+                    DS_Methods methods2 = new DS_Methods();
+                    methods2.addExpense(positionChoice);
 
                     break;
 
