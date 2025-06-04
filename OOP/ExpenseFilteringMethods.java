@@ -18,7 +18,7 @@ public class ExpenseFilteringMethods {
         ArrayList<Expense> filteredExpenses = new ArrayList<>(); // Create a new list to store filtered expenses
 
         // Sort the expenses by description in ascending order
-        expenses.sort(Comparator.comparing(Expense::getDescription));// Sort the expenses by description
+        expenseCopy.sort(Comparator.comparing(Expense::getDescription));// Sort the expenses by description
 
         // Add expenses to the filtered list if they match the category
         for (Expense expense : expenseCopy) {
@@ -31,16 +31,16 @@ public class ExpenseFilteringMethods {
 
     //filter from newest to oldest
     public ArrayList<Expense> filterByDate(List<Expense> expenses, int year, int month, int date) {
-        ArrayList<Expense> expensesCopy = new ArrayList<>(expenses); // Create a copy of the expenses list
+        ArrayList<Expense> expenseCopy = new ArrayList<>(expenses); // Create a copy of the expenses list
         ArrayList<Expense> filteredExpenses = new ArrayList<>(); // Create a new list to store filtered expenses
 
         // Sort the expenses by year, month, and date in descending order
-        expenses.sort(Comparator.comparing(Expense::getYear).reversed()
+        expenseCopy.sort(Comparator.comparing(Expense::getYear).reversed()
                 .thenComparing(Expense::getMonth).reversed()
                 .thenComparing(Expense::getDate).reversed());
 
         // Add expenses to the filtered list if they match the specified year, month, and date
-        for (Expense expense : expensesCopy) {
+        for (Expense expense : expenseCopy) {
             if (expense.getYear() == year && expense.getMonth() == month) {
                 filteredExpenses.add(expense);
             }

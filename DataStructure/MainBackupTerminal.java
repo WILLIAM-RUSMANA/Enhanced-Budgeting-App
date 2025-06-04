@@ -22,11 +22,12 @@ public class MainBackupTerminal {
             System.out.println("\nMenu:");
             System.out.println("1. Generate Expenses");
             System.out.println("2. Add Expense");
-            System.out.println("3. Update Expense");
-            System.out.println("4. View Expenses");
-            System.out.println("5. sort Expenses");
-            System.out.println("6. Search Expenses");
-            System.out.println("7. Exit");
+            System.out.println("3. Delete Expense");
+            System.out.println("4. Update Expense");
+            System.out.println("5. View Expenses");
+            System.out.println("6. sort Expenses");
+            System.out.println("7. Search Expenses");
+            System.out.println("8. Exit");
             System.out.print("Choose an option: ");
             
             int choice = scanner.nextInt();
@@ -34,10 +35,18 @@ public class MainBackupTerminal {
             
             switch (choice) {
                 case 1:
-                    DS_Methods methods = new DS_Methods();
+                    ArrayListMethod methodsAL1 = new ArrayListMethod();
+                    LinkedListMethod methodsLL1 = new LinkedListMethod();
+                    HashMapMethod methodsHM1 = new HashMapMethod();
+
                     System.out.print("Enter the number of expenses to generate: ");
                     int numExpenses = scanner.nextInt();
-                    methods.generateValues(numExpenses);
+
+                    System.out.println("Time and Memory Usage for Generating Expenses in Different Data Structures:");
+                    methodsAL1.generateExpense(numExpenses);
+                    methodsLL1.generateExpense(numExpenses);
+                    methodsHM1.generateExpense(numExpenses);
+                    System.out.println(numExpenses + " Expenses generated successfully!");
                     break;
 
  

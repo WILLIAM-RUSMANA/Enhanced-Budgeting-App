@@ -2,14 +2,7 @@ package DataStructure;
 
 import OOP.Expense;
 
-public abstract class AbstractMethod {
-    // Abstract methods for data structure operations
-    public abstract void addExpense(int positionChoice);
-    public abstract void updateExpense(int expenseId, String newDescription, double newAmount);
-    public abstract void viewExpenses();
-    public abstract void sortExpenses(String criteria);
-    public abstract void searchExpenses(String query);
-    public abstract void generateValues(int numValues);
+public class UtilityMethod {
 
     // Common utility methods can be added here
     public void printMemoryUsage(String structureName, long memoryBefore, long memoryAfter, long timeTaken) {
@@ -22,7 +15,7 @@ public abstract class AbstractMethod {
         System.out.println(structureName + " Time Taken: " + totalTime + " ns");
     }
 
-    public void initialiseExpense(){
+    public Expense initialiseExpense(){
         Expense initialExpense = new Expense(
         50.0 + (Math.random() * 200),  // random amount between 50 and 250
         2024,                         
@@ -32,9 +25,10 @@ public abstract class AbstractMethod {
         "Sample expense " ,     
         "Daily"                      
         );
+        return initialExpense;
     }
 
-    public void initialiseAddedExpense(){
+    public Expense initialiseAddedExpense(){
         Expense addedExpense = new Expense(
         50.0 + (Math.random() * 200),  // random amount between 50 and 250
         2024,                         
@@ -44,9 +38,10 @@ public abstract class AbstractMethod {
         "Sample expense " ,     
         "Daily"                      
         );
+        return addedExpense;
     }
 
-    public void initialiseUpdatedExpense(){
+    public Expense initialiseUpdatedExpense(){
         Expense initialExpense = new Expense(
         50.0 + (Math.random() * 200),  // random amount between 50 and 250
         2024,                         
@@ -56,6 +51,7 @@ public abstract class AbstractMethod {
         "Updated expense " ,     
         "Daily"                      
         );
+        return initialExpense;
     }
     
 }

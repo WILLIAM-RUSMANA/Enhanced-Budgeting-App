@@ -32,62 +32,11 @@ public class DS_Methods {
         The method takes an Integer numValues as input, which specifies the number of Expense objects to generate.
         The method runtime and memory usage for each data structure (HashMap, ArrayList, LinkedList) is measured and printed.
     */
-
-    public void generateValues(Integer numValues) {
-        System.out.println("Generated " + numValues + " expense objects in arraylist, linkedlist and hashmap."); 
-        
-        // Start timing and memory usage for HashMap
-        System.gc();
-        Runtime runtimeHS = Runtime.getRuntime();
-        long memoryBeforeHS = runtimeHS.totalMemory() - runtimeHS.freeMemory();
-        long startTimeHS = System.nanoTime();
-
-        for (int i = 0; i < numValues; i++) {expenseHashMap.put(i, expense);} //generate random expenses in HashMap
-
-        //end timing and memory usage for HashMap
-        long endTimeHS = System.nanoTime();
-        long memoryAfterHS = runtimeHS.totalMemory() - runtimeHS.freeMemory();
-        long totalMemoryHS = memoryAfterHS - memoryBeforeHS;
-        long totalTimeHS = endTimeHS - startTimeHS;
-
-
-        // Start timing and memory usage for LinkedList
-        System.gc();
-        Runtime runtimeLL = Runtime.getRuntime();
-        long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
-        long startTimeLL = System.nanoTime();
-
-        for (int i = 0; i < numValues; i++) {expenseLinkedList.add(expense);} //generate random expenses in LinkedList
-
-        //end timing and memory usage for LinkedList
-        long endTimeLL = System.nanoTime();
-        long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
-        long totalMemoryLL = memoryAfterLL - memoryBeforeLL;
-        long totalTimeLL = (endTimeLL - startTimeLL);
-
-        // Print memory and time usage for HashMap
-        System.out.println("HashMap Memory Usage: " + totalMemoryHS + " bytes, Time Taken: " + totalTimeHS + " ns");
-    
-        System.out.println("LinkedList Memory Usage: " + totalMemoryLL + " bytes, Time Taken: " + totalTimeLL + " ns");
-    }
     
 
 
     // method to add an expense to the map at a specific index
     public void addExpense(int positionChoice) {
-
-        Map<Integer, Expense> expenseHashMapCopy = new HashMap<>();
-        expenseHashMapCopy.putAll(expenseHashMap);
-
-        Expense addedExpense = new Expense(
-        50.0 + (Math.random() * 200),  // random amount between 50 and 250
-        2024,                         
-        (int)(Math.random() * 12) + 1, // random month 1-12
-        (int)(Math.random() * 28) + 1, // random day 1-28
-        "Added Expense",                     
-        "Sample added expense" ,     
-        "Daily"                      
-        );
 
         try {
             switch (positionChoice) {
