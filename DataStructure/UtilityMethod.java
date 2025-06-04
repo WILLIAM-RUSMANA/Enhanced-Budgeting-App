@@ -5,14 +5,10 @@ import OOP.Expense;
 public class UtilityMethod {
 
     // Common utility methods can be added here
-    public void printMemoryUsage(String structureName, long memoryBefore, long memoryAfter, long timeTaken) {
+    public void printMemoryAndTime(String structureName, long memoryBefore, long memoryAfter, long endTime, long startTime) {
         long totalMemory = memoryAfter - memoryBefore;
-        System.out.println(structureName + " Memory Usage: " + totalMemory + " bytes, Time Taken: " + timeTaken + " ns");
-    }
-
-    public void printRuntime(String structureName, long startTime, long endTime) {
         long totalTime = endTime - startTime;
-        System.out.println(structureName + " Time Taken: " + totalTime + " ns");
+        System.out.println(structureName + " Memory Usage: " + totalMemory + " bytes, Time Taken: " + totalTime + " ns");
     }
 
     public Expense initialiseExpense(){
@@ -35,7 +31,7 @@ public class UtilityMethod {
         (int)(Math.random() * 12) + 1, // random month 1-12
         (int)(Math.random() * 28) + 1, // random day 1-28
         "Added Expense",                     
-        "Sample expense " ,     
+        "random expense " ,     
         "Daily"                      
         );
         return addedExpense;
@@ -47,8 +43,8 @@ public class UtilityMethod {
         2024,                         
         (int)(Math.random() * 12) + 1, // random month 1-12
         (int)(Math.random() * 28) + 1, // random day 1-28
-        "Initial Expense",                     
-        "Updated expense " ,     
+        "Updated Expense",                     
+        "random expense " ,     
         "Daily"                      
         );
         return initialExpense;
