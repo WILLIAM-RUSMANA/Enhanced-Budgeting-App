@@ -3,6 +3,11 @@ package DataStructure;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
+
+import DataStructure.ArrayList.ArrayListMethod;
+import DataStructure.HashMap.HashMapMethod;
+import DataStructure.LinkedList.LinkedListMethod;
+
 import java.time.LocalDate;
 
 import OOP.Budget;
@@ -17,6 +22,11 @@ public class MainBackupTerminal {
 
 
     public static void main(String[] args) {
+
+        ArrayListMethod methodsAL = new ArrayListMethod();
+        LinkedListMethod methodsLL = new LinkedListMethod();
+        HashMapMethod methodsHM = new HashMapMethod();
+
         System.out.println("Welcome to the Budget Management System!");
         while (true) {
             System.out.println("\nMenu:");
@@ -35,17 +45,13 @@ public class MainBackupTerminal {
             
             switch (choice) {
                 case 1:
-                    ArrayListMethod methodsAL1 = new ArrayListMethod();
-                    LinkedListMethod methodsLL1 = new LinkedListMethod();
-                    HashMapMethod methodsHM1 = new HashMapMethod();
-
                     System.out.print("Enter the number of expenses to generate: ");
                     int numExpenses = scanner.nextInt();
 
                     System.out.println("Time and Memory Usage for Generating Expenses in Different Data Structures:");
-                    methodsAL1.generateExpense(numExpenses);
-                    methodsLL1.generateExpense(numExpenses);
-                    methodsHM1.generateExpense(numExpenses);
+                    methodsAL.generateExpense(numExpenses);
+                    methodsLL.generateExpense(numExpenses);
+                    methodsHM.generateExpense(numExpenses);
                     System.out.println(numExpenses + " Expenses generated successfully!");
                     break;
 
@@ -58,8 +64,8 @@ public class MainBackupTerminal {
                     System.out.print("Enter your choice (1-3): ");
 
                     int positionChoice = scanner.nextInt();
-                    DS_Methods methods2 = new DS_Methods();
-                    methods2.addExpense(positionChoice);
+                    methodsHM.addExpense(positionChoice);
+                    
 
                     break;
 

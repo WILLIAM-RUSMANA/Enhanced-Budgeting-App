@@ -1,6 +1,8 @@
-package DataStructure;
+package DataStructure.ArrayList;
 
 import java.util.*;
+
+import DataStructure.UtilityMethod;
 import OOP.Expense;
 
 public class ArrayListMethod {
