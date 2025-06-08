@@ -1,7 +1,10 @@
-package DataStructure;
+package DataStructure.HashMap;
 
 import OOP.Expense;
 import java.util.*;
+
+import DataStructure.MethodInterface;
+import DataStructure.UtilityMethod;
 
 public class HashMapMethod implements MethodInterface {
 
@@ -158,6 +161,34 @@ public class HashMapMethod implements MethodInterface {
         if (expenseHashMap.containsKey(index)) {
             expenseHashMap.put(index, updatedExpense);
             System.out.println("Updated expense at index " + index + ": " + updatedExpense);
+        } else {
+            System.out.println("No expense found at index " + index);
+        }
+
+        //end timing and memory usage for HashMap
+        long endTimeHM = System.nanoTime();
+        long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
+        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+    }
+
+    @Override
+    /* this method is used to search for an expense object inside of the hashmap at a specific index.
+     * It checks if the index exists in the HashMap.
+     * If it does, it retrieves and prints the expense at that index.
+     * If it does not, it prints a message indicating that no expense was found at that index.
+     */
+    public void searchExpense(int index) {
+        UtilityMethod utility = new UtilityMethod();
+
+        // Start timing and memory usage for HashMap
+        System.gc();
+        Runtime runtimeHM = Runtime.getRuntime();
+        long memoryBeforeHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
+        long startTimeHM = System.nanoTime();
+
+        if (expenseHashMap.containsKey(index)) {
+            Expense expense = expenseHashMap.get(index);
+            System.out.println("Expense found at index " + index + ": " + expense);
         } else {
             System.out.println("No expense found at index " + index);
         }
