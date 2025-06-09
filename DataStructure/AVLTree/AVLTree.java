@@ -8,7 +8,7 @@ import DataStructure.MethodInterface;
 import DataStructure.UtilityMethod;     
 
 public class AVLTree implements MethodInterface {
-    private Nodes root;
+    public Nodes root;
 
     public AVLTree() {
         this.root = null;
@@ -123,14 +123,27 @@ public class AVLTree implements MethodInterface {
     }
 
     @Override
+    /*
+     * Method to generate a specified number of expenses in the AVL Tree.
+     * It initializes the AVL Tree and inserts expenses using a utility method.
+     * Measures the time and memory usage for the operation.
+     * @param numValues, The number of expenses to be generated.
+     */
     public void generateExpense(int numValues) {
-        System
+        System.gc();
+        Runtime runtime = Runtime.getRuntime();
+        long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        Long startTime = System.nanoTime();
 
+        System.out.println("Generating " + numValues + " expenses in AVL Tree.");
         UtilityMethod utility = new UtilityMethod();
-        AVLTree tree = new AVLTree();
         for (int i = 0; i < numValues; i++) {
-            tree.insert(utility.initialiseAddedExpense());
+            insert(utility.initialiseAddedExpense());
         }
+
+        Long endTime = System.nanoTime();
+        long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
     }
 
     /*
@@ -141,7 +154,10 @@ public class AVLTree implements MethodInterface {
      * @param expense, is the expense to be inserted
      */
     private void insert(Expense expense) {
+        Stack<Nodes> nodeStack = new Stack<>();        
         Nodes newNode = new Nodes(expense);
+
+        try{
         if (root == null) {
             root = newNode;
             return;
@@ -149,7 +165,6 @@ public class AVLTree implements MethodInterface {
 
         Nodes current = root;
         Nodes parent = null;
-        Stack<Nodes> nodeStack = new Stack<>();
 
         while(current != null){
             parent = current;
@@ -184,15 +199,129 @@ public class AVLTree implements MethodInterface {
             }
             parent = node;
         }
+        }
+        finally{
+            // Clear the stack to free memory
+            nodeStack.clear();
+        }
     }
 
-
+    @Override
+    /*
+     * Method to add an expense at a specific index in the AVL Tree.
+     * It does not use indexes like arrays or lists, but rather generates a new expense
+     * and inserts it into the AVL Tree.
+     * Measures the time and memory usage for the operation.
+     * @param index, The index at which the expense is to be added (not used in AVL Tree).
+     */
     public void addExpense(int index) {
+        System.gc();
+        Runtime runtime = Runtime.getRuntime();
+        long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        Long startTime = System.nanoTime();
+
         System.out.println("AVL trees does not have indexes like arrays or lists. objects are through the generateExpense method.");
         UtilityMethod utility = new UtilityMethod();
-        
-        
+        this.insert(utility.initialiseAddedExpense());
+
+        Long endTime = System.nanoTime();
+        long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
     }
+
+    @Override
+    /*
+     * method to view expenses in the AVL Tree.
+     * It performs an in-order traversal of the tree to display all expenses.
+     * Measures the time and memory usage for the operation.
+    */
+    public void viewExpenses() {
+        System.out.println("Viewing expenses in AVL Tree:");
+        inOrderTraversal(root);
+    }
+
+    /*
+     * A method that performs an in-order traversal of the AVL Tree.
+     * It recursively visits the left subtree, processes the current node,
+     * and then visits the right subtree.
+     * This method prints the details of each expense in the tree.
+     * @param node, The current node in the AVL Tree.
+     */
+    private void inOrderTraversal(Nodes node) {
+        if (node != null) {
+            inOrderTraversal(node.getLeft());
+            for (int i = 0; i < node.getCount(); i++) {
+                System.out.println("Amount: " + node.getExpense().getAmount() + 
+                ", Year: " + node.getExpense().getYear()+
+                ", Month: " + node.getExpense().getMonth() +
+                ", Day: " + node.getExpense().getDate() +
+                ", Description: " + node.getExpense().getDescription()+
+                ", frequency: " + node.getExpense().getFrequency()
+                );
+            }
+            inOrderTraversal(node.getRight());
+        }
+    }
+
+    public void sortExpenses() {
+        System.out.println("Any expense objects added to the AVL Tree are automatically sorted based on their amount, from least to most.");
+    }
+
+    @Override
+    /*
+     * Method to search for an expense by its amount in the AVL Tree.
+     * It traverses the tree to find the node with the specified amount.
+     * If found, it prints the details of the expense.
+     * Measures the time and memory usage for the operation.
+     * @param amount, The amount of the expense to be searched.
+     */
+    public void searchExpense(int amount) {
+        UtilityMethod utility = new UtilityMethod();
+        System.gc();
+        Runtime runtime = Runtime.getRuntime();
+        long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+        Long startTime = System.nanoTime();
+
+
+        System.out.println("Searching for expense with amount: " + amount);
+        Nodes result = searchRec(root, amount);
+        if (result != null) {
+            System.out.println("Expense found: " + result.getExpense().getAmount() + 
+            ", Year: " + result.getExpense().getYear()+
+            ", Month: " + result.getExpense().getMonth() +
+            ", Day: " + result.getExpense().getDate() +
+            ", Description: " + result.getExpense().getDescription()+
+            ", frequency: " + result.getExpense().getFrequency()
+            );
+        } else {
+            System.out.println("No expense found with amount: " + amount);
+        }
+
+        Long endTime = System.nanoTime();
+        long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
+    }
+
+    /*
+     * A recursive method to search for an expense by its amount in the AVL Tree.
+     * it usese in-order traversal to find the node with the specified amount.
+     * If found, it returns the node; otherwise, it returns null.
+     * @param node, The current node in the AVL Tree.
+     * @param amount, The amount of the expense to be searched.
+     * @return The node containing the expense with the specified amount, or null if not found.
+     */
+    private Nodes searchRec(Nodes node, int amount) {
+        if (node.getExpense().getAmount() == amount) {
+            return node;
+        } else if (amount < node.getExpense().getAmount()) {
+            return searchRec(node.getLeft(), amount);
+        } else if( amount > node.getExpense().getAmount()) {
+            return searchRec(node.getRight(), amount);
+        }
+        return null; 
+    }
+
+    
 
 
 
