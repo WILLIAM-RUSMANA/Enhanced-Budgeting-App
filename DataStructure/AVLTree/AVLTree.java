@@ -3,6 +3,7 @@ package DataStructure.AVLTree;
 import OOP.Expense;
 import java.util.*;
 
+
 import DataStructure.MethodInterface;
 import DataStructure.UtilityMethod;     
 
@@ -48,6 +49,11 @@ public class AVLTree implements MethodInterface {
      * This is used to balance the AVL tree when a left-heavy imbalance occurs.
      * @param y The node to be rotated.
      * @return The new root of the subtree after the right rotation.
+     *    y                      x
+         / \                    / \
+        x   T3  (Right Rotate) T1  y
+       / \                        / \
+      T1  T2                     T2  T3
      */
     private Nodes rightRotate(Nodes y) {
         Nodes x = y.getLeft();
@@ -67,6 +73,11 @@ public class AVLTree implements MethodInterface {
      * This is used to balance the AVL tree when a right-heavy imbalance occurs.
      * @param x The node to be rotated.
      * @return The new root of the subtree after the left rotation.
+     *    x                      y
+         / \                    / \
+        T1  y  (Left Rotate)   x   T3
+           / \                / \
+          T2  T3            T1  T2
      */
     private Nodes leftRotate(Nodes x) {
         Nodes y = x.getRight();
@@ -84,7 +95,7 @@ public class AVLTree implements MethodInterface {
     /*
      * A method that calculates the balance of the AVL tree.
      * It checks the balance factor of each node and performs rotations accordingly
-     * @param node The root node of the AVL tree or subtree.
+     * @param node, The root node of the AVL tree or subtree.
      * @return The balanced node after performing necessary rotations.
      */
     private Nodes balances(Nodes node) {
@@ -111,40 +122,79 @@ public class AVLTree implements MethodInterface {
         return node;
     }
 
-    /*
-     * A method to insert a new expense into the AVL tree.
-     * It recursively finds the correct position for the new node and balances the tree.
-     * @param node The current node in the AVL tree.
-     * @param expense The Expense object to be inserted.
-     * @return The root of the balanced AVL tree after insertion.
-     */
-     private Nodes insert(Nodes node, Expense expense) {
-        if (node == null) {
-            return new Nodes(expense);
-        }
-
-        if(expense.getAmount() < node.getExpense().getAmount()) {
-            node.setLeft(insert(node.getLeft(), expense));
-        } else if (expense.getAmount() > node.getExpense().getAmount()) {
-            node.setRight(insert(node.getRight(), expense));
-        } else {
-            // If the amount is equal, we can choose to ignore or handle duplicates
-            node.setCount(node.getCount() + 1); // Increment count if duplicate
-            return node;
-        }
-
-        updateHeight(node);
-        return balances(node);
-    }
-
     @Override
     public void generateExpense(int numValues) {
-        UtilityMethod utility = new UtilityMethod();
+        System
 
+        UtilityMethod utility = new UtilityMethod();
+        AVLTree tree = new AVLTree();
         for (int i = 0; i < numValues; i++) {
-            root = insert(root, utility.initialiseExpense());
+            tree.insert(utility.initialiseAddedExpense());
         }
     }
+
+    /*
+     * Helper method of generateExpense
+     * when the avl tree is empty, the method would initiate a new node
+     * when it is not, the method would search for an apropriate place to put the node in
+     * once found, the method would plce the node in that position, and balances the tree
+     * @param expense, is the expense to be inserted
+     */
+    private void insert(Expense expense) {
+        Nodes newNode = new Nodes(expense);
+        if (root == null) {
+            root = newNode;
+            return;
+        }
+
+        Nodes current = root;
+        Nodes parent = null;
+        Stack<Nodes> nodeStack = new Stack<>();
+
+        while(current != null){
+            parent = current;
+            nodeStack.push(current);
+
+            if(expense.getAmount()>current.getExpense().getAmount()){
+                current = current.getRight();
+            } else if(expense.getAmount()<current.getExpense().getAmount()){
+                current = current.getLeft();
+            } else {
+                // If the expense already exists, increment the count
+                current.setCount(current.getCount() + 1);
+                return;
+            }
+        }
+
+        if (expense.getAmount() > parent.getExpense().getAmount()) {
+            parent.setRight(newNode);
+        } else {
+            parent.setLeft(newNode);
+        }        
+        while (!nodeStack.isEmpty()) {           
+            Nodes node = nodeStack.pop();
+            updateHeight(node);
+            node = balances(node);
+            if (node == root) {
+                root = node;
+            } else if (node.getExpense().getAmount() > parent.getExpense().getAmount()) {
+                parent.setRight(node);
+            } else {
+                parent.setLeft(node);
+            }
+            parent = node;
+        }
+    }
+
+
+    public void addExpense(int index) {
+        System.out.println("AVL trees does not have indexes like arrays or lists. objects are through the generateExpense method.");
+        UtilityMethod utility = new UtilityMethod();
+        
+        
+    }
+
+
 
 
 
