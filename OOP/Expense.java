@@ -57,4 +57,17 @@ public class Expense extends FinancialItem {
     public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "amount=" + getAmount() +
+                ", year=" + getYear() +
+                ", month=" + getMonth() +
+                ", date=" + date +
+                ", category='" + getCategory() + '\'' +
+                ", description='" + description + '\'' +
+                ", frequency='" + frequency + '\'' +
+                '}';
+    }
 }
