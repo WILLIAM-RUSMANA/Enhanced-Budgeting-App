@@ -1,10 +1,10 @@
-package DataStructure.HashMap;
+package DataStructures.HashMap;
 
 import OOP.Expense;
 import java.util.*;
 
-import DataStructure.MethodInterface;
-import DataStructure.UtilityMethod;
+import DataStructures.MethodInterface;
+import DataStructures.UtilityMethod;
 
 public class HashMapMethod implements MethodInterface {
 

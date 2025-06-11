@@ -1,12 +1,12 @@
-package DataStructure;
+package DataStructures;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-import DataStructure.ArrayList.ArrayListMethod;
-import DataStructure.HashMap.HashMapMethod;
-import DataStructure.LinkedList.LinkedListMethod;
+import DataStructures.ArrayList.ArrayListMethod;
+import DataStructures.HashMap.HashMapMethod;
+import DataStructures.LinkedList.LinkedListMethod;
 
 import java.time.LocalDate;
 

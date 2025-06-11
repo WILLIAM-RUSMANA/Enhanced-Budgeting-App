@@ -1,10 +1,10 @@
-package DataStructure.LinkedList;
+package DataStructures.LinkedList;
 
 import OOP.Expense;
 import java.util.*;
 
-import DataStructure.MethodInterface;
-import DataStructure.UtilityMethod;
+import DataStructures.MethodInterface;
+import DataStructures.UtilityMethod;
 
 public class LinkedListMethod implements MethodInterface {  
 
@@ -43,20 +43,20 @@ public class LinkedListMethod implements MethodInterface {
      * Measures the time and memory usage for the operation.
      * @param index, The index at which the new expense should be added.
      */
-    public void addExpense(int index){
+    public void addExpense(int indexToAdd){
         // Start timing and memory usage for LinkedList
         System.gc();
         Runtime runtimeLL = Runtime.getRuntime();
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (index < 0 || index > expenseLinkedList.size()) {
+        if (indexToAdd < 0 || indexToAdd > expenseLinkedList.size()) {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
         Expense newExpense = utility.initialiseExpense();
-        expenseLinkedList.add(index, newExpense);
-        System.out.println("Expense added at index " + index + ": " + newExpense);
+        expenseLinkedList.add(indexToAdd, newExpense);
+        System.out.println("Expense added at index " + indexToAdd + ": " + newExpense);
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
@@ -72,19 +72,19 @@ public class LinkedListMethod implements MethodInterface {
      * @param index, The index of the expense to be removed.
      */
 
-    public void removeExpense(int index) {
+    public void removeExpense(int indexToRemove) {
         // Start timing and memory usage for LinkedList
         System.gc();
         Runtime runtimeLL = Runtime.getRuntime();
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (index < 0 || index >= expenseLinkedList.size()) {
+        if (indexToRemove < 0 || indexToRemove >= expenseLinkedList.size()) {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
-        Expense removedExpense = expenseLinkedList.remove(index);
-        System.out.println("Expense removed at index " + index + ": " + removedExpense);
+        Expense removedExpense = expenseLinkedList.remove(indexToRemove);
+        System.out.println("Expense removed at index " + indexToRemove + ": " + removedExpense);
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
@@ -100,20 +100,20 @@ public class LinkedListMethod implements MethodInterface {
      * Measures the time and memory usage for the operation.
      * @param index, The index of the expense to be updated.
      */
-    public void updateExpense(int index) {
+    public void updateExpense(int indexToUpdate) {
         // Start timing and memory usage for LinkedList
         System.gc();
         Runtime runtimeLL = Runtime.getRuntime();
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (index < 0 || index >= expenseLinkedList.size()) {
+        if (indexToUpdate < 0 || indexToUpdate >= expenseLinkedList.size()) {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
         Expense updatedExpense = utility.initialiseExpense();
-        expenseLinkedList.set(index, updatedExpense);
-        System.out.println("Expense updated at index " + index + ": " + updatedExpense);
+        expenseLinkedList.set(indexToUpdate, updatedExpense);
+        System.out.println("Expense updated at index " + indexToUpdate + ": " + updatedExpense);
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
@@ -128,19 +128,19 @@ public class LinkedListMethod implements MethodInterface {
      * Measures the time and memory usage for the operation.
      * @param index, The index of the expense to be searched.
      */
-    public void searchExpense(int index) {
+    public void searchExpense(int indexToSearch) {
         // Start timing and memory usage for LinkedList
         System.gc();
         Runtime runtimeLL = Runtime.getRuntime();
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (index < 0 || index >= expenseLinkedList.size()) {
+        if (indexToSearch < 0 || indexToSearch >= expenseLinkedList.size()) {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
-        Expense foundExpense = expenseLinkedList.get(index);
-        System.out.println("Expense found at index " + index + ": " + foundExpense);
+        Expense foundExpense = expenseLinkedList.get(indexToSearch);
+        System.out.println("Expense found at index " + indexToSearch + ": " + foundExpense);
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
