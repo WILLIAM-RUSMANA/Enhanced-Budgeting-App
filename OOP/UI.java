@@ -1,10 +1,12 @@
 package OOP;
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
 
 public class UI extends JFrame {
     // Text fields:
@@ -24,6 +26,12 @@ public class UI extends JFrame {
     // Initialize display and current month
     private YearMonth displayedMonth = YearMonth.now();  // Starts with the value of the current year and month (2025-5)
     private YearMonth currentMonth = YearMonth.now();
+
+    // variables used for projection
+    private YearMonth lowerBound = currentMonth.plusMonths(1);
+    private YearMonth upperBound = currentMonth.plusMonths(3);
+
+    DecimalFormat df = new DecimalFormat("#,##0.00");
 
     public UI(ArrayList<Budget> budgets, ArrayList<Expense> expenses) {
         this.budgets = budgets;   // Gives access to the budgets arraylist to the UI class
@@ -45,7 +53,7 @@ public class UI extends JFrame {
         monthLabel = new JLabel();
         monthLabel.setPreferredSize(new Dimension(120, 30));
         monthLabel.setHorizontalAlignment(SwingConstants.CENTER);         // Set the horizontal alignment of monthLabel to center
-        updateMonth();  // updates month and year label in UI
+        updateMonthLabel();  // updates month and year label in UI
 
         // adds month navigation buttons and monthLabel to monthNavPanel
         monthNavPanel.add(prevMonthButton);
@@ -146,11 +154,6 @@ public class UI extends JFrame {
         expensesPanel.add(addExpensePanel, BorderLayout.NORTH);
         expensesPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Projection tab - create once and reuse
-        projectionPanel = new JPanel(new BorderLayout());
-        // TODO: BUG displayed month stays in june for some reason
-        projectionPanel.add(new JLabel("Projection estimate for " + displayedMonth.getMonth() + ", " + displayedMonth.getYear()), BorderLayout.PAGE_START);
-
         // Navigation Button Listeners
         prevMonthButton.addActionListener(e -> {
             displayedMonth = displayedMonth.minusMonths(1);
@@ -161,6 +164,21 @@ public class UI extends JFrame {
             displayedMonth = displayedMonth.plusMonths(1);
             refreshUI();
         });
+
+        // Projection tab - create once and reuse
+        projectionPanel = new JPanel(new BorderLayout());
+//        if (!displayedMonth.isBefore(lowerBound) && !displayedMonth.isAfter(upperBound)) {
+            double[] projection = Projection.project(expenses, displayedMonth.getYear(), displayedMonth.getMonthValue());
+
+            JLabel projectionLabel = new JLabel(df.format(projection[0]) + " ~ " + df.format(projection[1]));
+            projectionLabel.setFont(new Font("Calibre", Font.BOLD, 26));
+            JPanel centerPanel = new JPanel(new GridBagLayout());
+            centerPanel.add(projectionLabel);
+            projectionPanel.add(centerPanel, BorderLayout.CENTER);
+//        }
+
+        // TODO: BUG displayed month stays in june for some reason
+        projectionPanel.add(new JLabel("Projection estimate for " + displayedMonth.getMonth() + ", " + displayedMonth.getYear()), BorderLayout.PAGE_START);
 
         // Create tabs and put panels into them
         tabbedPane.addTab("Budgeting", budgetingPanel);
@@ -220,9 +238,9 @@ public class UI extends JFrame {
 
     private void refreshUI() {
         updateMonthLabel();
-        updateProjectionTab(); // Add this method call
+        updateProjectionTab(); // method call to add projection Tab accordingly
 
-        // Update expense table
+        // Update expense table using expenses
         expenseTableModel.setRowCount(0);
         List<Expense> monthlyExpenses = new ArrayList<>();
         double totalExpenses = 0;
@@ -233,7 +251,7 @@ public class UI extends JFrame {
         }
 
         for (Expense exp : monthlyExpenses) {
-            expenseTableModel.addRow(new Object[]{exp.getDate(), exp.getAmount(), exp.getCategory(), exp.getDescription(), exp.getFrequency()});
+            expenseTableModel.addRow(new Object[]{exp.getDate(), df.format(exp.getAmount()), exp.getCategory(), exp.getDescription(), exp.getFrequency()});
             totalExpenses += exp.getAmount();
         }
 
@@ -251,37 +269,37 @@ public class UI extends JFrame {
 
     // New method to handle projection tab visibility
     private void updateProjectionTab() {
-        YearMonth lowerBound = currentMonth.plusMonths(1);
-        YearMonth upperBound = currentMonth.plusMonths(3);
-
         // Check if displayedMonth is within the projection range (next 1-3 months)
         boolean shouldShowProjection = !displayedMonth.isBefore(lowerBound) && !displayedMonth.isAfter(upperBound);
 
         // Check if projection tab already exists
-        boolean projectionTabExists = false;
+        int projectionTabIndex = -1;
         for (int i = 0; i < tabbedPane.getTabCount(); i++) {
             if ("Projection".equals(tabbedPane.getTitleAt(i))) {
-                projectionTabExists = true;
+                projectionTabIndex = i;
                 break;
             }
         }
 
-        // Add or remove projection tab based on condition
-        if (shouldShowProjection && !projectionTabExists) {
-            tabbedPane.addTab("Projection", projectionPanel);
-        } else if (!shouldShowProjection && projectionTabExists) {
-            // Remove the projection tab if it exists but shouldn't be shown
-            for (int i = 0; i < tabbedPane.getTabCount(); i++) {
-                if ("Projection".equals(tabbedPane.getTitleAt(i))) {
-                    tabbedPane.removeTabAt(i);
-                    break;
-                }
+        if (shouldShowProjection) {
+            // Always update the projectionPanel content for the current displayedMonth
+            projectionPanel.removeAll();
+            double[] projection = Projection.project(expenses, displayedMonth.getYear(), displayedMonth.getMonthValue());
+            JLabel projectionLabel = new JLabel(df.format(projection[0]) + " ~ " + df.format(projection[1]));
+            projectionLabel.setFont(new Font("Calibre", Font.BOLD, 26));
+            JPanel centerPanel = new JPanel(new GridBagLayout());
+            centerPanel.add(projectionLabel);
+            projectionPanel.add(centerPanel, BorderLayout.CENTER);
+            projectionPanel.add(new JLabel("Projection estimate for " + displayedMonth.getMonth() + ", " + displayedMonth.getYear()), BorderLayout.PAGE_START);
+            projectionPanel.revalidate();
+            projectionPanel.repaint();
+            if (projectionTabIndex == -1) {
+                tabbedPane.addTab("Projection", projectionPanel);
             }
+        } else if (projectionTabIndex != -1) {
+            // Remove the projection tab if it exists but shouldn't be shown
+            tabbedPane.removeTabAt(projectionTabIndex);
         }
-    }
-
-    private void updateMonth() {
-        updateMonthLabel();
     }
 
     private void updateMonthLabel() {

@@ -81,7 +81,7 @@ public class Projection {
 
         // Take daily expense projection into account
         lowerProjectedExpense += dailyProjectedExpense;
-        higherProjectedExpense += lowerProjectedExpense;
+        higherProjectedExpense += lowerProjectedExpense * 1.05;
 
         return new double[] {lowerProjectedExpense, higherProjectedExpense};
     }

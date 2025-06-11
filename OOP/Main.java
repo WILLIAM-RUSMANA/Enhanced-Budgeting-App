@@ -6,8 +6,11 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Budget> budgets = new ArrayList<>();
         ArrayList<Expense> expenses = new ArrayList<>();
-        Data.addBudgetData(budgets);
-        Data.addExpenseData(expenses);
+        ExpenseBuilder builder = new ExpenseBuilder();
+//        Data.addBudgetData(budgets);
+//        Data.addExpenseData(expenses);
+        builder.build(expenses);
+
 
         SwingUtilities.invokeLater(() -> new UI(budgets, expenses));
     }

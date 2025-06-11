@@ -3,9 +3,26 @@ package OOP;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 
 public class ExpenseBuilder {
+    public ExpenseBuilder() {
+        // Divide all "Monthly" amounts above 10000 by 10
+        for (String category : categoriesMap.keySet()) {
+            String[] arr = categoriesMap.get(category);
+            if (arr[1].equals("Monthly")) {
+                double amount = Double.parseDouble(arr[0]);
+                if (amount > 10000) {
+                    amount = amount / 10.0;
+                    arr[0] = String.valueOf(amount);
+                    categoriesMap.put(category, arr);
+                }
+            }
+        }
+    }
+
     HashMap<String, String[]> categoriesMap = new HashMap<>() {{
         // a
         put("Accommodation", new String[]{"500", "Daily"});
@@ -180,7 +197,7 @@ public class ExpenseBuilder {
             for (int date=1; date < numberOfDays+1; date++) {
                 for (String dailyCategory : daily) {
                     double amount = Double.parseDouble(categoriesMap.get(dailyCategory)[0]);
-                    expenses.add(new Expense(amount, year, month, date, dailyCategory, "",  "Daily"));
+                    expenses.add(new Expense(roundUp(amount), year, month, date, dailyCategory, "",  "Daily"));
                 }
             }
             increaseAmount(daily, "Daily", 0.005);
@@ -192,7 +209,7 @@ public class ExpenseBuilder {
             for (int date = 7; date < 29; date += 7) {    // Loop starting from 7 to 28
                 for (String weeklyCategory : weekly) {    // Loop throuhg the categories in weekly list
                     double amount = Double.parseDouble(categoriesMap.get(weeklyCategory)[0]);
-                    expenses.add(new Expense(amount, year, month, date, weeklyCategory, "", "Weekly"));
+                    expenses.add(new Expense(roundUp(amount), year, month, date, weeklyCategory, "", "Weekly"));
                 }
             }
             increaseAmount(weekly, "Weekly", 0.005);
@@ -207,7 +224,7 @@ public class ExpenseBuilder {
             for (String monthlyCategory : monthly) {
                 double amount = getCategoryAmount(monthlyCategory);
                 int date = monthlyCategoryPaymentDate.get(monthlyCategory);
-                expenses.add(new Expense(amount, year, month, date, monthlyCategory, "", "Monthly"));
+                expenses.add(new Expense(roundUp(amount), year, month, date, monthlyCategory, "", "Monthly"));
             }
             increaseAmount(monthly, "Monthly", 0.005);
         }
@@ -222,7 +239,7 @@ public class ExpenseBuilder {
                 for (int month = startMonth; month < quarters * 3 + 1; month+=3) {
                     double amount = getCategoryAmount(quarterCategory);
                     int date = quarterlyCategoryPaymentDate.get(quarterCategory);
-                     expenses.add(new Expense(amount, year, month, date, quarterCategory, "", "Quarterly"));
+                     expenses.add(new Expense(roundUp(amount), year, month, date, quarterCategory, "", "Quarterly"));
                 }
             }
         }
@@ -237,7 +254,7 @@ public class ExpenseBuilder {
                     for (String semiAnnualCategory : semiAnnual) {
                         double amount = getCategoryAmount(semiAnnualCategory);
                         int date = semiAnnualCategoryPaymentDate.get(semiAnnualCategory);
-                        expenses.add(new Expense(amount, year, randomInt(6), date, semiAnnualCategory, "", "Semi-Annual"));
+                        expenses.add(new Expense(roundUp(amount), year, randomInt(6), date, semiAnnualCategory, "", "Semi-Annual"));
                     }
                     increaseAmount(semiAnnual, "Semi-Annual", 0.035);
                 }
@@ -246,8 +263,8 @@ public class ExpenseBuilder {
                         double amount = getCategoryAmount(semiAnnualCategory);
                         int date = semiAnnualCategoryPaymentDate.get(semiAnnualCategory);
                         int startMonth = randomInt(6);
-                        expenses.add(new Expense(amount, year, startMonth, date, semiAnnualCategory, "", "Semi-Annual"));
-                        expenses.add(new Expense(amount, year, startMonth + 6, date, semiAnnualCategory, "", "Semi-Annual"));
+                        expenses.add(new Expense(roundUp(amount), year, startMonth, date, semiAnnualCategory, "", "Semi-Annual"));
+                        expenses.add(new Expense(roundUp(amount), year, startMonth + 6, date, semiAnnualCategory, "", "Semi-Annual"));
                     }
                     increaseAmount(semiAnnual, "Semi-Annual", 0.07);
                 }
@@ -293,18 +310,13 @@ public class ExpenseBuilder {
         return categoryPaymentDate;
     }
 
-    public ExpenseBuilder() {
-        // Divide all "Monthly" amounts above 10000 by 10
-        for (String category : categoriesMap.keySet()) {
-            String[] arr = categoriesMap.get(category);
-            if (arr[1].equals("Monthly")) {
-                double amount = Double.parseDouble(arr[0]);
-                if (amount > 10000) {
-                    amount = amount / 10.0;
-                    arr[0] = String.valueOf(amount);
-                    categoriesMap.put(category, arr);
-                }
-            }
-        }
+    // Method to round up a double to 2 decimal places
+    private double roundUp(double value) {
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(2, RoundingMode.UP);
+
+
+        return bd.doubleValue();
     }
+
 }
