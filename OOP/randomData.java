@@ -39,7 +39,7 @@ public class randomData {
 
                 // increase the probability of entertainment and dining out for weekends
                 if((categoryName.equals("Entertainment") || categoryName.equals("Dining Out")) && (dayOfWeek > 5)){
-                    probability = 0.9;  // TODO: idk looks sus to me is this right? probability 0? comment on why it's 0 if it is
+                    probability = 0.9;
                 }
 
                 // Generate a random number and compare it with the probability

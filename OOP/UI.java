@@ -148,6 +148,7 @@ public class UI extends JFrame {
 
         // Projection tab - create once and reuse
         projectionPanel = new JPanel(new BorderLayout());
+        // TODO: BUG displayed month stays in june for some reason
         projectionPanel.add(new JLabel("Projection estimate for " + displayedMonth.getMonth() + ", " + displayedMonth.getYear()), BorderLayout.PAGE_START);
 
         // Navigation Button Listeners
