@@ -167,7 +167,7 @@ public class UI extends JFrame {
 
         // Projection tab - create once and reuse
         projectionPanel = new JPanel(new BorderLayout());
-//        if (!displayedMonth.isBefore(lowerBound) && !displayedMonth.isAfter(upperBound)) {
+        if (!displayedMonth.isBefore(lowerBound) && !displayedMonth.isAfter(upperBound)) {
             double[] projection = Projection.project(expenses, displayedMonth.getYear(), displayedMonth.getMonthValue());
 
             JLabel projectionLabel = new JLabel(df.format(projection[0]) + " ~ " + df.format(projection[1]));
@@ -175,9 +175,8 @@ public class UI extends JFrame {
             JPanel centerPanel = new JPanel(new GridBagLayout());
             centerPanel.add(projectionLabel);
             projectionPanel.add(centerPanel, BorderLayout.CENTER);
-//        }
+        }
 
-        // TODO: BUG displayed month stays in june for some reason
         projectionPanel.add(new JLabel("Projection estimate for " + displayedMonth.getMonth() + ", " + displayedMonth.getYear()), BorderLayout.PAGE_START);
 
         // Create tabs and put panels into them
@@ -239,7 +238,8 @@ public class UI extends JFrame {
     private void refreshUI() {
         updateMonthLabel();
         updateProjectionTab(); // method call to add projection Tab accordingly
-
+        // TODO: Sort
+        expenses = ExpenseSort.sort(expenses);
         // Update expense table using expenses
         expenseTableModel.setRowCount(0);
         List<Expense> monthlyExpenses = new ArrayList<>();
@@ -250,13 +250,13 @@ public class UI extends JFrame {
             }
         }
 
-        for (Expense exp : monthlyExpenses) {
+        for (Expense exp : monthlyExpenses) {  // display all expenses
             expenseTableModel.addRow(new Object[]{exp.getDate(), df.format(exp.getAmount()), exp.getCategory(), exp.getDescription(), exp.getFrequency()});
             totalExpenses += exp.getAmount();
         }
 
         double monthlyBudget = 0;
-        for (Budget budget : budgets) {
+        for (Budget budget : budgets) {  // Updates budget to according budget of the appropriate month
             if (budget.getYear() == displayedMonth.getYear() && budget.getMonth() == displayedMonth.getMonthValue()) {
                 monthlyBudget = budget.getAmount();
             }
