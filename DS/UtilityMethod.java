@@ -1,4 +1,4 @@
-package DataStructures;
+package DS;
 
 import OOP.Expense;
 

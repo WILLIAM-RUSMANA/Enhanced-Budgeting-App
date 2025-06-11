@@ -1,4 +1,4 @@
-package DataStructures;
+package DS;
 
 public interface MethodInterface {
     void generateExpense(int numValues);

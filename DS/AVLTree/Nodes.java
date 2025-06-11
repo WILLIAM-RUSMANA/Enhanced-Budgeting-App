@@ -1,4 +1,4 @@
-package DataStructures.AVLTree;
+package DS.AVLTree;
 
 import OOP.Expense;
 

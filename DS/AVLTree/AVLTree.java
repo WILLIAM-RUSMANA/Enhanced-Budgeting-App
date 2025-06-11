@@ -1,11 +1,11 @@
-package DataStructures.AVLTree;
+package DS.AVLTree;
 
 import OOP.Expense;
 import java.util.*;
 
 
-import DataStructures.MethodInterface;
-import DataStructures.UtilityMethod;     
+import DS.MethodInterface;
+import DS.UtilityMethod;     
 
 public class AVLTree implements MethodInterface {
     public Nodes root;

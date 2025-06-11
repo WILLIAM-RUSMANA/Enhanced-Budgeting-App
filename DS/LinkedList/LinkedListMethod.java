@@ -1,14 +1,15 @@
-package DataStructures.ArrayList;
+package DS.LinkedList;
 
 import OOP.Expense;
 import java.util.*;
-import DataStructures.MethodInterface;
-import DataStructures.UtilityMethod;
 
+import DS.MethodInterface;
+import DS.UtilityMethod;
 
-public class ArrayListMethod implements MethodInterface {
+public class LinkedListMethod implements MethodInterface {  
+
     UtilityMethod utility = new UtilityMethod();
-    public List<Expense> expeseArrayList = new ArrayList<>();
+    LinkedList<Expense> expenseLinkedList = new LinkedList<>();
 
     @Override
     /*
@@ -25,7 +26,7 @@ public class ArrayListMethod implements MethodInterface {
         long startTimeLL = System.nanoTime();
 
         for (int i = 0; i < numValues; i++) {
-            expeseArrayList.add(utility.initialiseExpense()); //generate random expenses in LinkedList
+            expenseLinkedList.add(utility.initialiseExpense()); //generate random expenses in LinkedList
         }
 
         //end timing and memory usage for LinkedList
@@ -42,19 +43,19 @@ public class ArrayListMethod implements MethodInterface {
      * Measures the time and memory usage for the operation.
      * @param index, The index at which the new expense should be added.
      */
-    public void addExpense(int indexToAdd) {
+    public void addExpense(int indexToAdd){
         // Start timing and memory usage for LinkedList
         System.gc();
         Runtime runtimeLL = Runtime.getRuntime();
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (indexToAdd < 0 || indexToAdd > expeseArrayList.size()) {
+        if (indexToAdd < 0 || indexToAdd > expenseLinkedList.size()) {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
         Expense newExpense = utility.initialiseExpense();
-        expeseArrayList.add(indexToAdd, newExpense);
+        expenseLinkedList.add(indexToAdd, newExpense);
         System.out.println("Expense added at index " + indexToAdd + ": " + newExpense);
 
         //end timing and memory usage for LinkedList
@@ -78,11 +79,11 @@ public class ArrayListMethod implements MethodInterface {
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (indexToRemove < 0 || indexToRemove >= expeseArrayList.size()) {
+        if (indexToRemove < 0 || indexToRemove >= expenseLinkedList.size()) {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
-        Expense removedExpense = expeseArrayList.remove(indexToRemove);
+        Expense removedExpense = expenseLinkedList.remove(indexToRemove);
         System.out.println("Expense removed at index " + indexToRemove + ": " + removedExpense);
 
         //end timing and memory usage for LinkedList
@@ -94,7 +95,7 @@ public class ArrayListMethod implements MethodInterface {
     @Override
     /*
      * Method to update an expense at a specific index in the LinkedList.
-     * It checks for valid index
+     * It checks for valid index 
      * it then replaces the expense at that index with a new one initialized by the utility method.
      * Measures the time and memory usage for the operation.
      * @param index, The index of the expense to be updated.
@@ -106,12 +107,12 @@ public class ArrayListMethod implements MethodInterface {
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (indexToUpdate < 0 || indexToUpdate >= expeseArrayList.size()) {
+        if (indexToUpdate < 0 || indexToUpdate >= expenseLinkedList.size()) {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
         Expense updatedExpense = utility.initialiseExpense();
-        expeseArrayList.set(indexToUpdate, updatedExpense);
+        expenseLinkedList.set(indexToUpdate, updatedExpense);
         System.out.println("Expense updated at index " + indexToUpdate + ": " + updatedExpense);
 
         //end timing and memory usage for LinkedList
@@ -134,11 +135,11 @@ public class ArrayListMethod implements MethodInterface {
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (indexToSearch < 0 || indexToSearch >= expeseArrayList.size()) {
+        if (indexToSearch < 0 || indexToSearch >= expenseLinkedList.size()) {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
-        Expense foundExpense = expeseArrayList.get(indexToSearch);
+        Expense foundExpense = expenseLinkedList.get(indexToSearch);
         System.out.println("Expense found at index " + indexToSearch + ": " + foundExpense);
 
         //end timing and memory usage for LinkedList
@@ -161,12 +162,12 @@ public class ArrayListMethod implements MethodInterface {
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (expeseArrayList.isEmpty()) {
+        if (expenseLinkedList.isEmpty()) {
             System.out.println("No expenses to display.");
             return;
         }
         System.out.println("Expenses in LinkedList:");
-        for (Expense expense : expeseArrayList) {
+        for (Expense expense : expenseLinkedList) {
             System.out.println(expense);
         }
 
@@ -179,9 +180,9 @@ public class ArrayListMethod implements MethodInterface {
 
     @Override
     /*
-     * Method to sort the expenses in the arrayList by amount.
-     * It checks if the LinkedList is empty
-     * it then sorts the expense from least to greatest amount using Timsort.
+     * Method to sort the expenses in the LinkedList by amount.
+     * It checks if the LinkedList is empty  
+     * it then sorts tthe expense from least to greatest amount using Timsort.
      * Measures the time and memory usage for the operation.
      * @param None
      */
@@ -192,11 +193,11 @@ public class ArrayListMethod implements MethodInterface {
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
 
-        if (expeseArrayList.isEmpty()) {
+        if (expenseLinkedList.isEmpty()) {
             System.out.println("No expenses to sort.");
             return;
         }
-        Collections.sort(expeseArrayList, Comparator.comparing(Expense::getAmount));
+        Collections.sort(expenseLinkedList, Comparator.comparing(Expense::getAmount));
         System.out.println("Expenses sorted by amount.");
 
         //end timing and memory usage for LinkedList
@@ -204,25 +205,7 @@ public class ArrayListMethod implements MethodInterface {
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
     }
-//    public void generateExpense(int numValues) {
-//        UtilityMethod utility = new UtilityMethod();
-//
-//        // Start timing and memory usage for ArrayList
-//        System.gc();
-//        Runtime runtimeAL = Runtime.getRuntime();
-//
-//        long memoryBeforeAL = runtimeAL.totalMemory() - runtimeAL.freeMemory();
-//        long startTimeAL = System.nanoTime();
-//
-//        for (int i = 0; i < numValues; i++) {
-//            expenseArrayList.add(i, utility.initialiseExpense()); //generate random expenses in ArrayList
-//        }
-//
-//        //end timing and memory usage for ArrayList
-//        long endTimeAL = System.nanoTime();
-//        long memoryAfterAL = runtimeAL.totalMemory() - runtimeAL.freeMemory();
-//
-//        utility.printMemoryUsage("ArrayList", memoryBeforeAL, memoryAfterAL, endTimeAL - startTimeAL);
-//        utility.printRuntime("ArrayList", startTimeAL, endTimeAL);
-//  }
+
+
+    
 }
