@@ -2,13 +2,12 @@ package OOP;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.List;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -48,6 +47,12 @@ public class UI extends JFrame {
     // Sound effects
     File walkmanSound = new File("sounds/walkman sound.wav");
 
+    /**
+     * UI Constructor: Sets up the main window for the Enhanced Budgeting App.
+     * Initializes all UI components, layouts, navigation, event listeners, and tabs.
+     * Handles budget and expense input, month navigation, projection tab, and sound effects.
+     * Connects the UI to the provided budgets and expenses lists.
+     */
     public UI(ArrayList<Budget> budgets, ArrayList<Expense> expenses) {
         this.budgets = budgets;   // Gives access to the budgets arraylist to the UI class
         this.expenses = expenses;
@@ -156,6 +161,7 @@ public class UI extends JFrame {
 
         JButton addExpenseButton = new JButton("Add Expense");
 
+        // Adds labels, fields, ComboBox and a button to the addExpensePanel
         addExpensePanel.add(new JLabel("Date:"));
         addExpensePanel.add(dateField);
         addExpensePanel.add(new JLabel("Amount (Rp):"));
@@ -164,21 +170,20 @@ public class UI extends JFrame {
         addExpensePanel.add(categoryField);
         addExpensePanel.add(new JLabel("Description"));
         addExpensePanel.add(descriptionField);
-
-        // Todo:  change
         addExpensePanel.add(new JLabel("Freq."));
         addExpensePanel.add(frequencyOptions);
-
-
         addExpensePanel.add(addExpenseButton);
 
         // Event listeners for Adding Expenses
+        // action listener for add expense button
         addExpenseButton.addActionListener(e -> {
             addExpense();
             playSound(walkmanSound);
-        });  // using button click
-        setupExpenseFieldNavigation();  // using ENTER navigation
+        });  
 
+        setupExpenseFieldNavigation();  // run ENTER navigation action listener
+
+        // Place addExpense panel on the top and scrollPane under it filling up the rest of the space
         expensesPanel.add(addExpensePanel, BorderLayout.NORTH);
         expensesPanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -207,17 +212,23 @@ public class UI extends JFrame {
             projectionPanel.add(centerPanel, BorderLayout.CENTER);
         }
 
+        // Label for Projection heading
         projectionPanel.add(new JLabel("Projection estimate for " + displayedMonth.getMonth() + ", " + displayedMonth.getYear()), BorderLayout.PAGE_START);
 
         // Create tabs and put panels into them
         tabbedPane.addTab("Budgeting", budgetingPanel);
         tabbedPane.addTab("Expenses", expensesPanel);
 
+
+        // Add the tabbedPane (all tabs) to the main window
         add(tabbedPane, BorderLayout.CENTER);
+        // Refresh the UI the current states
         refreshUI();
+        // Make the window visible to the user
         setVisible(true);
     }
 
+    // adds budget to budgets Array List and handles exception by displaying a pane detailing the cause
     private void setBudget() {
         try {
             double amount = Double.parseDouble(budgetField.getText());
@@ -225,10 +236,11 @@ public class UI extends JFrame {
             refreshUI();
             amountField.setText("");
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid number.");
+            JOptionPane.showMessageDialog(this, "Please enter a valid amount.");
         }
     }
 
+    // adds Expense to expenses Array List and handles exception handling by displaying a pane detailing the cause
     private void addExpense() {
         try {
             Expense expense = getExpense();
@@ -250,6 +262,7 @@ public class UI extends JFrame {
         }
     }
 
+    // Getter that returns a expense object with params derived from the text fields and drop down box of the expense tab
     private Expense getExpense() {
         int date = getIntDate();
 
@@ -302,9 +315,13 @@ public class UI extends JFrame {
 
         return date;
     }
-
+    
+    // Updates all UI components to reflect the current state of budgets, expenses,
+    // displayed month, projection of specified month and table model generation.
     private void refreshUI() {
+        // Update the month label at the top of the UI
         updateMonthLabel();
+        // Add or remove the projection tab as needed
         updateProjectionTab(); // method call to add projection Tab accordingly
         // Sorts expenses and budgets items from earliest to latest
         ExpenseSort.sort(expenses);
@@ -371,6 +388,7 @@ public class UI extends JFrame {
         }
     }
 
+    // Updates month label text with updated YearMonth object
     private void updateMonthLabel() {
         monthLabel.setText(displayedMonth.getMonth() + " " + displayedMonth.getYear());
     }
@@ -424,7 +442,7 @@ public class UI extends JFrame {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
-        } catch (Exception e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.err.println("Error in playSound playing " + soundFile);
             System.err.println(e.getMessage());
         }
