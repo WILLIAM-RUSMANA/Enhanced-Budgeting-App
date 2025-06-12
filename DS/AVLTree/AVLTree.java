@@ -134,7 +134,7 @@ public class AVLTree implements MethodInterface {
         System.out.println("Generating " + numValues + " expenses in AVL Tree.");
         UtilityMethod utility = new UtilityMethod();
         for (int i = 0; i < numValues; i++) {
-            insert(utility.initialiseAddedExpense());
+            root = insertRec(root, utility.initialiseAddedExpense());
         }
 
         Long endTime = System.nanoTime();
@@ -148,58 +148,25 @@ public class AVLTree implements MethodInterface {
      * when it is not, the method would search for an apropriate place to put the node in
      * once found, the method would plce the node in that position, and balances the tree
      * @param expense, is the expense to be inserted
+     * @param node, is the current node in the AVL Tree
      */
-    private void insert(Expense expense) {
-        Stack<Nodes> nodeStack = new Stack<>();        
-        Nodes newNode = new Nodes(expense);
-
-        try{
-        if (root == null) {
-            root = newNode;
-            return;
+    private Nodes insertRec(Nodes node, Expense expense) {
+        if (node == null) {
+            return new Nodes(expense);
         }
 
-        Nodes current = root;
-        Nodes parent = null;
-
-        while(current != null){
-            parent = current;
-            nodeStack.push(current);
-
-            if(expense.getAmount()>current.getExpense().getAmount()){
-                current = current.getRight();
-            } else if(expense.getAmount()<current.getExpense().getAmount()){
-                current = current.getLeft();
-            } else {
-                // If the expense already exists, increment the count
-                current.setCount(current.getCount() + 1);
-                return;
-            }
-        }
-
-        if (expense.getAmount() > parent.getExpense().getAmount()) {
-            parent.setRight(newNode);
+        if (expense.getAmount() < node.getExpense().getAmount()) {
+            node.setLeft(insertRec(node.getLeft(), expense));
+        } else if (expense.getAmount() > node.getExpense().getAmount()) {
+            node.setRight(insertRec(node.getRight(), expense));
         } else {
-            parent.setLeft(newNode);
-        }        
-        while (!nodeStack.isEmpty()) {           
-            Nodes node = nodeStack.pop();
-            updateHeight(node);
-            node = balances(node);
-            if (node == root) {
-                root = node;
-            } else if (node.getExpense().getAmount() > parent.getExpense().getAmount()) {
-                parent.setRight(node);
-            } else {
-                parent.setLeft(node);
-            }
-            parent = node;
+            // If the expense already exists, increment the count
+            node.setCount(node.getCount() + 1);
+            return node;
         }
-        }
-        finally{
-            // Clear the stack to free memory
-            nodeStack.clear();
-        }
+
+        updateHeight(node);
+        return balances(node);
     }
 
     @Override
@@ -220,7 +187,7 @@ public class AVLTree implements MethodInterface {
         UtilityMethod utility = new UtilityMethod();
         Expense expense = utility.initialiseAddedExpense();
         expense.setAmount(amountToAdd); // Set the amount to the specified value
-        insert(expense);
+        root = insertRec(root, expense);
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();

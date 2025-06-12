@@ -32,7 +32,7 @@ public class ArrayListMethod implements MethodInterface {
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
 
-        utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        utility.printMemoryAndTime("ArrayList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ArrayListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
-        utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        utility.printMemoryAndTime("ArrayList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ArrayListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
-        utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        utility.printMemoryAndTime("ArrayList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class ArrayListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
-        utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        utility.printMemoryAndTime("Arraylist", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
     }
 
     @Override
@@ -144,7 +144,7 @@ public class ArrayListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
-        utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        utility.printMemoryAndTime("ArrayList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
     }
 
     @Override
@@ -174,7 +174,7 @@ public class ArrayListMethod implements MethodInterface {
         System.out.println(" ");
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
-        utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        utility.printMemoryAndTime("Arraylist", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
     }
 
     @Override
@@ -202,27 +202,7 @@ public class ArrayListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
-        utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        utility.printMemoryAndTime("ArrayList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
     }
-//    public void generateExpense(int numValues) {
-//        UtilityMethod utility = new UtilityMethod();
-//
-//        // Start timing and memory usage for ArrayList
-//        System.gc();
-//        Runtime runtimeAL = Runtime.getRuntime();
-//
-//        long memoryBeforeAL = runtimeAL.totalMemory() - runtimeAL.freeMemory();
-//        long startTimeAL = System.nanoTime();
-//
-//        for (int i = 0; i < numValues; i++) {
-//            expenseArrayList.add(i, utility.initialiseExpense()); //generate random expenses in ArrayList
-//        }
-//
-//        //end timing and memory usage for ArrayList
-//        long endTimeAL = System.nanoTime();
-//        long memoryAfterAL = runtimeAL.totalMemory() - runtimeAL.freeMemory();
-//
-//        utility.printMemoryUsage("ArrayList", memoryBeforeAL, memoryAfterAL, endTimeAL - startTimeAL);
-//        utility.printRuntime("ArrayList", startTimeAL, endTimeAL);
-//  }
+
 }
