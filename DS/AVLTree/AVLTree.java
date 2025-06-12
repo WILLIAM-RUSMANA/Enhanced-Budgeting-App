@@ -131,7 +131,6 @@ public class AVLTree implements MethodInterface {
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
         Long startTime = System.nanoTime();
 
-        System.out.println("Generating " + numValues + " expenses in AVL Tree.");
         UtilityMethod utility = new UtilityMethod();
         for (int i = 0; i < numValues; i++) {
             root = insertRec(root, utility.initialiseAddedExpense());
@@ -192,8 +191,8 @@ public class AVLTree implements MethodInterface {
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
         utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
-    }
-
+    }    
+    
     @Override
     /*
      * method to view expenses in the AVL Tree.
@@ -201,8 +200,17 @@ public class AVLTree implements MethodInterface {
      * Measures the time and memory usage for the operation.
     */
     public void viewExpenses() {
-        System.out.println("Viewing expenses in AVL Tree:");
-        inOrderTraversal(root);
+
+        if (root == null) {
+            System.out.println("The AVL Tree is empty. No expenses to display.");
+            return;
+        }
+        System.out.println("Viewing expenses in AVL Tree (max 50 entries):");
+        int [] count = {0};
+        inOrderTraversal(root, count);
+        if (count[0] >= 50){
+            System.out.println("\n... Additional expenses exist but not shown");
+        }
     }
 
     /*
@@ -211,20 +219,24 @@ public class AVLTree implements MethodInterface {
      * and then visits the right subtree.
      * This method prints the details of each expense in the tree.
      * @param node, The current node in the AVL Tree.
-     */
-    private void inOrderTraversal(Nodes node) {
-        if (node != null) {
-            inOrderTraversal(node.getLeft());
+     */    
+    private void inOrderTraversal(Nodes node, int[] count) {
+
+        if (node != null && count[0] < 50) {
+            inOrderTraversal(node.getLeft(), count);
+
             for (int i = 0; i < node.getCount(); i++) {
                 System.out.println("Amount: " + node.getExpense().getAmount() + 
                 ", Year: " + node.getExpense().getYear()+
                 ", Month: " + node.getExpense().getMonth() +
                 ", Day: " + node.getExpense().getDate() +
                 ", Description: " + node.getExpense().getDescription()+
-                ", frequency: " + node.getExpense().getFrequency()
+                ", frequency: " + node.getExpense().getFrequency() + 
+                ", count: " + node.getCount()
                 );
+                count[0]++;
             }
-            inOrderTraversal(node.getRight());
+            inOrderTraversal(node.getRight(), count);
         }
     }
 
@@ -257,8 +269,7 @@ public class AVLTree implements MethodInterface {
             ", Month: " + result.getExpense().getMonth() +
             ", Day: " + result.getExpense().getDate() +
             ", Description: " + result.getExpense().getDescription()+
-            ", frequency: " + result.getExpense().getFrequency()
-            );
+            ", frequency: " + result.getExpense().getFrequency() +            ", Count: " + result.getCount());
         } else {
             System.out.println("No expense found with amount: " + amount);
         }
@@ -293,21 +304,30 @@ public class AVLTree implements MethodInterface {
      * this method removes an expense from the AVL Tree based on its amount.
      * It searches for the node with the specified amount,
      * and removes it while maintaining the AVL Tree properties.
-     */
-    public void removeExpense(int amountToRemove){
+     */    public void removeExpense(int amountToRemove){
+        if (root == null) {
+            System.out.println("The AVL Tree is empty. Nothing to remove.");
+            return;
+        }
+
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
         Long startTime = System.nanoTime();
         System.out.println("Removing expense with amount: " + amountToRemove);
 
+        Nodes oldRoot = root;
         root = deleteRecursive(root, amountToRemove);
+
+        // Only print success message if the tree actually changed
+        if (root != oldRoot || (root != null && searchRec(root, amountToRemove) == null)) {
+            System.out.println("Expense with amount " + amountToRemove + " removed successfully.");
+        }
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
         UtilityMethod utility = new UtilityMethod();
         utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
-        System.out.println("Expense with amount " + amountToRemove + " removed successfully.");
     }
 
     /*
@@ -320,6 +340,7 @@ public class AVLTree implements MethodInterface {
      */
     private Nodes deleteRecursive(Nodes node, double amountToRemove) {
         if (node == null) {
+            System.out.println("Expense to be deleted not found");
             return node; // Expense not found
         }
 
@@ -363,8 +384,7 @@ public class AVLTree implements MethodInterface {
                     temp.setCount(1); 
                     node.setRight(deleteRecursive(node.getRight(), temp.getExpense().getAmount()));
                 }
-            }
-        }
+            }        }        
         if (node == null) {
             return node;
         }

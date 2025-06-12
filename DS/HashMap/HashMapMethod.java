@@ -108,7 +108,7 @@ public class HashMapMethod implements MethodInterface {
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
-        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
     }
 
     @Override
@@ -214,13 +214,19 @@ public class HashMapMethod implements MethodInterface {
         long memoryBeforeHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
         long startTimeHM = System.nanoTime();
 
+        int count = 0;
         if (expenseHashMap.isEmpty()) {
             System.out.println("No expenses to display");
         } else {
             System.out.println("\nExpense List:");
             for (Map.Entry<Integer, Expense> entry : expenseHashMap.entrySet()) {
                 System.out.println("Index " + entry.getKey() + ": " + entry.getValue());
+                count++;
+                if (count == 50){
+                    return;
+                }
             }
+            
         }
 
         long endTimeHM = System.nanoTime();

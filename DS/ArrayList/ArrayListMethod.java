@@ -160,14 +160,22 @@ public class ArrayListMethod implements MethodInterface {
         Runtime runtimeLL = Runtime.getRuntime();
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
+        Expense exp;
 
         if (expeseArrayList.isEmpty()) {
             System.out.println("No expenses to display.");
             return;
         }
         System.out.println("Expenses in LinkedList:");
-        for (Expense expense : expeseArrayList) {
-            System.out.println(expense);
+        int limit = Math.min(50, expeseArrayList.size());
+        for (int i = 0; i<limit; i++) {
+            exp = expeseArrayList.get(i);
+            System.out.println("Index " + i + ": Amount: " + exp.getAmount() + 
+                            ", Year: " + exp.getYear() +
+                            ", Month: " + exp.getMonth() +
+                            ", Day: " + exp.getDate() +
+                            ", Description: " + exp.getDescription() +
+                            ", Frequency: " + exp.getFrequency());
         }
 
         //end timing and memory usage for LinkedList

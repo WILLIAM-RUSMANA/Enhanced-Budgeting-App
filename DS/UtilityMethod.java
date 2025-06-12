@@ -4,13 +4,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import OOP.Expense;
 
-public class UtilityMethod {
-
-    // Common utility methods can be added here
+public class UtilityMethod {    // Common utility methods can be added here
     public void printMemoryAndTime(String structureName, long memoryBefore, long memoryAfter, long endTime, long startTime) {
         long totalMemory = memoryAfter - memoryBefore;
-        long totalTime = endTime - startTime;
-        System.out.println(structureName + " Memory Usage: " + totalMemory + " bytes, Time Taken: " + totalTime + " ns");
+        double totalTimeMs = (endTime - startTime) / 1_000_000.0; // Convert ns to ms
+        double memoryValue = totalMemory/1_000; // convert bytes to kilobytes
+        
+        System.out.println(structureName + " Performance Metrics:");
+        System.out.printf("|-- Memory Usage: %,.2f Kilobytes%n", memoryValue);
+        System.out.printf("|-- Time Taken: %,.2f Miliseconds%n", totalTimeMs);
+        System.out.println(" ");
     }
 
     public Expense initialiseExpense(){

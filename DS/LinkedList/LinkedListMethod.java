@@ -166,9 +166,13 @@ public class LinkedListMethod implements MethodInterface {
             System.out.println("No expenses to display.");
             return;
         }
+        int count = 0;
         System.out.println("Expenses in LinkedList:");
         for (Expense expense : expenseLinkedList) {
             System.out.println(expense);
+            if(count == 50){
+                return;
+            }
         }
 
         //end timing and memory usage for LinkedList
