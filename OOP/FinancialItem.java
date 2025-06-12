@@ -43,7 +43,6 @@ public class FinancialItem {
         return this.year + " " + this.month;
     }
 
-    // Setters
 
     public String getCategory() {
         return category;

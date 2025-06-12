@@ -10,10 +10,6 @@ import DS.UtilityMethod;
 public class AVLTree implements MethodInterface {
     public Nodes root;
 
-    public AVLTree() {
-        this.root = null;
-    }
-
     //get height of each node
     private int height(Nodes node) {
         if (node == null) {
@@ -212,9 +208,9 @@ public class AVLTree implements MethodInterface {
      * It does not use indexes like arrays or lists, but rather generates a new expense
      * and inserts it into the AVL Tree.
      * Measures the time and memory usage for the operation.
-     * @param index, The index at which the expense is to be added (not used in AVL Tree).
+     * @param amountToAdd, The amount of the expense to be added.
      */
-    public void addExpense(int index) {
+    public void addExpense(int amountToAdd) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -222,7 +218,9 @@ public class AVLTree implements MethodInterface {
 
         System.out.println("AVL trees does not have indexes like arrays or lists. objects are through the generateExpense method.");
         UtilityMethod utility = new UtilityMethod();
-        this.insert(utility.initialiseAddedExpense());
+        Expense expense = utility.initialiseAddedExpense();
+        expense.setAmount(amountToAdd); // Set the amount to the specified value
+        insert(expense);
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
@@ -263,6 +261,7 @@ public class AVLTree implements MethodInterface {
         }
     }
 
+    @Override
     public void sortExpenses() {
         System.out.println("Any expense objects added to the AVL Tree are automatically sorted based on their amount, from least to most.");
     }
@@ -352,15 +351,15 @@ public class AVLTree implements MethodInterface {
      * @param amountToRemeve, The amount of the expense to be removed.
      * @return The updated node after deletion, or null if the expense was not found.
      */
-    private Nodes deleteRecursive(Nodes node, double amountToRemeve) {
+    private Nodes deleteRecursive(Nodes node, double amountToRemove) {
         if (node == null) {
             return node; // Expense not found
         }
 
-        if (amountToRemeve < node.getExpense().getAmount()) {
-            node.setLeft(deleteRecursive(node.getLeft(), amountToRemeve));
-        } else if (amountToRemeve > node.getExpense().getAmount()) {
-            node.setRight(deleteRecursive(node.getRight(), amountToRemeve));
+        if (amountToRemove < node.getExpense().getAmount()) {
+            node.setLeft(deleteRecursive(node.getLeft(), amountToRemove));
+        } else if (amountToRemove > node.getExpense().getAmount()) {
+            node.setRight(deleteRecursive(node.getRight(), amountToRemove));
         } else {
             // Node with matching expense amount is found
             if (node.getCount() > 1) {
@@ -422,35 +421,57 @@ public class AVLTree implements MethodInterface {
     }
 
     @Override
-    public void updateExpense(int indexToUpdate) {
+    /*
+     * Method to update an expense in the AVL Tree.
+     * It searches for the expense by its amount and updates its details.
+     * Measures the time and memory usage for the operation.
+     * @param amountToUpdate, The amount of the expense to be updated.
+     */
+    public void updateExpense(int amountToUpdate) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
         Long startTime = System.nanoTime();
 
-        System.out.println("Updating expense with amount: " + indexToUpdate);
+        System.out.println("AVL Tree does not use indexes like arrays or lists." +
+        " any value passed in this method will be ignored, and only the amount variable in the updated expense will be considered.");
+
         UtilityMethod utility = new UtilityMethod();
-        root = UpdateExpenseRec(root, indexToUpdate);
-
-
+        root = UpdateExpenseRec(root, amountToUpdate);
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
         utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
     }
 
- private Nodes UpdateExpenseRec(Nodes node, double updatedExpense) {
+    /*
+     * A recursive method to update an expense in the AVL Tree.
+     * It searches for the node with the specified expense amount and updates its details.
+     * If the node is found, it updates the expense details and resets the count to 1.
+     * @param node, The current node in the AVL Tree.
+     * @param updatedExpense, The new expense amount to be updated.
+     * @return The updated node after the update operation.
+     */
+    private Nodes UpdateExpenseRec(Nodes node, int updatedExpense) {
+        UtilityMethod utility = new UtilityMethod();
+        utility.initialiseUpdatedExpense();
         if (node == null) {
             return null; // Expense not found
         }
 
         if (updatedExpense < node.getExpense().getAmount()) {
             node.setLeft(UpdateExpenseRec(node.getLeft(), updatedExpense));
-        } else if (updatedExpense> node.getExpense().getAmount()) {
+        } else if (updatedExpense > node.getExpense().getAmount()) {
             node.setRight(UpdateExpenseRec(node.getRight(), updatedExpense));
         } else {
             // Node with matching expense amount is found
-            node.setExpense(updatedExpense);
+        node.getExpense().setAmount(utility.getUpdatedExpense().getAmount());
+        node.getExpense().setYear(utility.getUpdatedExpense().getYear());
+        node.getExpense().setMonth(utility.getUpdatedExpense().getMonth());
+        node.getExpense().setDate(utility.getUpdatedExpense().getDate());
+        node.getExpense().setDescription(utility.getUpdatedExpense().getDescription());
+        node.getExpense().setFrequency(utility.getUpdatedExpense().getFrequency());
+        node.setCount(1); // Reset count to 1 after update
         }
 
         updateHeight(node);

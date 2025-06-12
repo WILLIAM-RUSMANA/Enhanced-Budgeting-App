@@ -57,6 +57,9 @@ public class Expense extends FinancialItem {
     public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public String toString() {

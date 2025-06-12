@@ -1,5 +1,7 @@
 package DS;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import OOP.Expense;
 
 public class UtilityMethod {
@@ -13,10 +15,10 @@ public class UtilityMethod {
 
     public Expense initialiseExpense(){
         Expense initialExpense = new Expense(
-        50.0 + (Math.random() * 200),  // random amount between 50 and 250
-        2024,                         
-        (int)(Math.random() * 12) + 1, // random month 1-12
-        (int)(Math.random() * 28) + 1, // random day 1-28
+        (double)ThreadLocalRandom.current().nextInt(1, 400),  // random amount between 1 and 400
+        2024,
+        ThreadLocalRandom.current().nextInt(1, 13), // random month 1-12
+        ThreadLocalRandom.current().nextInt(1, 29), // random day 1-28
         "Initial Expense",                     
         "Sample expense " ,     
         "Daily"                      
@@ -26,10 +28,10 @@ public class UtilityMethod {
 
     public Expense initialiseAddedExpense(){
         Expense addedExpense = new Expense(
-        50.0 + (Math.random() * 200),  // random amount between 50 and 250
-        2024,                         
-        (int)(Math.random() * 12) + 1, // random month 1-12
-        (int)(Math.random() * 28) + 1, // random day 1-28
+        (double)ThreadLocalRandom.current().nextInt(1, 400),  // random amount between 1 and 400
+        2024,
+        ThreadLocalRandom.current().nextInt(1, 13), // random month 1-12
+        ThreadLocalRandom.current().nextInt(1, 29), // random day 1-28
         "Added Expense",                     
         "random expense " ,     
         "Daily"                      
@@ -39,15 +41,20 @@ public class UtilityMethod {
 
     public Expense initialiseUpdatedExpense(){
         Expense initialExpense = new Expense(
-        50.0 + (Math.random() * 200),  // random amount between 50 and 250
-        2024,                         
-        (int)(Math.random() * 12) + 1, // random month 1-12
-        (int)(Math.random() * 28) + 1, // random day 1-28
-        "Updated Expense",                     
-        "random expense " ,     
-        "Daily"                      
+        (double)ThreadLocalRandom.current().nextInt(1, 400),  // random amount between 1 and 400
+        2024,
+        ThreadLocalRandom.current().nextInt(1, 13), // random month 1-12
+        ThreadLocalRandom.current().nextInt(1, 29), // random day 1-28
+        "Updated Expense",
+        "random expense " ,
+        "Daily"
         );
         return initialExpense;
     }
-    
+
+
+    public Expense getUpdatedExpense() {
+        return initialiseUpdatedExpense();
+    }
+
 }
