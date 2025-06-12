@@ -1,37 +1,52 @@
 package OOP;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.List;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 
 public class UI extends JFrame {
     // Text fields:
-    private JTextField budgetField, amountField, categoryField, dateField, descriptionField, frequencyField;
+    private final JTextField budgetField, amountField, categoryField, dateField, descriptionField, frequencyField;
+    private final JComboBox<String> frequencyOptions;
     // Labels:
-    private JLabel budgetLabel, remainingBudgetLabel, monthLabel, totalExpenseLabel;
+    private final JLabel budgetLabel, remainingBudgetLabel, monthLabel, totalExpenseLabel;
     // Expense table
-    private DefaultTableModel expenseTableModel;
+    private final DefaultTableModel expenseTableModel;
     // Lists of budgets and expenses
     private ArrayList<Budget> budgets;
     private ArrayList<Expense> expenses;
 
     // tabbedPane and projectionPanel
-    private JTabbedPane tabbedPane;
-    private JPanel projectionPanel;
+    private final JTabbedPane tabbedPane;
+    private final JPanel projectionPanel;
 
     // Initialize display and current month
     private YearMonth displayedMonth = YearMonth.now();  // Starts with the value of the current year and month (2025-5)
-    private YearMonth currentMonth = YearMonth.now();
+    private final YearMonth currentMonth = YearMonth.now();
 
     // variables used for projection
-    private YearMonth lowerBound = currentMonth.plusMonths(1);
-    private YearMonth upperBound = currentMonth.plusMonths(3);
+    private final YearMonth lowerBound = currentMonth.plusMonths(1);
+    private final YearMonth upperBound = currentMonth.plusMonths(3);
 
+    // Variable for rounding up to 2 decimal places and separates 0s with ','
     DecimalFormat df = new DecimalFormat("#,##0.00");
+
+    // Array of options for frequency drop down
+    private final String[] options = { "One-time", "Daily", "Weekly", "Monthly",
+                                  "Quarterly", "Semi-Annual", "Annual"
+                                };
+
+    // Sound effects
+    File walkmanSound = new File("sounds/walkman sound.wav");
 
     public UI(ArrayList<Budget> budgets, ArrayList<Expense> expenses) {
         this.budgets = budgets;   // Gives access to the budgets arraylist to the UI class
@@ -114,8 +129,14 @@ public class UI extends JFrame {
 
         budgetingPanel.add(inputPanel, BorderLayout.NORTH);
 
-        setBudgetButton.addActionListener(e -> setBudget());
-        budgetField.addActionListener(e -> setBudget());
+        setBudgetButton.addActionListener(e -> {
+            setBudget();
+            playSound(walkmanSound);
+        });
+        budgetField.addActionListener(e -> {
+            setBudget();
+            playSound(walkmanSound);
+        });
 
         // Expenses tab
         JPanel expensesPanel = new JPanel(new BorderLayout());
@@ -127,10 +148,11 @@ public class UI extends JFrame {
 
         JPanel addExpensePanel = new JPanel();
         amountField = new JTextField(10);
-        dateField = new JTextField(5);
-        categoryField = new JTextField(5);
+        dateField = new JTextField(2);
+        categoryField = new JTextField(10);
         descriptionField = new JTextField(15);
         frequencyField = new JTextField(5);
+        frequencyOptions = new JComboBox<>(options);
 
         JButton addExpenseButton = new JButton("Add Expense");
 
@@ -142,13 +164,19 @@ public class UI extends JFrame {
         addExpensePanel.add(categoryField);
         addExpensePanel.add(new JLabel("Description"));
         addExpensePanel.add(descriptionField);
+
+        // Todo:  change
         addExpensePanel.add(new JLabel("Freq."));
-        addExpensePanel.add(frequencyField);
+        addExpensePanel.add(frequencyOptions);
+
 
         addExpensePanel.add(addExpenseButton);
 
         // Event listeners for Adding Expenses
-        addExpenseButton.addActionListener(e -> addExpense());  // using button click
+        addExpenseButton.addActionListener(e -> {
+            addExpense();
+            playSound(walkmanSound);
+        });  // using button click
         setupExpenseFieldNavigation();  // using ENTER navigation
 
         expensesPanel.add(addExpensePanel, BorderLayout.NORTH);
@@ -158,11 +186,13 @@ public class UI extends JFrame {
         prevMonthButton.addActionListener(e -> {
             displayedMonth = displayedMonth.minusMonths(1);
             refreshUI();
+            playSound(walkmanSound);
         });
 
         nextMonthButton.addActionListener(e -> {
             displayedMonth = displayedMonth.plusMonths(1);
             refreshUI();
+            playSound(walkmanSound);
         });
 
         // Projection tab - create once and reuse
@@ -184,7 +214,6 @@ public class UI extends JFrame {
         tabbedPane.addTab("Expenses", expensesPanel);
 
         add(tabbedPane, BorderLayout.CENTER);
-
         refreshUI();
         setVisible(true);
     }
@@ -211,35 +240,75 @@ public class UI extends JFrame {
             categoryField.setText("");
             descriptionField.setText("");
             frequencyField.setText("");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid expense.");
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid date.");
+        } catch (IllegalArgumentException e) {
+            String message = e.getMessage();
+            if (message.contains("inv date")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid date between 1 - " + displayedMonth.lengthOfMonth());
+            } else if (message.contains("inv amount")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid amount.");
+            }
         }
     }
 
     private Expense getExpense() {
-        double amount = Double.parseDouble(amountField.getText().trim().replace("\n", "").replace("\r", ""));
-        int date = Integer.parseInt(dateField.getText().trim().replace("\n", "").replace("\r", ""));
+        int date = getIntDate();
+
+        double amount = getDoubleAmount(); // Get valid
+
         String category = categoryField.getText().trim();
         int numericYear = displayedMonth.getYear();
         int numericMonth = displayedMonth.getMonthValue();
         String description = descriptionField.getText().trim();
-        String freq = frequencyField.getText().trim();
+        String freq = frequencyOptions.getSelectedItem() + "";
 
 
-        if (date > 31 || date < 1) {  // Change according to accurate amount of dates in the specific month
-            throw new IllegalArgumentException();  // Triggers the invalid date popup
-        }
+
 
         return new Expense(amount, numericYear, numericMonth, date, category, description, freq);
+    }
+
+    // Method to determine if amount is valid and throws an exception
+    private double getDoubleAmount() {
+        String amountText = amountField.getText().trim().replace("\n", "").replace("\r", "");
+        double amount = 0;
+        if (!amountText.isEmpty()) {
+            try {
+                amount = Double.parseDouble(amountText);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("inv amount");
+            }
+        }
+
+        if (amount <= 0) {
+            throw new IllegalArgumentException("inv amount"); // Triggers the invalid amount popup
+        }
+        return amount;
+    }
+
+    // Method to determine if date is valid if not throw an exception
+    private int getIntDate() {
+        int date = 0;
+        String dateText = dateField.getText().trim().replace("\n", "").replace("\r", "");
+        if (!dateText.isEmpty()) {
+            try {
+                date = Integer.parseInt(dateText);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("inv date");
+            }
+        }
+        if (date > displayedMonth.lengthOfMonth() || date < 1) {  // Change according to accurate amount of dates in the specific month
+            throw new IllegalArgumentException("inv date");  // Triggers the invalid date popup
+        }
+
+        return date;
     }
 
     private void refreshUI() {
         updateMonthLabel();
         updateProjectionTab(); // method call to add projection Tab accordingly
-        // TODO: Sort
-        expenses = ExpenseSort.sort(expenses);
+        // Sorts expenses and budgets items from earliest to latest
+        ExpenseSort.sort(expenses);
+        BudgetSort.sort(budgets);
         // Update expense table using expenses
         expenseTableModel.setRowCount(0);
         List<Expense> monthlyExpenses = new ArrayList<>();
@@ -306,27 +375,58 @@ public class UI extends JFrame {
         monthLabel.setText(displayedMonth.getMonth() + " " + displayedMonth.getYear());
     }
 
-    // Enter shortcut enabler function
+    // ENTER shortcut enabler function
     private void setupExpenseFieldNavigation() {
         // When Enter is pressed in the date field, move focus to description field
         dateField.addActionListener(e -> {
             amountField.requestFocusInWindow();
+            playSound(walkmanSound);
         });
 
         // When Enter is pressed in the amount field, move to freq field
         amountField.addActionListener(e -> {
             categoryField.requestFocusInWindow();
+            playSound(walkmanSound);
         });
 
         categoryField.addActionListener(e -> {
             descriptionField.requestFocusInWindow();
+            playSound(walkmanSound);
         });
 
         descriptionField.addActionListener(e -> {
-            frequencyField.requestFocusInWindow();
+            frequencyOptions.requestFocusInWindow();
+            playSound(walkmanSound);
         });
 
-        frequencyField.addActionListener(e -> addExpense());
+        // Set the keystore to ENTER
+        frequencyOptions.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
+                .put(KeyStroke.getKeyStroke("ENTER"), "enterPressed");
 
+        // When enter is clicked, run addExpense()
+        frequencyOptions.getActionMap().put("enterPressed", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addExpense();
+                playSound(walkmanSound);
+                dateField.requestFocusInWindow();
+            }
+        });
+    }
+
+    // Function that plays .wav sound files
+    private void playSound(File soundFile) {
+        try {
+            // Initialize audioStream with File object soundFile
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+
+            // sound clip resource to play the audio clip
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception e) {
+            System.err.println("Error in playSound playing " + soundFile);
+            System.err.println(e.getMessage());
+        }
     }
 }
