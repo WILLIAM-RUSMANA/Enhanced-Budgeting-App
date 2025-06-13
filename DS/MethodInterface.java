@@ -8,8 +8,4 @@ public interface MethodInterface {
     void searchExpense(int indexToSearch, boolean printMetric);
     void viewExpenses(boolean printMetric);
     void sortExpenses(boolean printMetric);
-
-    void generateExpense(int numValues);
-
-    void addExpense(int indexToAdd);
 }
