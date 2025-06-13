@@ -243,7 +243,7 @@ public class UI extends JFrame {
             refreshUI();
             amountField.setText("");
         } catch (NumberFormatException ex) {
-            playSOund(errorSound);
+            playSound(errorSound);
             JOptionPane.showMessageDialog(this, "Please enter a valid amount.");
         }
     }
