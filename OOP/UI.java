@@ -41,8 +41,7 @@ public class UI extends JFrame {
 
     // Array of options for frequency drop down
     private final String[] options = { "One-time", "Daily", "Weekly", "Monthly",
-                                  "Quarterly", "Semi-Annual", "Annual"
-                                };
+                                       "Quarterly", "Semi-Annual", "Annual"};
 
     // Sound effects
     File walkmanSound = new File("OOP/sounds/walkman sound.wav");
