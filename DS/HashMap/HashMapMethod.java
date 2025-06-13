@@ -31,7 +31,7 @@ public class HashMapMethod implements MethodInterface {
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
         if(printMetric==true){
-        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        utility.printMemoryAndTime("HashMap: ", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
         }
     }
 
@@ -147,7 +147,7 @@ public class HashMapMethod implements MethodInterface {
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
         if(printMetric==true){
-        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        utility.printMemoryAndTime("HashMap: ", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
         }
     }
 
@@ -170,7 +170,6 @@ public class HashMapMethod implements MethodInterface {
 
         if (expenseHashMap.containsKey(index)) {
             expenseHashMap.put(index, updatedExpense);
-            System.out.println("Updated expense at index " + index + ": " + updatedExpense);
         } else {
             System.out.println("No expense found at index " + index);
         }
@@ -180,7 +179,7 @@ public class HashMapMethod implements MethodInterface {
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
         if(printMetric==true){
-        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        utility.printMemoryAndTime("HashMap: ", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
         }
     }
 
@@ -211,7 +210,7 @@ public class HashMapMethod implements MethodInterface {
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
         if(printMetric==true){
-        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        utility.printMemoryAndTime("HashMap: ", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
         }
     }
 
@@ -249,7 +248,7 @@ public class HashMapMethod implements MethodInterface {
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
         if(printMetric==true){
-        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        utility.printMemoryAndTime("HashMap: ", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
         }
     }
 
@@ -273,17 +272,11 @@ public class HashMapMethod implements MethodInterface {
         // Sort the list based on the expense amount
         entryList.sort(Comparator.comparingDouble(entry -> entry.getValue().getAmount()));
 
-        // Print the sorted expenses
-        System.out.println("\nSorted Expenses:");
-        for (Map.Entry<Integer, Expense> entry : entryList) {
-            System.out.println("Index " + entry.getKey() + ": " + entry.getValue());
-        }
-
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
         if(printMetric==true){
-        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        utility.printMemoryAndTime("HashMap: ", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
         }
     }
 
