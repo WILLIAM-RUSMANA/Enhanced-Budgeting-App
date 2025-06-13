@@ -10,7 +10,14 @@ public class StackMethod implements MethodInterface {
     public Stack<Expense> expenseStack = new Stack<>();
 
     @Override
-    public void generateExpense(int numValues) {
+    /*
+     * this method is used to generate expense object
+     * the number of expense object generated is dependant on numValues
+     * once generated, the expense object would be pusdeh into a stack
+     * @param numValues, the number of expense object to be pinted
+     * @param printMetric, decides whether or not to print performance metric
+     */
+    public void generateExpense(int numValues, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -22,11 +29,24 @@ public class StackMethod implements MethodInterface {
 
         long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+
+        if(printMetric==true){
         utility.printMemoryAndTime("Stack", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     @Override
-    public void addExpense(int indexToAdd) {
+    /*
+     * the method is used to add an expense object to a specific index in the stack
+     * a new stack is initialised 
+     * all content, from the old stack, up to the indexToAdd is pushed into it
+     * new expense object is then inserted into the old stack
+     * all content from the newly created stack would be pushed into the ols stack
+     * 
+     * @param indexToAdd, the index at which the new expense object is inserted
+     * @printMetric, wheter or not to print performance metric
+     */
+    public void addExpense(int indexToAdd, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -52,11 +72,14 @@ public class StackMethod implements MethodInterface {
 
         long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        
+        if(printMetric==true){
         utility.printMemoryAndTime("Stack", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     @Override
-    public void removeExpense(int indexToRemove) {
+    public void removeExpense(int indexToRemove, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -81,11 +104,14 @@ public class StackMethod implements MethodInterface {
 
         long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        
+        if(printMetric==true){
         utility.printMemoryAndTime("Stack", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     @Override
-    public void updateExpense(int indexToUpdate) {
+    public void updateExpense(int indexToUpdate, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -113,11 +139,14 @@ public class StackMethod implements MethodInterface {
 
         long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        
+        if(printMetric==true){
         utility.printMemoryAndTime("Stack", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     @Override
-    public void searchExpense(int indexToSearch) {
+    public void searchExpense(int indexToSearch, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -144,11 +173,14 @@ public class StackMethod implements MethodInterface {
 
         long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        
+        if(printMetric==true){
         utility.printMemoryAndTime("Stack", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     @Override
-    public void viewExpenses() {
+    public void viewExpenses(boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -181,11 +213,14 @@ public class StackMethod implements MethodInterface {
 
         long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        
+        if(printMetric==true){
         utility.printMemoryAndTime("Stack", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     @Override
-    public void sortExpenses() {
+    public void sortExpenses(boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -207,6 +242,9 @@ public class StackMethod implements MethodInterface {
 
         long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        
+        if(printMetric==true){
         utility.printMemoryAndTime("Stack", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 }
