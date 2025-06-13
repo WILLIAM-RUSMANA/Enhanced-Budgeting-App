@@ -1,9 +1,9 @@
 package DS.ArrayList;
 
-import OOP.Expense;
-import java.util.*;
 import DS.MethodInterface;
 import DS.UtilityMethod;
+import OOP.Expense;
+import java.util.*;
 
 
 public class ArrayListMethod implements MethodInterface {

@@ -256,8 +256,10 @@ public class UI extends JFrame {
             String message = e.getMessage();
             if (message.contains("inv date")) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid date between 1 - " + displayedMonth.lengthOfMonth());
+                dateField.requestFocusInWindow();  // move focus back to dateField
             } else if (message.contains("inv amount")) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid amount.");
+                amountField.requestFocusInWindow(); // move focus back to the amountField
             }
         }
     }
@@ -443,6 +445,7 @@ public class UI extends JFrame {
             clip.open(audioStream);
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            // Prints out error to terminal if Exception is thrown
             System.err.println("Error in playSound playing " + soundFile);
             System.err.println(e.getMessage());
         }
