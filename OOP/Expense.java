@@ -4,6 +4,7 @@ public class Expense extends FinancialItem {
     private String description;
     private String frequency;
 
+    // Constructors
     public Expense(int year, int month) {
         super(year, month);
         this.date = 0;
@@ -36,11 +37,9 @@ public class Expense extends FinancialItem {
     public int getDate() {
         return date;
     }
-
     public String getDescription() {
         return description;
     }
-
     public String getFrequency() {
         return frequency;
     }
@@ -49,11 +48,9 @@ public class Expense extends FinancialItem {
     public void setExpense(double expenseAmount) {
         this.setAmount(expenseAmount);
     }
-
     public void setDate(int date) {
         this.date = date;
     }
-
     public void setFrequency(String frequency) {
         this.frequency = frequency;
     }

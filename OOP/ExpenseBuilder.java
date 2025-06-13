@@ -8,6 +8,17 @@ import java.math.RoundingMode;
 
 
 public class ExpenseBuilder {
+    // Array Lists used to store categories of type string
+    ArrayList<String> oneTime = new ArrayList<>();
+    ArrayList<String> daily = new ArrayList<>();
+    ArrayList<String> weekly = new ArrayList<>();
+    ArrayList<String> monthly = new ArrayList<>();
+    ArrayList<String> quarterly = new ArrayList<>();
+    ArrayList<String> semiAnnual = new ArrayList<>();
+    ArrayList<String> annual = new ArrayList<>();
+    ArrayList<String> every5Years = new ArrayList<>();
+
+
     public ExpenseBuilder() {
         // Divide all "Monthly" amounts above 10000 by 10
         for (String category : categoriesMap.keySet()) {
@@ -23,6 +34,7 @@ public class ExpenseBuilder {
         }
     }
 
+    // A map filled with different categories with value of an array of amount and frequency
     HashMap<String, String[]> categoriesMap = new HashMap<>() {{
         // a
         put("Accommodation", new String[]{"500", "Daily"});
@@ -118,32 +130,9 @@ public class ExpenseBuilder {
         put("Zoning Fees", new String[]{"20000", "One-time"});
     }};
 
-
-//    HashMap<String, Integer> frequencies = new HashMap<>() {{  // TODO: REM LATER
-//        put("One-time", 0);
-//        put("Daily", 0); // Not a monthly frequency, set to 0 or handle specially
-//        put("Weekly", 0); // Not a monthly frequency, set to 0 or handle specially
-//        put("Monthly", 1);
-//        put("Quarterly", 3);
-//        put("Semi-Annual", 6);
-//        put("Annual", 12);
-//        put("Every 2 years", 24);
-//        put("Every 3 years", 36);
-//        put("Every 4 years", 48);
-//        put("Every 5 years", 60);
-//        put("Every decade", 120);
-//    }};
-
-    // Array Lists used to store categories of type string
-    ArrayList<String> oneTime = new ArrayList<>();
-    ArrayList<String> daily = new ArrayList<>();
-    ArrayList<String> weekly = new ArrayList<>();
-    ArrayList<String> monthly = new ArrayList<>();
-    ArrayList<String> quarterly = new ArrayList<>();
-    ArrayList<String> semiAnnual = new ArrayList<>();
-    ArrayList<String> annual = new ArrayList<>();
-    ArrayList<String> every5Years = new ArrayList<>();
-
+    /*
+    Adds each category to an according frequency based on its frequency in the categories map
+    */
     public void build(ArrayList <Expense> expenses) {
         for (String category : categoriesMap.keySet()) {
             String frequency = categoriesMap.get(category)[1];
@@ -318,5 +307,4 @@ public class ExpenseBuilder {
 
         return bd.doubleValue();
     }
-
 }

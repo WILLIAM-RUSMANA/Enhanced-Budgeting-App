@@ -5,6 +5,7 @@ public class FinancialItem {
     private int year;
     private String category;
 
+    // Constructors
     public FinancialItem(int year, int month) {
         this.amount = 0;
         this.month = month;
@@ -30,20 +31,15 @@ public class FinancialItem {
     public double getAmount() {
         return amount;
     }
-
     public int getMonth() {
         return month;
     }
-
     public int getYear() {
         return year;
     }
-
     public String getYearMonth() {
         return this.year + " " + this.month;
     }
-
-
     public String getCategory() {
         return category;
     }
@@ -52,15 +48,12 @@ public class FinancialItem {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-
     public void setYear(int year) {
         this.year = year;
     }
-
     public void setMonth(int month) {
         this.month = month;
     }
-
     public void setCategory(String category) {
         this.category = category;
     }

@@ -46,6 +46,7 @@ public class UI extends JFrame {
 
     // Sound effects
     File walkmanSound = new File("OOP/sounds/walkman sound.wav");
+    File errorSound = new File("OOP/sounds/error.wav");
 
     /**
      * UI Constructor: Sets up the main window for the Enhanced Budgeting App.
@@ -229,6 +230,9 @@ public class UI extends JFrame {
         refreshUI();
         // Make the window visible to the user
         setVisible(true);
+
+        // Enable SHIFT + Tab for tabbed navigation
+        tabbedNavigation();
     }
 
     // adds budget to budgets Array List and handles exception by displaying a pane detailing the cause
@@ -257,8 +261,10 @@ public class UI extends JFrame {
         } catch (IllegalArgumentException e) {
             String message = e.getMessage();
             if (message.contains("inv date")) {
+                playSound(errorSound);
                 JOptionPane.showMessageDialog(this, "Please enter a valid date between 1 - " + displayedMonth.lengthOfMonth());
             } else if (message.contains("inv amount")) {
+                playSound(errorSound);
                 JOptionPane.showMessageDialog(this, "Please enter a valid amount.");
             }
         }
@@ -434,6 +440,32 @@ public class UI extends JFrame {
         });
     }
 
+    // Allows SHIFT + TAB to navigate accross the two tabs
+    public void tabbedNavigation() {
+        // Remove Shift+Tab from focus traversal keys so we can use it solely for tab switching
+        Set<AWTKeyStroke> backwardKeys = new HashSet<>(tabbedPane.getFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS));
+        backwardKeys.remove(KeyStroke.getKeyStroke("shift TAB"));
+        tabbedPane.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, backwardKeys);
+
+        // Enable Shift+Tab navigation between Budgeting and Expenses tabs only
+        InputMap inputMap = tabbedPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        ActionMap actionMap = tabbedPane.getActionMap();
+        inputMap.put(KeyStroke.getKeyStroke("shift TAB"), "switchTab");
+        actionMap.put("switchTab", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int current = tabbedPane.getSelectedIndex();
+                int next = 0;
+                if (tabbedPane.getTabCount() == 3) {
+                    next = (current >= 2) ? 0 : next + 1;
+                } else {
+                    next = (current == 0) ? 1 : 0; // Only switch between first two tabs
+                }
+                tabbedPane.setSelectedIndex(next);
+            }
+        });
+    }
+
     // Function that plays .wav sound files
     private void playSound(File soundFile) {
         try {
@@ -449,4 +481,5 @@ public class UI extends JFrame {
             System.err.println(e.getMessage());
         }
     }
+
 }
