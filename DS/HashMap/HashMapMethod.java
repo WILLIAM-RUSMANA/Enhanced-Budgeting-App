@@ -12,7 +12,7 @@ public class HashMapMethod implements MethodInterface {
 
     @Override
     // this methods generate a specified number of expense object inside of the hashmap
-    public void generateExpense(int numValues) {
+    public void generateExpense(int numValues, boolean printMetric) {
         UtilityMethod utility = new UtilityMethod();
 
         // Start timing and memory usage for HashMap
@@ -30,7 +30,9 @@ public class HashMapMethod implements MethodInterface {
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
-    utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        if(printMetric==true){
+        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        }
     }
 
     @Override
@@ -39,7 +41,7 @@ public class HashMapMethod implements MethodInterface {
      * if a collision did not occur it would put the expense object at the given index
      */
 
-    public void addExpense(int index) {
+    public void addExpense(int index, boolean printMetric) {
         UtilityMethod utility = new UtilityMethod();
         Expense addedExpense = utility.initialiseAddedExpense();
 
@@ -64,7 +66,10 @@ public class HashMapMethod implements MethodInterface {
         //end timing and memory usage for HashMap
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
+
+        if(printMetric==true){
         utility.printMemoryAndTime("HashMap (With incrementation)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        }
     }
 
 
@@ -74,7 +79,7 @@ public class HashMapMethod implements MethodInterface {
      * if a collision did occur in the new hashmap it would resolve it by chaining
      */
 
-    public void addExpenseChaining(int index){
+    public void addExpenseChaining(int index, boolean printMetric){
         Map <Integer, List<Expense>> newMap = new HashMap<>();
 
         UtilityMethod utility = new UtilityMethod();
@@ -108,7 +113,9 @@ public class HashMapMethod implements MethodInterface {
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
 
+        if(printMetric==true){
         utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        }
     }
 
     @Override
@@ -118,7 +125,7 @@ public class HashMapMethod implements MethodInterface {
      * If it does not, it prints a message indicating that no expense was found at that index.
      */
 
-    public void removeExpense(int index) {
+    public void removeExpense(int index, boolean printMetric) {
         UtilityMethod utility = new UtilityMethod();
 
         // Start timing and memory usage for HashMap
@@ -138,7 +145,10 @@ public class HashMapMethod implements MethodInterface {
         //end timing and memory usage for HashMap
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
-        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+
+        if(printMetric==true){
+        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        }
     }
 
     @Override
@@ -148,7 +158,7 @@ public class HashMapMethod implements MethodInterface {
      * If it does not, it prints a message indicating that no expense was found at that index.
      */
 
-    public void updateExpense(int index) {
+    public void updateExpense(int index, boolean printMetric) {
         UtilityMethod utility = new UtilityMethod();
         Expense updatedExpense = utility.initialiseUpdatedExpense();
 
@@ -168,7 +178,10 @@ public class HashMapMethod implements MethodInterface {
         //end timing and memory usage for HashMap
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
-        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+
+        if(printMetric==true){
+        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        }
     }
 
     @Override
@@ -177,7 +190,7 @@ public class HashMapMethod implements MethodInterface {
      * If it does, it retrieves and prints the expense at that index.
      * If it does not, it prints a message indicating that no expense was found at that index.
      */
-    public void searchExpense(int index) {
+    public void searchExpense(int index, boolean printMetric) {
         UtilityMethod utility = new UtilityMethod();
 
         // Start timing and memory usage for HashMap
@@ -196,7 +209,10 @@ public class HashMapMethod implements MethodInterface {
         //end timing and memory usage for HashMap
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
-        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+
+        if(printMetric==true){
+        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        }
     }
 
     @Override
@@ -206,7 +222,7 @@ public class HashMapMethod implements MethodInterface {
     * If it is not empty, it iterates through the entries in the HashMap and prints each expense.
     */
 
-    public void viewExpenses() {
+    public void viewExpenses(boolean printMetric) {
         UtilityMethod utility = new UtilityMethod();
 
         System.gc();
@@ -231,7 +247,10 @@ public class HashMapMethod implements MethodInterface {
 
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
-        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+
+        if(printMetric==true){
+        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        }
     }
 
     @Override
@@ -240,7 +259,7 @@ public class HashMapMethod implements MethodInterface {
      * sorts the list using timsort based on the expense amount,
      * and then prints the sorted expenses.
      */
-    public void sortExpenses() {
+    public void sortExpenses(boolean printMetric) {
         UtilityMethod utility = new UtilityMethod();
 
         System.gc();
@@ -262,7 +281,10 @@ public class HashMapMethod implements MethodInterface {
 
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
-        utility.printMemoryAndTime("HashMap", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+
+        if(printMetric==true){
+        utility.printMemoryAndTime("HashMap(with chaining)", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+        }
     }
 
 }

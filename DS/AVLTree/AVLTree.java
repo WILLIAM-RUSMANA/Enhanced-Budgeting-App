@@ -125,7 +125,7 @@ public class AVLTree implements MethodInterface {
      * Measures the time and memory usage for the operation.
      * @param numValues, The number of expenses to be generated.
      */
-    public void generateExpense(int numValues) {
+    public void generateExpense(int numValues, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -138,7 +138,10 @@ public class AVLTree implements MethodInterface {
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+
+        if(printMetric==true){
         utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     /*
@@ -176,7 +179,7 @@ public class AVLTree implements MethodInterface {
      * Measures the time and memory usage for the operation.
      * @param amountToAdd, The amount of the expense to be added.
      */
-    public void addExpense(int amountToAdd) {
+    public void addExpense(int amountToAdd, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
@@ -190,7 +193,10 @@ public class AVLTree implements MethodInterface {
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+
+        if(printMetric==true){
         utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }    
     
     @Override
@@ -199,8 +205,7 @@ public class AVLTree implements MethodInterface {
      * It performs an in-order traversal of the tree to display all expenses.
      * Measures the time and memory usage for the operation.
     */
-    public void viewExpenses() {
-
+    public void viewExpenses(boolean printMetric) {
         if (root == null) {
             System.out.println("The AVL Tree is empty. No expenses to display.");
             return;
@@ -231,8 +236,7 @@ public class AVLTree implements MethodInterface {
                 ", Month: " + node.getExpense().getMonth() +
                 ", Day: " + node.getExpense().getDate() +
                 ", Description: " + node.getExpense().getDescription()+
-                ", frequency: " + node.getExpense().getFrequency() + 
-                ", count: " + node.getCount()
+                ", frequency: " + node.getExpense().getFrequency() 
                 );
                 count[0]++;
             }
@@ -241,7 +245,7 @@ public class AVLTree implements MethodInterface {
     }
 
     @Override
-    public void sortExpenses() {
+    public void sortExpenses(boolean printMetric) {
         System.out.println("Any expense objects added to the AVL Tree are automatically sorted based on their amount, from least to most.");
     }
 
@@ -253,7 +257,7 @@ public class AVLTree implements MethodInterface {
      * Measures the time and memory usage for the operation.
      * @param amount, The amount of the expense to be searched.
      */
-    public void searchExpense(int amount) {
+    public void searchExpense(int amount, boolean printMetric) {
         UtilityMethod utility = new UtilityMethod();
         System.gc();
         Runtime runtime = Runtime.getRuntime();
@@ -276,7 +280,10 @@ public class AVLTree implements MethodInterface {
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+
+        if(printMetric==true){
         utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     /*
@@ -286,16 +293,17 @@ public class AVLTree implements MethodInterface {
      * @param node, The current node in the AVL Tree.
      * @param amount, The amount of the expense to be searched.
      * @return The node containing the expense with the specified amount, or null if not found.
-     */
-    private Nodes searchRec(Nodes node, int amount) {
+     */    private Nodes searchRec(Nodes node, int amount) {
+        if (node == null) {
+            return null;
+        }
         if (node.getExpense().getAmount() == amount) {
             return node;
         } else if (amount < node.getExpense().getAmount()) {
             return searchRec(node.getLeft(), amount);
-        } else if( amount > node.getExpense().getAmount()) {
+        } else {
             return searchRec(node.getRight(), amount);
         }
-        return null; 
     }
 
     
@@ -304,7 +312,7 @@ public class AVLTree implements MethodInterface {
      * this method removes an expense from the AVL Tree based on its amount.
      * It searches for the node with the specified amount,
      * and removes it while maintaining the AVL Tree properties.
-     */    public void removeExpense(int amountToRemove){
+     */    public void removeExpense(int amountToRemove, boolean printMetric){
         if (root == null) {
             System.out.println("The AVL Tree is empty. Nothing to remove.");
             return;
@@ -327,7 +335,10 @@ public class AVLTree implements MethodInterface {
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
         UtilityMethod utility = new UtilityMethod();
+
+        if(printMetric==true){
         utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     /*
@@ -414,21 +425,20 @@ public class AVLTree implements MethodInterface {
      * Measures the time and memory usage for the operation.
      * @param amountToUpdate, The amount of the expense to be updated.
      */
-    public void updateExpense(int amountToUpdate) {
+    public void updateExpense(int amountToUpdate, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
         Long startTime = System.nanoTime();
-
-        System.out.println("AVL Tree does not use indexes like arrays or lists." +
-        " any value passed in this method will be ignored, and only the amount variable in the updated expense will be considered.");
 
         UtilityMethod utility = new UtilityMethod();
         root = UpdateExpenseRec(root, amountToUpdate);
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+        if(printMetric==true){
         utility.printMemoryAndTime("AVL Tree", memoryBefore, memoryAfter, endTime, startTime);
+        }
     }
 
     /*

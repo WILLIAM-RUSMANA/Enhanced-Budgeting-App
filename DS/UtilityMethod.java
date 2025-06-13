@@ -7,12 +7,12 @@ import OOP.Expense;
 public class UtilityMethod {    // Common utility methods can be added here
     public void printMemoryAndTime(String structureName, long memoryBefore, long memoryAfter, long endTime, long startTime) {
         long totalMemory = memoryAfter - memoryBefore;
-        double totalTimeMs = (endTime - startTime) / 1_000_000.0; // Convert ns to ms
-        double memoryValue = totalMemory/1_000; // convert bytes to kilobytes
+        double totalTimeMs = (endTime - startTime); // Convert ns to ms
+        double memoryValue = totalMemory; // convert bytes to kilobytes
         
         System.out.println(structureName + " Performance Metrics:");
-        System.out.printf("|-- Memory Usage: %,.2f Kilobytes%n", memoryValue);
-        System.out.printf("|-- Time Taken: %,.2f Miliseconds%n", totalTimeMs);
+        System.out.printf("|-- Memory Usage: %,.2f bytes%n", memoryValue);
+        System.out.printf("|-- Time Taken: %,.2f Nanoseconds%n", totalTimeMs);
         System.out.println(" ");
     }
 
