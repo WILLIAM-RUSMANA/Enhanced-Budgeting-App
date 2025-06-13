@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class UI extends JFrame {
     // Text fields:
-    private final JTextField budgetField, amountField, categoryField, dateField, descriptionField, frequencyField;
+    private final JTextField budgetField, amountField, categoryField, dateField, descriptionField;
     private final JComboBox<String> frequencyOptions;
     // Labels:
     private final JLabel budgetLabel, remainingBudgetLabel, monthLabel, totalExpenseLabel;
@@ -45,7 +45,7 @@ public class UI extends JFrame {
                                 };
 
     // Sound effects
-    File walkmanSound = new File("sounds/walkman sound.wav");
+    File walkmanSound = new File("OOP/sounds/walkman sound.wav");
 
     /**
      * UI Constructor: Sets up the main window for the Enhanced Budgeting App.
@@ -54,6 +54,8 @@ public class UI extends JFrame {
      * Connects the UI to the provided budgets and expenses lists.
      */
     public UI(ArrayList<Budget> budgets, ArrayList<Expense> expenses) {
+        // Use the correct path for the sound file depending on its location
+
         this.budgets = budgets;   // Gives access to the budgets arraylist to the UI class
         this.expenses = expenses;
         setTitle("Enhanced Budgeting App");
@@ -95,22 +97,23 @@ public class UI extends JFrame {
         remainingBudgetLabel.setPreferredSize(new Dimension(250, 30));
         remainingBudgetLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
+        // Top content components
         JPanel topContentPanel = new JPanel();
         topContentPanel.setLayout(new BoxLayout(topContentPanel, BoxLayout.X_AXIS));
 
-        JPanel budgetPanel = new JPanel();
-        budgetPanel.setLayout(new BoxLayout(budgetPanel, BoxLayout.Y_AXIS));
-        budgetPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        budgetPanel.add(budgetLabel);
-        budgetPanel.add(totalExpenseLabel);
-        budgetPanel.add(remainingBudgetLabel);
-
+        // Top budget and expense panel; month's budget, expense and remaining display
+        JPanel budgetExpenseDisplayPanel = new JPanel();
+        budgetExpenseDisplayPanel.setLayout(new BoxLayout(budgetExpenseDisplayPanel, BoxLayout.Y_AXIS));
+        budgetExpenseDisplayPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        budgetExpenseDisplayPanel.add(budgetLabel);
+        budgetExpenseDisplayPanel.add(totalExpenseLabel);
+        budgetExpenseDisplayPanel.add(remainingBudgetLabel);
         monthNavPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-        budgetPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+        budgetExpenseDisplayPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
         topContentPanel.add(monthNavPanel);
         topContentPanel.add(Box.createHorizontalStrut(20));
-        topContentPanel.add(budgetPanel);
+        topContentPanel.add(budgetExpenseDisplayPanel);
 
         topPanel.setLayout(new BorderLayout());
         topPanel.add(topContentPanel, BorderLayout.WEST);
@@ -119,6 +122,7 @@ public class UI extends JFrame {
         add(topPanel, BorderLayout.NORTH);
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 2, 0, 2));
 
+        // Initialize tabbed pane
         tabbedPane = new JTabbedPane(); // Tabbed Pane (Budgeting and expenses) tabs
 
         // Budgeting tab
@@ -156,7 +160,6 @@ public class UI extends JFrame {
         dateField = new JTextField(2);
         categoryField = new JTextField(10);
         descriptionField = new JTextField(15);
-        frequencyField = new JTextField(5);
         frequencyOptions = new JComboBox<>(options);
 
         JButton addExpenseButton = new JButton("Add Expense");
@@ -251,7 +254,6 @@ public class UI extends JFrame {
             amountField.setText("");
             categoryField.setText("");
             descriptionField.setText("");
-            frequencyField.setText("");
         } catch (IllegalArgumentException e) {
             String message = e.getMessage();
             if (message.contains("inv date")) {

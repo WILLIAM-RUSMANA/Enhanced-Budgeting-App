@@ -1,7 +1,9 @@
 package DS.Stack;
 
 import OOP.Expense;
+
 import java.util.*;
+
 import DS.MethodInterface;
 import DS.UtilityMethod;
 
@@ -12,10 +14,10 @@ public class StackMethod implements MethodInterface {
     @Override
     /*
      * this method is used to generate expense object
-     * the number of expense object generated is dependant on numValues
-     * once generated, the expense object would be pusdeh into a stack
-     * @param numValues, the number of expense object to be pinted
-     * @param printMetric, decides whether or not to print performance metric
+     * the number of expense object generated is dependent on numValues
+     * once generated, the expense object would be pusde into a stack
+     * @param numValues, the number of expense object to be printed
+     * @param printMetric, decides whether to print performance metric
      */
     public void generateExpense(int numValues, boolean printMetric) {
         System.gc();
