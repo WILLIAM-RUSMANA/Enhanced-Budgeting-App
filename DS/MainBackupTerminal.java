@@ -8,24 +8,20 @@ import DS.HashMap.HashMapMethod;
 import DS.LinkedList.LinkedListMethod;
 import DS.Stack.StackMethod;
 
+
 public class MainBackupTerminal {
     static Scanner scanner = new Scanner(System.in); 
 
     public static void main(String[] args) {
 
-            //warming up jvm
-    // 1. More intensive initial warmup
-    System.out.println("Initializing system...");
-    ArrayListMethod warmupAL = new ArrayListMethod();
-    LinkedListMethod warmupLL = new LinkedListMethod();
-    HashMapMethod warmupHM = new HashMapMethod();
-    AVLTree warmupAVL = new AVLTree();
 
-    // Phase 1: Larger dataset generation (1000 instead of 100)
-    warmupAL.generateExpense(1000, false);
-    warmupLL.generateExpense(1000, false);
-    warmupHM.generateExpense(1000, false);
-    warmupAVL.generateExpense(1000, false);
+    //warming up jvm
+        ArrayListMethod methodsAL1 = new ArrayListMethod();
+        LinkedListMethod methodsLL1 = new LinkedListMethod();
+        HashMapMethod methodsHM1 = new HashMapMethod();
+        AVLTree avlTree1 = new AVLTree();
+        StackMethod methodStack1 = new StackMethod();
+
 
     try {Thread.sleep(100);} catch (InterruptedException e) {}
 
@@ -302,6 +298,21 @@ public class MainBackupTerminal {
             }
 
         }
+    }
+
+    static ArrayListMethod warmupAL = new ArrayListMethod();
+    static LinkedListMethod warmupLL = new LinkedListMethod();
+    static HashMapMethod warmupHM = new HashMapMethod();
+    static AVLTree warmupAVL = new AVLTree();
+
+    public static void warmupJVM (){
+    warmupAL.generateExpense(1000,false);
+    warmupLL.generateExpense(1000, false);
+    warmupHM.generateExpense(1000, false);
+    warmupAVL.generateExpense(1000, false);
+
+    warmupAL.expeseArrayList.clear();
+    warmupLL.expenseLinkedList.clear();
     }
 }
 

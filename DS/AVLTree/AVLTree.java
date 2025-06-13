@@ -88,6 +88,7 @@ public class AVLTree implements MethodInterface {
         return y;
     }
 
+
     /*
      * A method that calculates the balance of the AVL tree.
      * It checks the balance factor of each node and performs rotations accordingly
@@ -395,7 +396,8 @@ public class AVLTree implements MethodInterface {
                     temp.setCount(1); 
                     node.setRight(deleteRecursive(node.getRight(), temp.getExpense().getAmount()));
                 }
-            }        }        
+            }        
+        }        
         if (node == null) {
             return node;
         }
@@ -449,17 +451,17 @@ public class AVLTree implements MethodInterface {
      * @param updatedExpense, The new expense amount to be updated.
      * @return The updated node after the update operation.
      */
-    private Nodes UpdateExpenseRec(Nodes node, int updatedExpense) {
+    private Nodes UpdateExpenseRec(Nodes node, int amountToFind) {
         UtilityMethod utility = new UtilityMethod();
         utility.initialiseUpdatedExpense();
         if (node == null) {
             return null; // Expense not found
         }
 
-        if (updatedExpense < node.getExpense().getAmount()) {
-            node.setLeft(UpdateExpenseRec(node.getLeft(), updatedExpense));
-        } else if (updatedExpense > node.getExpense().getAmount()) {
-            node.setRight(UpdateExpenseRec(node.getRight(), updatedExpense));
+        if (amountToFind < node.getExpense().getAmount()) {
+            node.setLeft(UpdateExpenseRec(node.getLeft(), amountToFind));
+        } else if (amountToFind > node.getExpense().getAmount()) {
+            node.setRight(UpdateExpenseRec(node.getRight(), amountToFind));
         } else {
             // Node with matching expense amount is found
         node.getExpense().setAmount(utility.getUpdatedExpense().getAmount());

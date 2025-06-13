@@ -9,7 +9,7 @@ import DS.UtilityMethod;
 public class LinkedListMethod implements MethodInterface {  
 
     UtilityMethod utility = new UtilityMethod();
-    LinkedList<Expense> expenseLinkedList = new LinkedList<>();
+    public List<Expense> expenseLinkedList = new LinkedList<>();
 
     @Override
     /*
@@ -33,7 +33,9 @@ public class LinkedListMethod implements MethodInterface {
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
 
+        if (printMetric==true){
         utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        }
     }
 
     @Override
@@ -61,6 +63,7 @@ public class LinkedListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
+
         if (printMetric==true){
         utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
         }
@@ -91,6 +94,7 @@ public class LinkedListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
+
         if (printMetric==true){
         utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
         }
@@ -122,6 +126,7 @@ public class LinkedListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
+
         if (printMetric==true){
         utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
         }
@@ -151,6 +156,7 @@ public class LinkedListMethod implements MethodInterface {
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
+
         if (printMetric==true){
         utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
         }
