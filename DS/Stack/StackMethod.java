@@ -1,7 +1,9 @@
 package DS.Stack;
 
 import OOP.Expense;
-import java.util.Stack;
+
+import java.util.*;
+
 import DS.MethodInterface;
 import DS.UtilityMethod;
 
