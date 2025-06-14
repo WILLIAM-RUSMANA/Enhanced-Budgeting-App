@@ -70,7 +70,7 @@ public class StackMethod implements MethodInterface {
             expenseStack.push(tempStack.pop());
         }
 
-        System.out.println("Expense added at index " + indexToAdd + ": " + newExpense);
+
 
         long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
@@ -96,9 +96,6 @@ public class StackMethod implements MethodInterface {
         while (expenseStack.size() > indexToRemove + 1) {
             tempStack.push(expenseStack.pop());
         }
-
-        Expense removedExpense = expenseStack.pop();
-        System.out.println("Expense removed at index " + indexToRemove + ": " + removedExpense);
 
         while (!tempStack.isEmpty()) {
             expenseStack.push(tempStack.pop());
@@ -133,8 +130,6 @@ public class StackMethod implements MethodInterface {
         expenseStack.pop(); // remove the old one
         expenseStack.push(updatedExpense);
 
-        System.out.println("Expense updated at index " + indexToUpdate + ": " + updatedExpense);
-
         while (!tempStack.isEmpty()) {
             expenseStack.push(tempStack.pop());
         }
@@ -167,7 +162,6 @@ public class StackMethod implements MethodInterface {
         }
 
         foundExpense = expenseStack.peek();
-        System.out.println("Expense found at index " + indexToSearch + ": " + foundExpense);
 
         while (!tempStack.isEmpty()) {
             expenseStack.push(tempStack.pop());
@@ -248,5 +242,10 @@ public class StackMethod implements MethodInterface {
         if(printMetric==true){
         utility.printMemoryAndTime("Stack", memoryBefore, memoryAfter, endTime, startTime);
         }
+    }
+
+    public void clear(){
+        expenseStack.clear();
+        System.out.println("All content of Stack has been deeletd");
     }
 }

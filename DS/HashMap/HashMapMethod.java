@@ -52,7 +52,6 @@ public class HashMapMethod implements MethodInterface {
 
         if (!expenseHashMap.containsKey(index)) {
             expenseHashMap.put(index, addedExpense); // add the expense at the specified index
-            System.out.println("Added Expense at index " + index + ": " + addedExpense);
             return;
             } 
 
@@ -136,11 +135,8 @@ public class HashMapMethod implements MethodInterface {
 
         // Check if the index exists in the HashMap
         if (expenseHashMap.containsKey(index)) {
-            expenseHashMap.remove(index);
-            System.out.println("Removed expense at index " + index);
-        } else {
-            System.out.println("No expense found at index " + index);
-        }
+            expenseHashMap.remove(index);        
+        } 
 
         //end timing and memory usage for HashMap
         long endTimeHM = System.nanoTime();
@@ -148,6 +144,7 @@ public class HashMapMethod implements MethodInterface {
 
         if(printMetric==true){
         utility.printMemoryAndTime("HashMap: ", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
+
         }
     }
 
@@ -199,8 +196,7 @@ public class HashMapMethod implements MethodInterface {
         long startTimeHM = System.nanoTime();
 
         if (expenseHashMap.containsKey(index)) {
-            Expense expense = expenseHashMap.get(index);
-            System.out.println("Expense found at index " + index + ": " + expense);
+            expenseHashMap.get(index);
         } else {
             System.out.println("No expense found at index " + index);
         }
@@ -230,9 +226,7 @@ public class HashMapMethod implements MethodInterface {
         long startTimeHM = System.nanoTime();
 
         int count = 0;
-        if (expenseHashMap.isEmpty()) {
-            System.out.println("No expenses to display");
-        } else {
+        if (!expenseHashMap.isEmpty()) {
             System.out.println("\nExpense List:");
             for (Map.Entry<Integer, Expense> entry : expenseHashMap.entrySet()) {
                 System.out.println("Index " + entry.getKey() + ": " + entry.getValue());
@@ -241,12 +235,13 @@ public class HashMapMethod implements MethodInterface {
                     return;
                 }
             }
-            
+        } else {
+            System.out.println("Hashmap is Empty");
         }
 
         long endTimeHM = System.nanoTime();
         long memoryAfterHM = runtimeHM.totalMemory() - runtimeHM.freeMemory();
-
+        
         if(printMetric==true){
         utility.printMemoryAndTime("HashMap: ", memoryBeforeHM, memoryAfterHM, endTimeHM, startTimeHM);
         }
@@ -280,6 +275,10 @@ public class HashMapMethod implements MethodInterface {
         }
     }
 
+    public void clear(){
+        expenseHashMap.clear();
+        System.out.println("All Hashmpap content has been deleted");
+    }
 }
 
 

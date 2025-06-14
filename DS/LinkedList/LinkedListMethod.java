@@ -58,7 +58,6 @@ public class LinkedListMethod implements MethodInterface {
         }
         Expense newExpense = utility.initialiseExpense();
         expenseLinkedList.add(indexToAdd, newExpense);
-        System.out.println("Expense added at index " + indexToAdd + ": " + newExpense);
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
@@ -88,8 +87,7 @@ public class LinkedListMethod implements MethodInterface {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
-        Expense removedExpense = expenseLinkedList.remove(indexToRemove);
-        System.out.println("Expense removed at index " + indexToRemove + ": " + removedExpense);
+        else{expenseLinkedList.remove(indexToRemove);}
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
@@ -121,7 +119,6 @@ public class LinkedListMethod implements MethodInterface {
         }
         Expense updatedExpense = utility.initialiseExpense();
         expenseLinkedList.set(indexToUpdate, updatedExpense);
-        System.out.println("Expense updated at index " + indexToUpdate + ": " + updatedExpense);
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
@@ -150,8 +147,7 @@ public class LinkedListMethod implements MethodInterface {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
-        Expense foundExpense = expenseLinkedList.get(indexToSearch);
-        System.out.println("Expense found at index " + indexToSearch + ": " + foundExpense);
+        expenseLinkedList.get(indexToSearch);
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
@@ -218,16 +214,20 @@ public class LinkedListMethod implements MethodInterface {
             return;
         }
         Collections.sort(expenseLinkedList, Comparator.comparing(Expense::getAmount));
-        System.out.println("Expenses sorted by amount.");
 
         //end timing and memory usage for LinkedList
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
+
         if (printMetric==true){
         utility.printMemoryAndTime("LinkedList", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
         }
     }
 
+        public void clear(){
+        expenseLinkedList.clear();
+        System.out.println("All linkedlist content has been deleted");
+    }
 
     
 }

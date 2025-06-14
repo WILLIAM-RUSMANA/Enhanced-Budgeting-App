@@ -186,7 +186,6 @@ public class AVLTree implements MethodInterface {
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
         Long startTime = System.nanoTime();
 
-        System.out.println("AVL trees does not have indexes like arrays or lists. objects are through the generateExpense method.");
         UtilityMethod utility = new UtilityMethod();
         Expense expense = utility.initialiseAddedExpense();
         expense.setAmount(amountToAdd); // Set the amount to the specified value
@@ -323,15 +322,9 @@ public class AVLTree implements MethodInterface {
         Runtime runtime = Runtime.getRuntime();
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
         Long startTime = System.nanoTime();
-        System.out.println("Removing expense with amount: " + amountToRemove);
 
-        Nodes oldRoot = root;
+     
         root = deleteRecursive(root, amountToRemove);
-
-        // Only print success message if the tree actually changed
-        if (root != oldRoot || (root != null && searchRec(root, amountToRemove) == null)) {
-            System.out.println("Expense with amount " + amountToRemove + " removed successfully.");
-        }
 
         Long endTime = System.nanoTime();
         long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
@@ -477,5 +470,10 @@ public class AVLTree implements MethodInterface {
         return balances(node);
     }
 
+    public void clear(){
+        root= null;
+        System.out.println("All content inside of the Avl tree has been deleted");
+    }
+    
     
 }

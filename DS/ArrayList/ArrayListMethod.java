@@ -9,6 +9,8 @@ import java.util.*;
 public class ArrayListMethod implements MethodInterface {
     UtilityMethod utility = new UtilityMethod();
     public List<Expense> expeseArrayList = new ArrayList<>();
+    long sumMemory = 0;
+    long sumTime = 0;
 
     @Override
     /*
@@ -18,12 +20,14 @@ public class ArrayListMethod implements MethodInterface {
      */
     public void generateExpense(int numValues, boolean printMetric) {
         // Start timing and memory usage for ArrayList
+
+        expeseArrayList.clear();
         System.gc();
         Runtime runtimeLL = Runtime.getRuntime();
 
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
         long startTimeLL = System.nanoTime();
-
+        
         for (int i = 0; i < numValues; i++) {
             expeseArrayList.add(utility.initialiseExpense()); //generate random expenses in ArrayList
         }
@@ -32,9 +36,10 @@ public class ArrayListMethod implements MethodInterface {
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
 
-        if (printMetric==true){
-        utility.printMemoryAndTime("Arraylist", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
+        if(printMetric==true){
+            utility.printMemoryAndTime("Arraylisy: ", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
         }
+
     }
 
     @Override
@@ -46,6 +51,7 @@ public class ArrayListMethod implements MethodInterface {
      */
     public void addExpense(int indexToAdd, boolean printMetric) {
         // Start timing and memory usage for ArrayList
+
         System.gc();
         Runtime runtimeLL = Runtime.getRuntime();
         long memoryBeforeLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
@@ -57,7 +63,7 @@ public class ArrayListMethod implements MethodInterface {
         }
         Expense newExpense = utility.initialiseExpense();
         expeseArrayList.add(indexToAdd, newExpense);
-        System.out.println("Expense added at index " + indexToAdd + ": " + newExpense);
+
 
         //end timing and memory usage for ArrayList
         long endTimeLL = System.nanoTime();
@@ -87,8 +93,8 @@ public class ArrayListMethod implements MethodInterface {
             System.out.println("Invalid index. Please enter a valid index.");
             return;
         }
-        Expense removedExpense = expeseArrayList.remove(indexToRemove);
-        System.out.println("Expense removed at index " + indexToRemove + ": " + removedExpense);
+       else{expeseArrayList.remove(indexToRemove);}
+
 
         //end timing and memory usage for ArrayList
         long endTimeLL = System.nanoTime();
@@ -120,7 +126,6 @@ public class ArrayListMethod implements MethodInterface {
         }
         Expense updatedExpense = utility.initialiseExpense();
         expeseArrayList.set(indexToUpdate, updatedExpense);
-        System.out.println("Expense updated at index " + indexToUpdate + ": " + updatedExpense);
 
         //end timing and memory usage for ArrayList
         long endTimeLL = System.nanoTime();
@@ -146,11 +151,11 @@ public class ArrayListMethod implements MethodInterface {
         long startTimeLL = System.nanoTime();
 
         if (indexToSearch < 0 || indexToSearch >= expeseArrayList.size()) {
-            System.out.println("Invalid index. Please enter a valid index.");
+            System.out.println("Invalid index. im the problem Please enter a valid index.");
             return;
         }
-        Expense foundExpense = expeseArrayList.get(indexToSearch);
-        System.out.println("Expense found at index " + indexToSearch + ": " + foundExpense);
+        else{expeseArrayList.get(indexToSearch);}
+
 
         //end timing and memory usage for ArrayList
         long endTimeLL = System.nanoTime();
@@ -219,10 +224,9 @@ public class ArrayListMethod implements MethodInterface {
 
         if (expeseArrayList.isEmpty()) {
             System.out.println("No expenses to sort.");
-            return;
         }
+
         Collections.sort(expeseArrayList, Comparator.comparing(Expense::getAmount));
-        System.out.println("Expenses sorted by amount.");
 
         //end timing and memory usage for ArrayList
         long endTimeLL = System.nanoTime();
@@ -230,8 +234,12 @@ public class ArrayListMethod implements MethodInterface {
 
         if (printMetric){
         utility.printMemoryAndTime("Arraylist", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
-
         }
+    }
+
+    public void clear(){
+        expeseArrayList.clear();
+        System.out.println("All arraylist content has been deleted");
     }
 
 }

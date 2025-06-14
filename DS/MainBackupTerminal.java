@@ -7,29 +7,24 @@ import DS.ArrayList.ArrayListMethod;
 import DS.HashMap.HashMapMethod;
 import DS.LinkedList.LinkedListMethod;
 import DS.Stack.StackMethod;
+import DS.WarmUpJVM;
 
 
 public class MainBackupTerminal {
     static Scanner scanner = new Scanner(System.in); 
 
+
     public static void main(String[] args) {
 
 
     //warming up jvm
-        ArrayListMethod methodsAL1 = new ArrayListMethod();
-        LinkedListMethod methodsLL1 = new LinkedListMethod();
-        HashMapMethod methodsHM1 = new HashMapMethod();
-        AVLTree avlTree1 = new AVLTree();
-        StackMethod methodStack1 = new StackMethod();
-
-
-    try {Thread.sleep(100);} catch (InterruptedException e) {}
 
         ArrayListMethod methodsAL = new ArrayListMethod();
         LinkedListMethod methodsLL = new LinkedListMethod();
         HashMapMethod methodsHM = new HashMapMethod();
         AVLTree avlTree = new AVLTree();
         StackMethod methodStack = new StackMethod();
+        WarmUpJVM warmUpJVM = new WarmUpJVM();
         boolean condition = true;
 
         System.out.println("Welcome to the Budget Management System!");
@@ -43,7 +38,8 @@ public class MainBackupTerminal {
             System.out.println("5. Sort expenses");
             System.out.println("6. Search Expenses");
             System.out.println("7. Print Expenses");
-            System.out.println("8. Exit");
+            System.out.println("8. Clear Data Structures");
+            System.out.println("9. Exit");
             System.out.println("----------------------------------------");
             System.out.print("Choose an option: ");
 
@@ -57,6 +53,7 @@ public class MainBackupTerminal {
                         try{
                             System.out.print("Enter the number of expenses to generate: ");
                             int numExpenses = scanner.nextInt();
+                            warmUpJVM.warmUpGeneration(numExpenses);
 
                             System.out.println("Time and Memory Usage for Generating Expenses in Different Data Structures:");
                             methodsAL.generateExpense(numExpenses, true);
@@ -87,8 +84,10 @@ public class MainBackupTerminal {
                             scanner.nextLine(); // Consume newline
 
                             if (structureChoice == 1) {
+                                
                                 System.out.print("Enter the index to add the expense: ");
                                 int indexToAdd = scanner.nextInt();
+
                                 methodsAL.addExpense(indexToAdd, true);
                                 methodsLL.addExpense(indexToAdd, true);
                                 methodsHM.addExpense(indexToAdd, true);
@@ -97,6 +96,8 @@ public class MainBackupTerminal {
                             } else if (structureChoice == 2) {
                                 System.out.print("Enter the amount to add to the AVL Tree: ");
                                 int amountToAdd = scanner.nextInt();
+
+
                                 avlTree.addExpense(amountToAdd, true);
                                 condition2 = false;
                             } else if (structureChoice == 3) {
@@ -126,6 +127,8 @@ public class MainBackupTerminal {
                             if (structureChoice == 1) {
                                 System.out.print("Enter the index to delete in the data structures: ");
                                 int indexToRemove = scanner.nextInt();
+                                warmUpJVM.warmUpRemoval(indexToRemove);
+                                
                                 methodsAL.removeExpense(indexToRemove, true);
                                 methodsLL.removeExpense(indexToRemove, true);
                                 methodsHM.removeExpense(indexToRemove, true);
@@ -134,6 +137,8 @@ public class MainBackupTerminal {
                             } else if (structureChoice == 2) {
                                 System.out.print("Enter the amount to delete in AVl tree: ");
                                 int amountToDelete = scanner.nextInt();
+                                warmUpJVM.avlTree1.addExpense(amountToDelete, false);
+
                                 avlTree.removeExpense(amountToDelete, true);
                                 condition3 = false;
                             } else if (structureChoice == 3) {
@@ -163,6 +168,8 @@ public class MainBackupTerminal {
                             if (structureChoice == 1) {
                                 System.out.print("Enter the index to update the expense: ");
                                 int indexToUpdate = scanner.nextInt();
+                                warmUpJVM.warmUpRemoval(indexToUpdate);
+
                                 methodsAL.updateExpense(indexToUpdate, true);
                                 methodsLL.updateExpense(indexToUpdate, true);
                                 methodsHM.updateExpense(indexToUpdate, true);
@@ -172,6 +179,8 @@ public class MainBackupTerminal {
                                 System.out.println("(e.g. if yoou want to update a node with amount 30, you input 30 here)");
                                 System.out.print("Enter the amount to update: ");
                                 int amountToUpdate = scanner.nextInt();
+                                warmUpJVM.avlTree1.updateExpense(amountToUpdate, false);
+
                                 avlTree.updateExpense(amountToUpdate, true);
                                 condition4 = false;
                             } else if (structureChoice == 3) {
@@ -191,6 +200,8 @@ public class MainBackupTerminal {
                     while (condition5) {
                         try {
                             System.out.println("Sorting expenses based on amount in multiple data sturctures");
+                            warmUpJVM.warmUpSorting();;
+                            
                             methodsAL.sortExpenses( true);
                             methodsHM.sortExpenses( true);
                             methodsLL.sortExpenses( true);
@@ -217,21 +228,24 @@ public class MainBackupTerminal {
                             scanner.nextLine(); // Consume newline
 
                             if (structureChoice == 1) {
-                                System.out.print("Enter the index to update the expense: ");
+                                System.out.print("Enter the index to search the expense: ");
                                 int indexToUpdate = scanner.nextInt();
+                                warmUpJVM.warmUpSearching(indexToUpdate);
+
                                 methodsAL.searchExpense(indexToUpdate, condition);
                                 methodsLL.searchExpense(indexToUpdate, condition);
                                 methodsHM.searchExpense(indexToUpdate, condition);
                                 methodStack.searchExpense(indexToUpdate, condition);
-                                condition4 = false;
+                                condition7 = false;
                             } else if (structureChoice == 2) {
-                                System.out.println("(e.g. if yoou want to update a node with amount 30, you input 30 here)");
-                                System.out.print("Enter the amount to search");
+                                System.out.print("Enter the amount to search: ");
                                 int amountToUpdate = scanner.nextInt();
+                                warmUpJVM.warmUpSearching(amountToUpdate);
+
                                 avlTree.searchExpense(amountToUpdate, condition);
-                                condition4 = false;
+                                condition7 = false;
                             } else if (structureChoice == 3) {
-                                condition4 = false;
+                                condition7 = false;
                             } else {
                                 System.out.println("Invalid choice. Please enter 1, 2, or 3.");
                             }
@@ -290,7 +304,16 @@ public class MainBackupTerminal {
                     }
                 break;
                 case 8:
+                System.out.println("clearing the Data Structures");
+                methodsAL.clear();
+                methodsHM.clear();
+                methodStack.clear();
+               methodsLL.clear();
+                avlTree.clear();
+                break;
+                case 9:
                     System.out.println("Exiting the program. Goodbye!");
+                    condition = false;
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -300,19 +323,5 @@ public class MainBackupTerminal {
         }
     }
 
-    static ArrayListMethod warmupAL = new ArrayListMethod();
-    static LinkedListMethod warmupLL = new LinkedListMethod();
-    static HashMapMethod warmupHM = new HashMapMethod();
-    static AVLTree warmupAVL = new AVLTree();
-
-    public static void warmupJVM (){
-    warmupAL.generateExpense(1000,false);
-    warmupLL.generateExpense(1000, false);
-    warmupHM.generateExpense(1000, false);
-    warmupAVL.generateExpense(1000, false);
-
-    warmupAL.expeseArrayList.clear();
-    warmupLL.expenseLinkedList.clear();
-    }
 }
 
