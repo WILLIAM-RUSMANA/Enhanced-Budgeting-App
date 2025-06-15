@@ -38,6 +38,13 @@ public class WarmUpJVM {
         methodStack1.removeExpense(indexToAdd, false);
     }
 
+    public void warmUpUpdate(int indexTUpdate){
+        methodsAL1.updateExpense(indexTUpdate, false);
+        methodsLL1.updateExpense(indexTUpdate, false);
+        methodsHM1.updateExpense(indexTUpdate, false);
+        methodStack1.updateExpense(indexTUpdate, false);
+    }
+
     public void warmUpSorting(){
         methodsAL1.sortExpenses(false);
         methodsLL1.sortExpenses(false);
@@ -45,11 +52,11 @@ public class WarmUpJVM {
         methodStack1.sortExpenses(false);
     }
 
-    public void warmUpSearching(int indexToAdd){
-       // methodsAL1.searchExpense(indexToAdd, false);
-        methodsLL1.searchExpense(indexToAdd, false);
-        methodsHM1.searchExpense(indexToAdd, false);
-        methodStack1.searchExpense(indexToAdd, false);
+    public void warmUpSearching(int indexToSearch){
+       methodsAL1.searchExpense(indexToSearch, false);
+        methodsLL1.searchExpense(indexToSearch, false);
+        methodsHM1.searchExpense(indexToSearch, false);
+        methodStack1.searchExpense(indexToSearch, false);
     }
 
     public void clearWarmUp(){

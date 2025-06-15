@@ -7,7 +7,6 @@ import DS.ArrayList.ArrayListMethod;
 import DS.HashMap.HashMapMethod;
 import DS.LinkedList.LinkedListMethod;
 import DS.Stack.StackMethod;
-import DS.WarmUpJVM;
 
 
 public class MainBackupTerminal {
@@ -87,6 +86,7 @@ public class MainBackupTerminal {
                                 
                                 System.out.print("Enter the index to add the expense: ");
                                 int indexToAdd = scanner.nextInt();
+                                warmUpJVM.warmUpAddition(indexToAdd);
 
                                 methodsAL.addExpense(indexToAdd, true);
                                 methodsLL.addExpense(indexToAdd, true);
@@ -96,7 +96,7 @@ public class MainBackupTerminal {
                             } else if (structureChoice == 2) {
                                 System.out.print("Enter the amount to add to the AVL Tree: ");
                                 int amountToAdd = scanner.nextInt();
-
+                                warmUpJVM.avlTree1.addExpense(amountToAdd, false);
 
                                 avlTree.addExpense(amountToAdd, true);
                                 condition2 = false;
@@ -137,7 +137,7 @@ public class MainBackupTerminal {
                             } else if (structureChoice == 2) {
                                 System.out.print("Enter the amount to delete in AVl tree: ");
                                 int amountToDelete = scanner.nextInt();
-                                warmUpJVM.avlTree1.addExpense(amountToDelete, false);
+                                warmUpJVM.avlTree1.removeExpense(amountToDelete, false);
 
                                 avlTree.removeExpense(amountToDelete, true);
                                 condition3 = false;
@@ -168,7 +168,7 @@ public class MainBackupTerminal {
                             if (structureChoice == 1) {
                                 System.out.print("Enter the index to update the expense: ");
                                 int indexToUpdate = scanner.nextInt();
-                                warmUpJVM.warmUpRemoval(indexToUpdate);
+                                warmUpJVM.warmUpUpdate(indexToUpdate);
 
                                 methodsAL.updateExpense(indexToUpdate, true);
                                 methodsLL.updateExpense(indexToUpdate, true);
