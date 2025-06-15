@@ -6,9 +6,47 @@
 
 ## Features
 ## Dependancies
-## Installation
+• **Java Standard library**
+<br>
+• **No external dependancies**
+<br>
+• **JDK 8 or higher** (JDK11+ is recommended for best compatability and support)
+
+## Installation & Running
+
+1. **Download or clone this repository.**
+
+2. **Open a terminal in the project root directory.**
+
+3. **Compile all Java files:**
+   
+   On Windows (PowerShell):
+   ```powershell
+   javac -d bin -cp . .\OOP\*.java .\OOP\*\*.java .\DS\*.java .\DS\*\*.java .\ExpenseBuilder\*.java
+   ```
+   On Linux/Mac:
+   ```bash
+   javac -d bin -cp . ./OOP/*.java ./OOP/*/*.java ./DS/*.java ./DS/*/*.java ./ExpenseBuilder/*.java
+   ```
+   This will compile all source files into the `bin` directory.
+
+4. **Run the application:**
+   
+   ```powershell
+   java -cp bin OOP.Main
+   ```
+   (Replace `OOP.Main` with your actual main class if different.)
+
+## Notes
+- Make sure your sound files are in the correct location (either in the root or in the `sounds` folder).
+- No external dependencies are required; only a standard Java JDK is needed.
+- If you encounter issues, ensure your Java version is 8 or higher by running `java -version`.
+
 ## Data Structures Performance
-## Report
+## Report, Demo and Manual
+<br>
+For the Demo video [👉 Click here](https://drive.google.com/drive/folders/1X8SVb_UyPilcT84En5GifwhlYZ26B77g)
+<br>
 ## Snapshots
 <p align="center">
     <img src="report and resources/snap1.png" alt="clone code snippet" width="540" height="360">

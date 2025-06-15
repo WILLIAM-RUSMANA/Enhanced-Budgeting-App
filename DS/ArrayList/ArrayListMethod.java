@@ -36,7 +36,7 @@ public class ArrayListMethod implements MethodInterface {
         long endTimeLL = System.nanoTime();
         long memoryAfterLL = runtimeLL.totalMemory() - runtimeLL.freeMemory();
 
-        if(printMetric==true){
+        if(printMetric){
             utility.printMemoryAndTime("Arraylist: ", memoryBeforeLL, memoryAfterLL, endTimeLL, startTimeLL);
         }
 
