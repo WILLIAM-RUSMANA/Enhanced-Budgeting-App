@@ -1,7 +1,7 @@
 package OOP;
-import java.util.*;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 public class RandomDataCategories {
     // Class to represent random data categories for expenses
@@ -88,5 +88,4 @@ public class RandomDataCategories {
         else if (averageDays >= 180 && averageDays < 365) {return "yearly";}
         else return "irregular";
     }
-
 }
