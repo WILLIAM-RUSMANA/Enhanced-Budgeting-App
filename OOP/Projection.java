@@ -5,7 +5,9 @@ import java.util.NoSuchElementException;
 
 
 public class Projection {
-    // Returns an array of doubles [0]: lower [1]: higher projection
+    // Returns an array of doubles where 
+    // index [0] contains lower projection val 
+    // index [2] contains higher projection val
     public static double[] project(ArrayList<Expense> expenses, int yearOfProjection, int monthOfProjection) {
         YearMonth projectionDate = YearMonth.of(yearOfProjection, monthOfProjection);
         int projectionNumberOfDays = projectionDate.lengthOfMonth();
