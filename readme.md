@@ -62,7 +62,6 @@ LinkedList | 123,408 | 4,402 | 0 | 0 | 2,672 | 12,128
 HashMap | 128,458 | 19,810 | 1,760 | 1,760 | 1,760 | 466,792
 Stack | 71,928 | 9,792 | 6,243 | 69,490 | 6,861 | 465,328
 AVL Tree | 74,520 | 2,648 | 2,648 | 2,672 | 9,648 | Already Sorted
-*results of 0 implies a very fast speed since insertion and deletion here is done from the end
 
 ### n = 10,000
 #### <b>Time Taken in <u>Nano seconds</u></b>
@@ -83,13 +82,17 @@ HashMap | 1,145,893 | 196,430 | 1,760 | 1,760 | 1,760 | 198,288
 Stack | 521,512 | 47,426 | 46,243 | 42,821 | 42,861 | 5,782,656
 AVL Tree | 587,440 | 2,648 | 10,342 | 2,672 | 2,648 | Already Sorted|
 
+*results of 0 is further explained in the report
 
 ## Report, Demo and Manual
 For the Demo video [👉 Click here](https://drive.google.com/drive/folders/1X8SVb_UyPilcT84En5GifwhlYZ26B77g)
 
-For the Report&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [👉 Click here](https://drive.google.com/drive/folders/1X8SVb_UyPilcT84En5GifwhlYZ26B77g)
+For Gdocs of report&nbsp; [👉 Click here](https://docs.google.com/document/d/1BkXFWzLVIb-7jPNPTuhH2XL6HZLGO4ocEI8TTf3JxcU/edit?tab=t.0)
 
-For the Manual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [👉 Click here](https://drive.google.com/drive/folders/1X8SVb_UyPilcT84En5GifwhlYZ26B77g)
+For the Report&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [👉 Click here](report%20and%20resources/Enhanced%20Budgeting%20App%20Report.pdf)
+
+For the Manual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [👉 Click here]()
+
 ## Snapshots
 <p align="center">
     <img src="report and resources/snap1.png" alt="clone code snippet" width="540" height="360">
