@@ -1,12 +1,11 @@
 package DS;
 
-import java.util.*;
-
 import DS.AVLTree.AVLTree;
 import DS.ArrayList.ArrayListMethod;
 import DS.HashMap.HashMapMethod;
 import DS.LinkedList.LinkedListMethod;
 import DS.Stack.StackMethod;
+import java.util.*;
 
 
 public class MainBackupTerminal {
@@ -81,29 +80,26 @@ public class MainBackupTerminal {
 
                             int structureChoice = scanner.nextInt();
                             scanner.nextLine(); // Consume newline
-
-                            if (structureChoice == 1) {
-                                
-                                System.out.print("Enter the index to add the expense: ");
-                                int indexToAdd = scanner.nextInt();
-                                warmUpJVM.warmUpAddition(indexToAdd);
-
-                                methodsAL.addExpense(indexToAdd, true);
-                                methodsLL.addExpense(indexToAdd, true);
-                                methodsHM.addExpense(indexToAdd, true);
-                                methodStack.addExpense(indexToAdd, true);
-                                condition2 = false;
-                            } else if (structureChoice == 2) {
-                                System.out.print("Enter the amount to add to the AVL Tree: ");
-                                int amountToAdd = scanner.nextInt();
-                                warmUpJVM.avlTree1.addExpense(amountToAdd, false);
-
-                                avlTree.addExpense(amountToAdd, true);
-                                condition2 = false;
-                            } else if (structureChoice == 3) {
-                                condition2 = false;
-                            } else {
-                                System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                            switch (structureChoice) {
+                                case 1 -> {
+                                    System.out.print("Enter the index to add the expense: ");
+                                    int indexToAdd = scanner.nextInt();
+                                    warmUpJVM.warmUpAddition(indexToAdd);
+                                    methodsAL.addExpense(indexToAdd, true);
+                                    methodsLL.addExpense(indexToAdd, true);
+                                    methodsHM.addExpense(indexToAdd, true);
+                                    methodStack.addExpense(indexToAdd, true);
+                                    condition2 = false;
+                                }
+                                case 2 -> {
+                                    System.out.print("Enter the amount to add to the AVL Tree: ");
+                                    int amountToAdd = scanner.nextInt();
+                                    warmUpJVM.avlTree1.addExpense(amountToAdd, false);
+                                    avlTree.addExpense(amountToAdd, true);
+                                    condition2 = false;
+                                }
+                                case 3 -> condition2 = false;
+                                default -> System.out.println("Invalid choice. Please enter 1, 2, or 3.");
                             }
                         } 
                          catch (Exception e) {
@@ -123,28 +119,26 @@ public class MainBackupTerminal {
 
                             int structureChoice = scanner.nextInt();
                             scanner.nextLine(); // Consume newline
-
-                            if (structureChoice == 1) {
-                                System.out.print("Enter the index to delete in the data structures: ");
-                                int indexToRemove = scanner.nextInt();
-                                warmUpJVM.warmUpRemoval(indexToRemove);
-                                
-                                methodsAL.removeExpense(indexToRemove, true);
-                                methodsLL.removeExpense(indexToRemove, true);
-                                methodsHM.removeExpense(indexToRemove, true);
-                                methodStack.removeExpense(indexToRemove, true);
-                                condition3 = false;
-                            } else if (structureChoice == 2) {
-                                System.out.print("Enter the amount to delete in AVl tree: ");
-                                int amountToDelete = scanner.nextInt();
-                                warmUpJVM.avlTree1.removeExpense(amountToDelete, false);
-
-                                avlTree.removeExpense(amountToDelete, true);
-                                condition3 = false;
-                            } else if (structureChoice == 3) {
-                                condition3 = false;
-                            } else {
-                                System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                            switch (structureChoice) {
+                                case 1 -> {
+                                    System.out.print("Enter the index to delete in the data structures: ");
+                                    int indexToRemove = scanner.nextInt();
+                                    warmUpJVM.warmUpRemoval(indexToRemove);
+                                    methodsAL.removeExpense(indexToRemove, true);
+                                    methodsLL.removeExpense(indexToRemove, true);
+                                    methodsHM.removeExpense(indexToRemove, true);
+                                    methodStack.removeExpense(indexToRemove, true);
+                                    condition3 = false;
+                                }
+                                case 2 -> {
+                                    System.out.print("Enter the amount to delete in AVl tree: ");
+                                    int amountToDelete = scanner.nextInt();
+                                    warmUpJVM.avlTree1.removeExpense(amountToDelete, false);
+                                    avlTree.removeExpense(amountToDelete, true);
+                                    condition3 = false;
+                                }
+                                case 3 -> condition3 = false;
+                                default -> System.out.println("Invalid choice. Please enter 1, 2, or 3.");
                             }
                         } 
                          catch (Exception e) {
@@ -164,29 +158,27 @@ public class MainBackupTerminal {
 
                             int structureChoice = scanner.nextInt();
                             scanner.nextLine(); // Consume newline
-
-                            if (structureChoice == 1) {
-                                System.out.print("Enter the index to update the expense: ");
-                                int indexToUpdate = scanner.nextInt();
-                                warmUpJVM.warmUpUpdate(indexToUpdate);
-
-                                methodsAL.updateExpense(indexToUpdate, true);
-                                methodsLL.updateExpense(indexToUpdate, true);
-                                methodsHM.updateExpense(indexToUpdate, true);
-                                methodStack.updateExpense(indexToUpdate, true);
-                                condition4 = false;
-                            } else if (structureChoice == 2) {
-                                System.out.println("(e.g. if yoou want to update a node with amount 30, you input 30 here)");
-                                System.out.print("Enter the amount to update: ");
-                                int amountToUpdate = scanner.nextInt();
-                                warmUpJVM.avlTree1.updateExpense(amountToUpdate, false);
-
-                                avlTree.updateExpense(amountToUpdate, true);
-                                condition4 = false;
-                            } else if (structureChoice == 3) {
-                                condition4 = false;
-                            } else {
-                                System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                            switch (structureChoice) {
+                                case 1 -> {
+                                    System.out.print("Enter the index to update the expense: ");
+                                    int indexToUpdate = scanner.nextInt();
+                                    warmUpJVM.warmUpUpdate(indexToUpdate);
+                                    methodsAL.updateExpense(indexToUpdate, true);
+                                    methodsLL.updateExpense(indexToUpdate, true);
+                                    methodsHM.updateExpense(indexToUpdate, true);
+                                    methodStack.updateExpense(indexToUpdate, true);
+                                    condition4 = false;
+                                }
+                                case 2 -> {
+                                    System.out.println("(e.g. if yoou want to update a node with amount 30, you input 30 here)");
+                                    System.out.print("Enter the amount to update: ");
+                                    int amountToUpdate = scanner.nextInt();
+                                    warmUpJVM.avlTree1.updateExpense(amountToUpdate, false);
+                                    avlTree.updateExpense(amountToUpdate, true);
+                                    condition4 = false;
+                                }
+                                case 3 -> condition4 = false;
+                                default -> System.out.println("Invalid choice. Please enter 1, 2, or 3.");
                             }
                         } 
                          catch (Exception e) {
@@ -226,28 +218,26 @@ public class MainBackupTerminal {
 
                             int structureChoice = scanner.nextInt();
                             scanner.nextLine(); // Consume newline
-
-                            if (structureChoice == 1) {
-                                System.out.print("Enter the index to search the expense: ");
-                                int indexToUpdate = scanner.nextInt();
-                                warmUpJVM.warmUpSearching(indexToUpdate);
-
-                                methodsAL.searchExpense(indexToUpdate, condition);
-                                methodsLL.searchExpense(indexToUpdate, condition);
-                                methodsHM.searchExpense(indexToUpdate, condition);
-                                methodStack.searchExpense(indexToUpdate, condition);
-                                condition7 = false;
-                            } else if (structureChoice == 2) {
-                                System.out.print("Enter the amount to search: ");
-                                int amountToUpdate = scanner.nextInt();
-                                warmUpJVM.warmUpSearching(amountToUpdate);
-
-                                avlTree.searchExpense(amountToUpdate, condition);
-                                condition7 = false;
-                            } else if (structureChoice == 3) {
-                                condition7 = false;
-                            } else {
-                                System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                            switch (structureChoice) {
+                                case 1 -> {
+                                    System.out.print("Enter the index to search the expense: ");
+                                    int indexToUpdate = scanner.nextInt();
+                                    warmUpJVM.warmUpSearching(indexToUpdate);
+                                    methodsAL.searchExpense(indexToUpdate, condition);
+                                    methodsLL.searchExpense(indexToUpdate, condition);
+                                    methodsHM.searchExpense(indexToUpdate, condition);
+                                    methodStack.searchExpense(indexToUpdate, condition);
+                                    condition7 = false;
+                                }
+                                case 2 -> {
+                                    System.out.print("Enter the amount to search: ");
+                                    int amountToUpdate = scanner.nextInt();
+                                    warmUpJVM.warmUpSearching(amountToUpdate);
+                                    avlTree.searchExpense(amountToUpdate, condition);
+                                    condition7 = false;
+                                }
+                                case 3 -> condition7 = false;
+                                default -> System.out.println("Invalid choice. Please enter 1, 2, or 3.");
                             }
                         } 
                          catch (Exception e) {
@@ -272,29 +262,33 @@ public class MainBackupTerminal {
                             int structureChoice = scanner.nextInt();
                             scanner.nextLine();
 
-                            if(structureChoice==1){
-                                methodsAL.viewExpenses(true);
-                                condition6 = false;
-                            } 
-                            else if (structureChoice==2){
-                                methodsLL.viewExpenses(true);
-                                condition6 = false;
-                            }
-                            else if (structureChoice==3){
-                                methodsHM.viewExpenses(true);
-                                condition6 = false;
-                            }
-                            else if (structureChoice==4){
-                                avlTree.viewExpenses(true);
-                                condition6 = false;
-                            }
-                            else if (structureChoice==5){
-                                methodStack.viewExpenses(condition);
-                                condition6 = false;
-                            }
-                            else if(structureChoice==6){
-                                System.out.println("Returning to main menu..");
-                                condition6=false;
+                            switch (structureChoice) {
+                                case 1 -> {
+                                    methodsAL.viewExpenses(true);
+                                    condition6 = false;
+                                }
+                                case 2 -> {
+                                    methodsLL.viewExpenses(true);
+                                    condition6 = false;
+                                }
+                                case 3 -> {
+                                    methodsHM.viewExpenses(true);
+                                    condition6 = false;
+                                }
+                                case 4 -> {
+                                    avlTree.viewExpenses(true);
+                                    condition6 = false;
+                                }
+                                case 5 -> {
+                                    methodStack.viewExpenses(condition);
+                                    condition6 = false;
+                                }
+                                case 6 -> {
+                                    System.out.println("Returning to main menu..");
+                                    condition6=false;
+                                }
+                                default -> {
+                                }
                             }
                         } 
                          catch (Exception e) {
