@@ -163,6 +163,7 @@ public class UI extends JFrame {
         frequencyOptions = new JComboBox<>(options);
 
         JButton addExpenseButton = new JButton("Add Expense");
+        JButton removeExpenseButton = new JButton("Remove Selected");
 
         // Adds labels, fields, ComboBox and a button to the addExpensePanel
         addExpensePanel.add(new JLabel("Date:"));
@@ -176,13 +177,40 @@ public class UI extends JFrame {
         addExpensePanel.add(new JLabel("Freq."));
         addExpensePanel.add(frequencyOptions);
         addExpensePanel.add(addExpenseButton);
+        addExpensePanel.add(removeExpenseButton);
 
         // Event listeners for Adding Expenses
         // action listener for add expense button
         addExpenseButton.addActionListener(e -> {
             addExpense();
             playSound(walkmanSound);
-        });  
+        });
+
+        // Remove expense on button click
+        removeExpenseButton.addActionListener(e -> {
+            int selectedRow = expenseTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                // Find which expenses are shown in current month
+                List<Expense> monthlyExpenses = new ArrayList<>();
+                for (Expense exp : expenses) {
+                    if (exp.getYear() == displayedMonth.getYear() &&
+                            exp.getMonth() == displayedMonth.getMonthValue()) {
+                        monthlyExpenses.add(exp);
+                    }
+                }
+
+                // Remove the corresponding Expense object from expenses list
+                Expense toRemove = monthlyExpenses.get(selectedRow);
+                expenses.remove(toRemove);
+
+                // Refresh table
+                refreshUI();
+                playSound(walkmanSound);
+            } else {
+                playSound(errorSound);
+                JOptionPane.showMessageDialog(this, "Please select a row to remove.");
+            }
+        });
 
         setupExpenseFieldNavigation();  // run ENTER navigation action listener
 
