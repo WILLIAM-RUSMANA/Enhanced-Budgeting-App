@@ -85,7 +85,7 @@ public class StackMethod implements MethodInterface {
      * the method is used to remove an expense object at a specific index in the stack
      * a new stack is initialised 
      * all content, from the old stack, up to the indexToAdd is pushed into it
-     * new expense object is then inserted into the old stack
+     * once it reaches indexToRemove, the element woule be deleted 
      * all content from the newly created stack would be pushed into the ols stack
      * 
      * @param indexToRemove, the index at which the new expense object is inserted
@@ -123,7 +123,7 @@ public class StackMethod implements MethodInterface {
     /*
      * the method is used to update an expense object at a specific index in the stack
      * a new stack is initialised 
-     * all content, from the old stack, up to the indexToAdd is pushed into it
+     * all content, from the old stack, up to the indexToUpdate is pushed into it
      * new expense object is then inserted into the old stack
      * all content from the newly created stack would be pushed into the ols stack
      * 
@@ -162,7 +162,17 @@ public class StackMethod implements MethodInterface {
         }
     }
 
-    @Override
+      @Override
+    /*
+     * the method is used to update an expense object at a specific index in the stack
+     * a new stack is initialised 
+     * all content, from the old stack, up to the indexToSearch is pushed into it
+     * .peek() is the used to know what the ibject at indexToSearch
+     * all content from the newly created stack would be pushed into the ols stack
+     * 
+     * @param indexToSearch, the index to search
+     * @printMetric, wheter or not to print performance metric
+     */
     public void searchExpense(int indexToSearch, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
@@ -196,6 +206,9 @@ public class StackMethod implements MethodInterface {
     }
 
     @Override
+    /*
+     * Methods to 
+     */
     public void viewExpenses(boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
