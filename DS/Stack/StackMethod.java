@@ -89,7 +89,7 @@ public class StackMethod implements MethodInterface {
      * all content from the newly created stack would be pushed into the ols stack
      * 
      * @param indexToRemove, the index at which the new expense object is inserted
-     * @printMetric, wheter or not to print performance metric
+     * @printMetric, whether to print performance metric
      */
     public void removeExpense(int indexToRemove, boolean printMetric) {
         System.gc();
@@ -128,7 +128,7 @@ public class StackMethod implements MethodInterface {
      * all content from the newly created stack would be pushed into the ols stack
      * 
      * @param indexToUpdate, the index at which the new expense object is inserted
-     * @printMetric, wheter or not to print performance metric
+     * @printMetric, whether to print performance metric
      */
     public void updateExpense(int indexToUpdate, boolean printMetric) {
         System.gc();
@@ -266,6 +266,6 @@ public class StackMethod implements MethodInterface {
 
     public void clear(){
         expenseStack.clear();
-        System.out.println("All content of Stack has been deeletd");
+        System.out.println("All content of Stack has been deleted");
     }
 }
