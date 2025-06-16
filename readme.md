@@ -91,7 +91,7 @@ For Gdocs of report&nbsp; [👉 Click here](https://docs.google.com/document/d/1
 
 For the Report&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [👉 Click here](report%20and%20resources/Enhanced%20Budgeting%20App%20Report.pdf)
 
-For the Report&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [👉 Click here](report%20and%20resources/DS%20Program%20Manual.pdf)
+For the Manual&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [👉 Click here](report%20and%20resources/DS%20Program%20Manual.pdf)
 
 ## Snapshots
 <p align="center">
