@@ -81,6 +81,16 @@ public class StackMethod implements MethodInterface {
     }
 
     @Override
+    /*
+     * the method is used to remove an expense object at a specific index in the stack
+     * a new stack is initialised 
+     * all content, from the old stack, up to the indexToAdd is pushed into it
+     * new expense object is then inserted into the old stack
+     * all content from the newly created stack would be pushed into the ols stack
+     * 
+     * @param indexToRemove, the index at which the new expense object is inserted
+     * @printMetric, wheter or not to print performance metric
+     */
     public void removeExpense(int indexToRemove, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
@@ -110,6 +120,16 @@ public class StackMethod implements MethodInterface {
     }
 
     @Override
+    /*
+     * the method is used to update an expense object at a specific index in the stack
+     * a new stack is initialised 
+     * all content, from the old stack, up to the indexToAdd is pushed into it
+     * new expense object is then inserted into the old stack
+     * all content from the newly created stack would be pushed into the ols stack
+     * 
+     * @param indexToUpdate, the index at which the new expense object is inserted
+     * @printMetric, wheter or not to print performance metric
+     */
     public void updateExpense(int indexToUpdate, boolean printMetric) {
         System.gc();
         Runtime runtime = Runtime.getRuntime();
