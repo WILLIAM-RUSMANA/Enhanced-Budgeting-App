@@ -59,7 +59,7 @@ public class UI extends JFrame {
         this.budgets = budgets;   // Gives access to the budgets arraylist to the UI class
         this.expenses = expenses;
         setTitle("Enhanced Budgeting App");
-        setSize(1080, 720);
+        setSize(1188, 797);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);  // Place the window in the center of the screen
 
@@ -151,7 +151,12 @@ public class UI extends JFrame {
         JPanel expensesPanel = new JPanel(new BorderLayout());
 
         String[] columnNames = {"Date", "Amount (Rp)", "Category", "Description", "Freq"};
-        expenseTableModel = new DefaultTableModel(columnNames, 0);
+        expenseTableModel = new DefaultTableModel(columnNames, 0) {
+            @Override    // Make table immutable
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make cells non editable
+            }
+        };
         JTable expenseTable = new JTable(expenseTableModel);
         JScrollPane scrollPane = new JScrollPane(expenseTable);
 
