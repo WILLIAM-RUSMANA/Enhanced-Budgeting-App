@@ -18,7 +18,7 @@ public class UtilityMethod {    // Common utility methods can be added here
 
     public Expense initialiseExpense(){
         Expense initialExpense = new Expense(
-        (double)ThreadLocalRandom.current().nextInt(1, 400),  // random amount between 1 and 400
+        (double)ThreadLocalRandom.current().nextInt(1, 100000),  // random amount between 1 and 1000000
         2024,
         ThreadLocalRandom.current().nextInt(1, 13), // random month 1-12
         ThreadLocalRandom.current().nextInt(1, 29), // random day 1-28
@@ -31,7 +31,7 @@ public class UtilityMethod {    // Common utility methods can be added here
 
     public Expense initialiseAddedExpense(){
         Expense addedExpense = new Expense(
-        (double)ThreadLocalRandom.current().nextInt(1, 400),  // random amount between 1 and 400
+        (double)ThreadLocalRandom.current().nextInt(1, 100000),  // random amount between 1 and 1000000
         2024,
         ThreadLocalRandom.current().nextInt(1, 13), // random month 1-12
         ThreadLocalRandom.current().nextInt(1, 29), // random day 1-28
@@ -44,7 +44,7 @@ public class UtilityMethod {    // Common utility methods can be added here
 
     public Expense initialiseUpdatedExpense(){
         Expense initialExpense = new Expense(
-        (double)ThreadLocalRandom.current().nextInt(1, 400),  // random amount between 1 and 400
+        (double)ThreadLocalRandom.current().nextInt(1, 100000),  // random amount between 1 and 1000000
         2024,
         ThreadLocalRandom.current().nextInt(1, 13), // random month 1-12
         ThreadLocalRandom.current().nextInt(1, 29), // random day 1-28
